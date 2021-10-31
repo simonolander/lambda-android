@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import org.simonolander.lambda.R
 
 /**
@@ -21,13 +19,6 @@ class C1L2Fragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.chapter_tutorial_level_2, container, false)
-        view.findViewById<View>(R.id.content_root)
-            ?.setOnClickListener {
-                parentFragmentManager.commit {
-                    setReorderingAllowed(true)
-                    replace<C1L1Fragment>(R.id.tutorial_page_container)
-                }
-            }
         return view
     }
 

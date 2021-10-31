@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/nav_graph"
+            app:startDestination="@id/levelFragment">
+    <fragment
+            android:id="@+id/levelFragment"
+            android:name="org.simonolander.lambda.LevelFragment"
+            android:label="LevelFragment"/>
+    <fragment
+            android:id="@+id/c1L1Fragment"
+            android:name="org.simonolander.lambda.campaignmain.C1L1Fragment"
+            android:label="C1L1Fragment">
+        <action
+                android:id="@+id/action_complete_c1l1"
+                app:destination="@id/c1L2Fragment"/>
+    </fragment>
+    <fragment
+            android:id="@+id/c1L2Fragment"
+            android:name="org.simonolander.lambda.campaignmain.C1L2Fragment"
+            android:label="C1L2Fragment"/>
+</navigation>
