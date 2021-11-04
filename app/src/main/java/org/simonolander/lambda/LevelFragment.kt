@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import org.simonolander.lambda.model.LevelId
+import org.simonolander.lambda.model.chapters
+import org.simonolander.lambda.room.LambdaDatabase
 
 class LevelFragment : Fragment() {
 
@@ -20,7 +23,15 @@ class LevelFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[TutorialViewModel::class.java]
         viewModel.getPage().observe(viewLifecycleOwner) {}
-        findNavController()
-            .navigate(R.id.c1L1Fragment)
+        LambdaDatabase.getInstance(requireContext())
+            .levelCompletionDao()
+            .getAll()
+            .observe(viewLifecycleOwner) { levelCompletions ->
+                val completedLevelIds = levelCompletions.map { LevelId(it.levelId) }.toSet()
+                val firstUncompletedLevel = chapters.flatMap { it.levels }
+                    .firstOrNull { it.id !in completedLevelIds }
+                findNavController()
+                    .navigate(firstUncompletedLevel?.destination ?: R.id.c1L2Fragment)
+            }
     }
 }
