@@ -1,7 +1,5 @@
 package org.simonolander.lambda.data
 
-import org.simonolander.lambda.Chapter1Level1
-
 data class Chapter(
     val id: ChapterId,
     val name: String,
@@ -16,10 +14,32 @@ data class Chapter(
                     Level(
                         id = LevelId("this-is-a-function"),
                         name = "This is a function",
-                        screen = {  }
+                    ),
+                    Level(
+                        id = LevelId("function-decomposition"),
+                        name = "Parts of a function",
+                    ),
+                    Level(
+                        id = LevelId("function-application"),
+                        name = "Using functions",
+                    ),
+                    Level(
+                        id = LevelId("sugar"),
+                        name = "Syntactic sugar",
                     )
                 )
             )
         )
+
+        fun fromRoute(route: String): Level? {
+            val segments = route.split("/")
+            return if (segments.size == 2) {
+                val chapterId = ChapterId(segments[0])
+                val levelId = LevelId(segments[1])
+                values.firstOrNull { it.id == chapterId }?.levels?.firstOrNull { it.id == levelId }
+            } else {
+                null
+            }
+        }
     }
 }
