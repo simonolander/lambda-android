@@ -12,6 +12,11 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="colorDistinct1">@color/indigo_700</item>
+        <item name="colorDistinct2">@color/red_800</item>
+        <item name="colorDistinct3">@color/teal_500</item>
+        <item name="colorDistinct4">@color/yellow_900</item>
+        <item name="colorDistinct5">@color/purple_600</item>
     </style>
 
     <style name="Theme.Lambda.NoActionBar">
