@@ -1,76 +1,30 @@
 package org.simonolander.lambda.data
 
-data class Chapter(
+enum class Chapter(
     val id: ChapterId,
-    val name: String,
+    val title: String,
     val levels: List<Level>,
 ) {
-    companion object {
-        val values = listOf(
-            Chapter(
-                id = ChapterId("tutorial"),
-                name = "Tutorial",
-                levels = listOf(
-                    Level(
-                        id = LevelId("this-is-a-function"),
-                        name = "This is a function",
-                    ),
-                    Level(
-                        id = LevelId("function-decomposition"),
-                        name = "Parts of a function",
-                    ),
-                    Level(
-                        id = LevelId("function-application"),
-                        name = "Using functions",
-                    ),
-                    Level(
-                        id = LevelId("syntactic-sugar"),
-                        name = "Syntactic sugar",
-                    )
-                )
-            ),
-            Chapter(
-                id = ChapterId("booleans"),
-                name = "Booleans",
-                levels = listOf(
-                    Level(
-                        id = LevelId("1"),
-                        name = "Lorem ipsum"
-                    ),
-                    Level(
-                        id = LevelId("1"),
-                        name = "Lorem ipsum"
-                    ),
-                    Level(
-                        id = LevelId("1"),
-                        name = "Lorem ipsum"
-                    ),
-                    Level(
-                        id = LevelId("1"),
-                        name = "Lorem ipsum"
-                    ),
-                    Level(
-                        id = LevelId("1"),
-                        name = "Lorem ipsum"
-                    ),
-                    Level(
-                        id = LevelId("1"),
-                        name = "Lorem ipsum"
-                    ),
-                )
-            ),
-            Chapter(ChapterId(""), "lol", listOf())
+    C1(
+        id = ChapterId("tutorial"),
+        title = "Tutorial",
+        levels = listOf(
+            Level.C1L1,
+            Level.C1L2,
+            Level.C1L3,
+            Level.C1L4,
         )
+    ),
+    C2(
+        id = ChapterId("booleans"),
+        title = "Booleans",
+        levels = listOf()
+    ),
+    ;
 
-        fun fromRoute(route: String): Level? {
-            val segments = route.split("/")
-            return if (segments.size == 2) {
-                val chapterId = ChapterId(segments[0])
-                val levelId = LevelId(segments[1])
-                values.firstOrNull { it.id == chapterId }?.levels?.firstOrNull { it.id == levelId }
-            } else {
-                null
-            }
+    companion object {
+        fun findById(id: ChapterId): Chapter? {
+            return values().firstOrNull { it.id == id }
         }
     }
 }

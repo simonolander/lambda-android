@@ -18,15 +18,15 @@ import org.simonolander.lambda.data.LevelId
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
 @Composable
-fun ChapterOverviewScreen(chapters: List<Chapter> = Chapter.values, onNavigateLevel: (LevelId) -> Unit = {}) {
+fun ChapterOverviewScreen(chapters: Array<Chapter> = Chapter.values(), onNavigateLevel: (LevelId) -> Unit = {}) {
     val listState = rememberLazyListState()
     LazyColumn(
         state = listState,
         modifier = Modifier.fillMaxSize()
             .padding(8.dp),
     ) {
-        items(chapters) {
-            ChapterView(it) {
+        items(chapters) { chapter ->
+            ChapterView(chapter) {
                 onNavigateLevel(it.id)
             }
         }
@@ -37,7 +37,7 @@ fun ChapterOverviewScreen(chapters: List<Chapter> = Chapter.values, onNavigateLe
 private fun ChapterView(chapter: Chapter, onLevelClick: (Level) -> Unit) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = chapter.name,
+            text = chapter.title,
             style = MaterialTheme.typography.h2,
         )
         FlowRow(
