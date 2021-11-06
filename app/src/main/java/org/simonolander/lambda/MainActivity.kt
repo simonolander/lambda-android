@@ -21,6 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import org.simonolander.lambda.ui.ChapterOverviewScreen
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
 class MainActivity : ComponentActivity() {
@@ -47,14 +48,21 @@ fun LambdaApp() {
 fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
     NavHost(
         navController = navController,
-        startDestination = "tutorial/this-is-a-function",
+        startDestination = "overview",
         modifier = modifier,
     ) {
+        composable("overview") {
+            ChapterOverviewScreen {
+                navController.navigate(it.value)
+            }
+        }
+
         composable("tutorial/this-is-a-function") {
             Chapter1Level1 {
                 navController.navigate("tutorial/function-decomposition")
             }
         }
+
         composable("tutorial/function-decomposition") {
             Chapter1Level2 {
                 navController.navigate("tutorial/this-is-a-function")
@@ -66,9 +74,7 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
 @Preview(name = "light mode", showBackground = true, uiMode = UI_MODE_NIGHT_NO)
 @Composable
 fun DefaultPreview() {
-    Chapter1Level3 {
-
-    }
+    ChapterOverviewScreen()
 }
 
 @Composable

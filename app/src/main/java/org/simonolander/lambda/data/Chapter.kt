@@ -28,7 +28,38 @@ data class Chapter(
                         name = "Syntactic sugar",
                     )
                 )
-            )
+            ),
+            Chapter(
+                id = ChapterId("booleans"),
+                name = "Booleans",
+                levels = listOf(
+                    Level(
+                        id = LevelId("1"),
+                        name = "Lorem ipsum"
+                    ),
+                    Level(
+                        id = LevelId("1"),
+                        name = "Lorem ipsum"
+                    ),
+                    Level(
+                        id = LevelId("1"),
+                        name = "Lorem ipsum"
+                    ),
+                    Level(
+                        id = LevelId("1"),
+                        name = "Lorem ipsum"
+                    ),
+                    Level(
+                        id = LevelId("1"),
+                        name = "Lorem ipsum"
+                    ),
+                    Level(
+                        id = LevelId("1"),
+                        name = "Lorem ipsum"
+                    ),
+                )
+            ),
+            Chapter(ChapterId(""), "lol", listOf())
         )
 
         fun fromRoute(route: String): Level? {
