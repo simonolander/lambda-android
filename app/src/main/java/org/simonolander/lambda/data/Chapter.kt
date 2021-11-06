@@ -24,7 +24,7 @@ data class Chapter(
                         name = "Using functions",
                     ),
                     Level(
-                        id = LevelId("sugar"),
+                        id = LevelId("syntactic-sugar"),
                         name = "Syntactic sugar",
                     )
                 )
