@@ -16,7 +16,7 @@ data class Chapter(
                     Level(
                         id = LevelId("this-is-a-function"),
                         name = "This is a function",
-                        screen = { Chapter1Level1() }
+                        screen = {  }
                     )
                 )
             )

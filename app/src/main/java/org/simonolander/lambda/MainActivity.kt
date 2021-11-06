@@ -7,20 +7,19 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.internal.composableLambda
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
@@ -37,9 +36,28 @@ class MainActivity : ComponentActivity() {
 fun LambdaApp() {
     LambdaTheme {
         val navController = rememberNavController()
+        val backstackEntry = navController.currentBackStackEntryAsState()
         Scaffold {
-            Surface(color = MaterialTheme.colors.background) {
-                Chapter1Level1()
+            LambdaNavHost(navController, Modifier.padding(it))
+        }
+    }
+}
+
+@Composable
+fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
+    NavHost(
+        navController = navController,
+        startDestination = "tutorial/this-is-a-function",
+        modifier = modifier,
+    ) {
+        composable("tutorial/this-is-a-function") {
+            Chapter1Level1 {
+                navController.navigate("tutorial/function-decomposition")
+            }
+        }
+        composable("tutorial/function-decomposition") {
+            Chapter1Level2 {
+                navController.navigate("tutorial/this-is-a-function")
             }
         }
     }
@@ -49,12 +67,13 @@ fun LambdaApp() {
 @Preview(name = "dark mode", showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun DefaultPreview() {
-    Chapter1Level2()
+    Chapter1Level2 {
+
+    }
 }
 
 @Composable
-fun Chapter1Level1() {
-    val context = LocalContext.current
+fun Chapter1Level1(onClick: () -> Unit) {
     LambdaTheme {
         Surface {
             Column(
@@ -62,11 +81,7 @@ fun Chapter1Level1() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxSize()
-                    .clickable {
-                        Toast
-                            .makeText(context, "hallå", Toast.LENGTH_SHORT)
-                            .show()
-                    }
+                    .clickable { onClick() }
             ) {
                 Text(
                     text = "λx. x",
@@ -84,8 +99,7 @@ fun Chapter1Level1() {
 }
 
 @Composable
-fun Chapter1Level2() {
-    val context = LocalContext.current
+fun Chapter1Level2(onClick: () -> Unit) {
     LambdaTheme {
         Surface {
             Column(
@@ -93,11 +107,7 @@ fun Chapter1Level2() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxSize()
-                    .clickable {
-                        Toast
-                            .makeText(context, "hallå", Toast.LENGTH_SHORT)
-                            .show()
-                    }
+                    .clickable { onClick() }
             ) {
                 val functionPieces = listOf(
                     "λ" to "λ starts the function" to colorResource(R.color.indigo_700),
