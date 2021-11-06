@@ -64,10 +64,9 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
 }
 
 @Preview(name = "light mode", showBackground = true, uiMode = UI_MODE_NIGHT_NO)
-@Preview(name = "dark mode", showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun DefaultPreview() {
-    Chapter1Level2 {
+    Chapter1Level3 {
 
     }
 }
@@ -131,6 +130,31 @@ fun Chapter1Level2(onClick: () -> Unit) {
                         style = MaterialTheme.typography.subtitle1,
                     )
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun Chapter1Level3(onClick: () -> Unit) {
+    LambdaTheme {
+        Surface {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable { onClick() }
+            ) {
+                Text(
+                    text = "(λx. x) y",
+                    style = MaterialTheme.typography.h2,
+                )
+                Text(
+                    text = "We apply the argument y to the function λx. x",
+                    style = MaterialTheme.typography.subtitle1,
+                    textAlign = TextAlign.Center
+                )
             }
         }
     }
