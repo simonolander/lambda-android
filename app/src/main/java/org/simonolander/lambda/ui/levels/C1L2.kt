@@ -14,13 +14,13 @@ import androidx.compose.ui.res.colorResource
 import org.simonolander.lambda.R
 
 @Composable
-fun C1L2(onClick: () -> Unit) {
+fun C1L2(onLevelComplete: () -> Unit) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .clickable { onClick() }
+            .clickable { onLevelComplete() }
     ) {
         val functionPieces = listOf(
             "λ" to "λ starts the function" to colorResource(R.color.indigo_700),

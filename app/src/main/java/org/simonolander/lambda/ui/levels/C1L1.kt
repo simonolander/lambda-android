@@ -12,13 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 
 @Composable
-fun C1L1(onClick: () -> Unit) {
+fun C1L1(onLevelComplete: () -> Unit) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .clickable { onClick() }
+            .clickable { onLevelComplete() }
     )
     {
         Text(
