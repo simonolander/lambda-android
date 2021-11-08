@@ -4,7 +4,7 @@ sealed class Expression
 
 data class Identifier(
     val name: String,
-    val index: Long,
+    val index: Int,
 ) : Expression()
 
 data class Function(
