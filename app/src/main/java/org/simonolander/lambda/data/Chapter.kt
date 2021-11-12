@@ -18,7 +18,9 @@ enum class Chapter(
     C2(
         id = ChapterId("booleans"),
         title = "Booleans",
-        levels = listOf()
+        levels = listOf(
+            Level.C2L1
+        )
     ),
     ;
 
