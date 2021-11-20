@@ -1,9 +1,6 @@
 package org.simonolander.lambda.data
 
-import org.simonolander.lambda.ui.levels.C1L1
-import org.simonolander.lambda.ui.levels.C1L2
-import org.simonolander.lambda.ui.levels.C1L3
-import org.simonolander.lambda.ui.levels.C1L4
+import org.simonolander.lambda.ui.levels.*
 
 enum class Level(
     val id: LevelId,
@@ -29,6 +26,11 @@ enum class Level(
         id = LevelId("syntactic-sugar"),
         title = "Syntactic sugar",
         view = { C1L4(it) }
+    ),
+    C2L1(
+        id = LevelId("boolean-intro"),
+        title = "Boolean introduction",
+        view = { C2L1View(it) }
     ),
     ;
 

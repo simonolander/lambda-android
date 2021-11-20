@@ -69,7 +69,7 @@ fun LevelView(level: Level, onClick: () -> Unit) {
 
 @Preview
 @Composable
-fun DefaultPreview() {
+private fun DefaultPreview() {
     LambdaTheme {
         Surface {
             ChapterOverviewScreen()
