@@ -1,24 +1,24 @@
 package org.simonolander.lambda.data
 
-import org.junit.Assert.*
-import org.junit.Test
+import io.kotest.assertions.withClue
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.inspectors.forAll
+import io.kotest.matchers.collections.shouldHaveSingleElement
+import io.kotest.matchers.shouldBe
 
-class ChapterTest {
-
-    @Test
-    fun uniqueIds() {
-        val chapters = Chapter.values()
-        chapters.forEach { chapter ->
-            val count = chapters.count { it.id == chapter.id }
-            assertEquals("Multiple occurrences of ${chapter.id}", 1, count)
+class ChapterTest : FunSpec({
+    val chapters = Chapter.values().toList()
+    test("chapters should have unique ids") {
+        chapters.forAll { chapter ->
+            withClue("There should only be one chapter with id $chapter") {
+                chapters shouldHaveSingleElement { it.id == chapter.id }
+            }
         }
     }
 
-    @Test
-    fun findById() {
-        val chapters = Chapter.values()
-        chapters.forEach { chapter ->
-            assertEquals(chapter, Chapter.findById(chapter.id))
+    test("findById") {
+        chapters.forAll {
+            Chapter.findById(it.id) shouldBe it
         }
     }
-}
+})

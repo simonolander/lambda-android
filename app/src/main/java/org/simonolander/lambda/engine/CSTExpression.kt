@@ -28,7 +28,11 @@ data class CSTIdentifier(
     val name: String,
 ) : CSTExpression() {
     override fun toExpression(binders: List<String>): Expression {
-        return Identifier(name, binders.reversed().indexOfFirst { it == name })
+        val index = binders.reversed()
+            .indexOfFirst { it == name }
+            .takeUnless { it < 0 }
+            ?: binders.size
+        return Identifier(name, index)
     }
 }
 
