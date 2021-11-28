@@ -34,6 +34,24 @@ data class Function(
         body.freeVariables - parameterName
     }
 
+    /**
+     * Creates a new [Function] with [parameterName] and all free occurrences of [parameterName] in
+     * the [body] changed to [newParameterName]. No care is taken to prevent the new parameter name
+     * from unintentionally binding to a free variable in [body].
+     *
+     * @return the new function, or this function if the [parameterName] did not change
+     */
+    fun unsafeRenameParameter(newParameterName: String): Function {
+        return if (newParameterName == parameterName) {
+            this
+        } else {
+            Function(newParameterName, body.substitute(
+                parameterName,
+                Identifier(newParameterName),
+            ))
+        }
+    }
+
     override fun substitute(search: String, replace: Expression): Function {
         return when (search) {
             parameterName -> this
