@@ -41,17 +41,45 @@ private fun reduceOnce(application: Application, library: Map<String, Expression
         ?: reduceOnce(argument, library)?.let { ApplicationArgumentReduction(function, it) }
 }
 
-private fun betaReduce(application: Application): BetaReduction? {
+/**
+ * Reduces expressions of the form
+ *     (\ x. x) a
+ * to
+ *     a
+ */
+private fun betaReduce(application: Application): Reduction? {
     val (function, argument) = application
     if (function !is Function) {
         return null
     }
-    return BetaReduction(
-        before = application,
-        after = function.applyArgument(argument),
-    )
+    return if (function.parameterName in argument.freeVariables) {
+        val newParameterName = nextName(argument.freeVariables + function.body.freeVariables)
+        ApplicationFunctionReduction(
+            AlphaRenaming(
+                function,
+                Function(
+                    newParameterName,
+                    function.body.substitute(function.parameterName, Identifier(newParameterName)),
+                ),
+            ),
+            argument,
+        )
+    }
+    else {
+        BetaReduction(
+            before = application,
+            after = function.body.substitute(function.parameterName, argument),
+        )
+    }
+
 }
 
+/**
+ * Eta reductions reduces expressions of the form
+ *     \ x. a x
+ * to
+ *     a
+ */
 private fun etaReduce(function: Function): EtaReduction? {
     if (function.body !is Application) {
         return null
@@ -59,15 +87,38 @@ private fun etaReduce(function: Function): EtaReduction? {
     if (function.body.argument !is Identifier) {
         return null
     }
-    if (function.body.argument.index != 0) {
+    if (function.body.argument.name != function.parameterName) {
         return null
     }
-    if (function.body.function.findBoundIdentifiers().any()) {
+    // TODO What about library?
+    if (function.body.function.freeVariables.contains(function.parameterName)) {
         return null
     }
     return EtaReduction(
         before = function,
         after = function.body.function,
     )
+}
+
+private fun nextName(names: Set<String>): String {
+    var candidate = StringBuilder("a")
+    while (candidate.toString() in names) {
+        candidate++
+    }
+    return candidate.toString()
+}
+
+private operator fun StringBuilder.inc(): StringBuilder {
+    for (index in length.rangeTo(0)) {
+        val newChar = when (val oldChar = this[index]) {
+            'z' -> 'a'
+            else -> oldChar + 1
+        }
+        setCharAt(index, newChar)
+        if (newChar != 'a') {
+            return this
+        }
+    }
+    return insert(0, 'a')
 }
 

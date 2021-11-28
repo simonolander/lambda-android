@@ -25,3 +25,5 @@ data class ApplicationArgumentReduction(val function: Expression, val argumentRe
     override val before = Application(function, argumentReduction.before)
     override val after = Application(function, argumentReduction.after)
 }
+
+data class AlphaRenaming(override val before: Function, override var after: Function): Reduction

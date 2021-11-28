@@ -9,25 +9,25 @@ class ParserTest : FunSpec({
         context("base cases") {
             test("identifier") {
                 val actual = parse("x")
-                val expected = Identifier("x", 0)
+                val expected = Identifier("x")
                 actual shouldBe expected
             }
 
             test("long identifier") {
                 val actual = parse("house")
-                val expected = Identifier("house", 0)
+                val expected = Identifier("house")
                 actual shouldBe expected
             }
 
             test("function backslash") {
                 val actual = parse("\\x.x")
-                val expected = Function("x", Identifier("x", 0))
+                val expected = Function("x", Identifier("x"))
                 actual shouldBe expected
             }
 
             test("function lambda") {
                 val actual = parse("λx.x")
-                val expected = Function("x", Identifier("x", 0))
+                val expected = Function("x", Identifier("x"))
                 actual shouldBe expected
             }
 
@@ -39,7 +39,7 @@ class ParserTest : FunSpec({
                         "b",
                         Function(
                             "c",
-                            Identifier("b", 1)
+                            Identifier("b")
                         )
                     )
                 )
@@ -49,8 +49,8 @@ class ParserTest : FunSpec({
             test("application") {
                 val actual = parse("a b")
                 val expected = Application(
-                    Identifier("a", 0),
-                    Identifier("b", 0),
+                    Identifier("a"),
+                    Identifier("b"),
                 )
                 actual shouldBe expected
             }
@@ -61,14 +61,14 @@ class ParserTest : FunSpec({
                     Application(
                         Application(
                             Application(
-                                Identifier("a", 0),
-                                Identifier("b", 0),
+                                Identifier("a"),
+                                Identifier("b"),
                             ),
-                            Identifier("c", 0),
+                            Identifier("c"),
                         ),
-                        Identifier("d", 0),
+                        Identifier("d"),
                     ),
-                    Identifier("e", 0),
+                    Identifier("e"),
                 )
                 actual shouldBe expected
             }
@@ -88,7 +88,7 @@ class ParserTest : FunSpec({
                                         "e",
                                         Function(
                                             "f",
-                                            Identifier("g", 6)
+                                            Identifier("g")
                                         )
                                     )
                                 )
@@ -104,10 +104,10 @@ class ParserTest : FunSpec({
                     "a",
                     Application(
                         Application(
-                            Identifier("a", 0),
-                            Identifier("b", 1),
+                            Identifier("a"),
+                            Identifier("b"),
                         ),
-                        Identifier("c", 1),
+                        Identifier("c"),
                     )
                 )
                 actual shouldBe expected
@@ -116,20 +116,20 @@ class ParserTest : FunSpec({
 
         test("complex expressions") {
             listOf(
-                "λa.λa.a" to Function("a", Function("a", Identifier("a", 0))),
+                "λa.λa.a" to Function("a", Function("a", Identifier("a"))),
                 "(λx.x)λx.x" to Application(
-                    Function("x", Identifier("x", 0)),
-                    Function("x", Identifier("x", 0)),
+                    Function("x", Identifier("x")),
+                    Function("x", Identifier("x")),
                 ),
                 "(λx y.x)x \\t. t t" to Application(
                     Application(
-                        Function("x", Function("y", Identifier("x", 1))),
-                        Identifier("x", 0),
+                        Function("x", Function("y", Identifier("x"))),
+                        Identifier("x"),
                     ),
                     Function(
                         "t", Application(
-                            Identifier("t", 0),
-                            Identifier("t", 0),
+                            Identifier("t"),
+                            Identifier("t"),
                         )
                     )
                 )
