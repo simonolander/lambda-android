@@ -1,15 +1,17 @@
 package org.simonolander.lambda.engine
 
-fun reduceAll(
+fun normalize(
     expression: Expression,
     library: Map<String, Expression> = emptyMap(),
-    maxDepth: Int = 1000
-): Expression {
-    return reduceAll(expression, library)
-        .map { it.after }
-        .ifEmpty { sequenceOf(expression) }
-        .take(maxDepth)
-        .last()
+    maxDepth: Int,
+): Expression? {
+    var expr = expression
+    repeat(maxDepth) {
+        expr = reduceOnce(expr, library)
+            ?.after
+            ?: return expr
+    }
+    return null
 }
 
 fun reduceAll(

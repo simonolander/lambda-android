@@ -80,8 +80,69 @@ class ReducerTest : FunSpec({
             ).forAll { (expression, expectedString) ->
                 withClue("`$expression` should reduce to `$expectedString`") {
                     val maxDepth = 100
-                    val actual = reduceAll(parse(expression), library, maxDepth)
-                    val expected = reduceAll(parse(expectedString), library, maxDepth)
+                    val actual = normalize(parse(expression), library, maxDepth)
+                    val expected = normalize(parse(expectedString), library, maxDepth)
+                    actual.shouldNotBeNull()
+                    actual shouldBe expected
+                }
+            }
+        }
+
+        context("church numerals") {
+            val library = mapOf(
+                "succ" to parse("λa f x. f (a f x)"),
+                "add" to parse("λa b f x. a f (b f x)"),
+                "multiply" to parse("λa b f. a (b f)"),
+                "pow" to parse("λa b. b a"),
+                "0" to parse("λf x. x"),
+                "1" to parse("λf x. f x"),
+                "2" to parse("λf x. f(f x)"),
+                "3" to parse("λf x. f(f(f x))"),
+                "4" to parse("λf x. f(f(f(f x)))"),
+                "16" to parse("λf x. f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f x)))))))))))))))"),
+                "27" to parse("λf x. f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f x))))))))))))))))))))))))))"),
+            )
+            listOf(
+                "succ 0" to "1",
+                "succ 1" to "2",
+                "succ 2" to "3",
+                "add 0 0" to "0",
+                "add 0 1" to "1",
+                "add 0 2" to "2",
+                "add 1 0" to "1",
+                "add 1 1" to "2",
+                "add 1 2" to "3",
+                "add 2 0" to "2",
+                "add 2 1" to "3",
+                "add 2 2" to "4",
+                "multiply 0 0" to "0",
+                "multiply 0 1" to "0",
+                "multiply 0 2" to "0",
+                "multiply 1 0" to "0",
+                "multiply 1 1" to "1",
+                "multiply 1 2" to "2",
+                "multiply 2 0" to "0",
+                "multiply 2 1" to "2",
+                "multiply 2 2" to "4",
+                "pow 0 0" to "1",
+                "pow 0 3" to "0",
+                "pow 1 0" to "1",
+                "pow 1 1" to "1",
+                "pow 1 4" to "1",
+                "pow 2 0" to "1",
+                "pow 2 1" to "2",
+                "pow 2 4" to "16",
+                "pow 3 0" to "1",
+                "pow 3 1" to "3",
+                "pow 3 3" to "27",
+                "pow 4 1" to "4",
+                "pow 4 2" to "16",
+            ).forAll { (expression, expectedString) ->
+                withClue("`$expression` should reduce to `$expectedString`") {
+                    val maxDepth = 1000
+                    val actual = normalize(parse(expression), library, maxDepth)
+                    val expected = normalize(parse(expectedString), library, maxDepth)
+                    actual.shouldNotBeNull()
                     actual shouldBe expected
                 }
             }
