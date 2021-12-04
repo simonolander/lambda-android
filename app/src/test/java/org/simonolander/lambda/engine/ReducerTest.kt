@@ -143,7 +143,8 @@ class ReducerTest : FunSpec({
                     val actual = normalize(parse(expression), library, maxDepth)
                     val expected = normalize(parse(expectedString), library, maxDepth)
                     actual.shouldNotBeNull()
-                    actual shouldBe expected
+                    expected.shouldNotBeNull()
+                    actual.alphaEquals(expected) shouldBe true
                 }
             }
         }

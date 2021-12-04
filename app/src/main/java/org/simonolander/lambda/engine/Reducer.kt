@@ -150,9 +150,9 @@ private fun etaReduce(function: Function): EtaReduction? {
     )
 }
 
-private fun nextName(names: Set<String>): String {
+internal fun nextName(forbiddenNames: Set<String>): String {
     var candidate = StringBuilder("a")
-    while (candidate.toString().reversed() in names) {
+    while (candidate.toString().reversed() in forbiddenNames) {
         candidate++
     }
     return candidate.toString().reversed()

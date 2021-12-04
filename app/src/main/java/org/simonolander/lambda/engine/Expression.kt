@@ -2,13 +2,16 @@ package org.simonolander.lambda.engine
 
 sealed interface Expression {
     val freeVariables: Set<String>
+    val functions: Set<Function>
 
     fun substitute(search: String, replace: Expression): Expression
     fun prettyPrint(): String
+    fun alphaEquals(other: Expression): Boolean
 }
 
 data class Identifier(val name: String) : Expression {
     override val freeVariables = setOf(name)
+    override val functions = emptySet<Function>()
 
     override fun substitute(search: String, replace: Expression): Expression {
         return when (search) {
@@ -19,6 +22,14 @@ data class Identifier(val name: String) : Expression {
 
     override fun prettyPrint(): String {
         return name
+    }
+
+    override fun alphaEquals(other: Expression): Boolean {
+        return when (other) {
+            is Application -> false
+            is Function -> false
+            is Identifier -> other.name == name
+        }
     }
 
     override fun toString(): String {
@@ -34,6 +45,16 @@ data class Function(
         body.freeVariables - parameterName
     }
 
+    override val functions by lazy {
+        body.functions + this
+    }
+
+    val unsafeParameterNames by lazy {
+        freeVariables + body.functions
+            .filter { parameterName in it.freeVariables }
+            .map { it.parameterName }
+    }
+
     /**
      * Creates a new [Function] with [parameterName] and all free occurrences of [parameterName] in
      * the [body] changed to [newParameterName]. No care is taken to prevent the new parameter name
@@ -45,10 +66,12 @@ data class Function(
         return if (newParameterName == parameterName) {
             this
         } else {
-            Function(newParameterName, body.substitute(
-                parameterName,
-                Identifier(newParameterName),
-            ))
+            Function(
+                newParameterName, body.substitute(
+                    parameterName,
+                    Identifier(newParameterName),
+                )
+            )
         }
     }
 
@@ -63,8 +86,30 @@ data class Function(
         return "λ $parameterName. ${body.prettyPrint()}"
     }
 
+    override fun alphaEquals(other: Expression): Boolean {
+        return when (other) {
+            is Application -> false
+            is Identifier -> false
+            is Function -> when {
+                other.parameterName == parameterName -> body.alphaEquals(other.body)
+                parameterName !in other.unsafeParameterNames -> body.alphaEquals(
+                    other.unsafeRenameParameter(parameterName).body
+                )
+                other.parameterName !in unsafeParameterNames -> other.body.alphaEquals(
+                    unsafeRenameParameter(other.parameterName).body
+                )
+                else -> {
+                    val newParameterName = nextName(unsafeParameterNames + other.unsafeParameterNames)
+                    val thisBody = unsafeRenameParameter(newParameterName).body
+                    val otherBody = other.unsafeRenameParameter(newParameterName).body
+                    thisBody.alphaEquals(otherBody)
+                }
+            }
+        }
+    }
+
     override fun toString(): String {
-        return "λ $parameterName. ($body)"
+        return "λ $parameterName. $body"
     }
 }
 
@@ -74,6 +119,10 @@ data class Application(
 ) : Expression {
     override val freeVariables by lazy {
         function.freeVariables + argument.freeVariables
+    }
+
+    override val functions by lazy {
+        function.functions + argument.functions
     }
 
     override fun substitute(search: String, replace: Expression): Expression {
@@ -98,6 +147,14 @@ data class Application(
             else -> argument.prettyPrint()
         }
         return "$f $a"
+    }
+
+    override fun alphaEquals(other: Expression): Boolean {
+        return when (other) {
+            is Application -> function.alphaEquals(other.function) && argument.alphaEquals(other.argument)
+            is Function -> false
+            is Identifier -> false
+        }
     }
 
     override fun toString(): String {
