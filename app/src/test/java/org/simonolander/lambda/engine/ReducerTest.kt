@@ -99,7 +99,7 @@ class ReducerTest : FunSpec({
             val library = mutableMapOf(
                 "succ" to parse("λa f x. f (a f x)"),
                 "add" to parse("λa b f x. a f (b f x)"),
-                "multiply" to parse("λa b f. a (b f)"),
+                "mult" to parse("λa b f. a (b f)"),
                 "pow" to parse("λa b. b a"),
                 "pred" to parse("λn f x. n (λg h. h (g f)) (λu.x) λu.u"),
                 "sub" to parse("λa b. b pred a"),
@@ -157,15 +157,15 @@ class ReducerTest : FunSpec({
 
             context("multiplication") {
                 listOf(
-                    "multiply 0 0" to "0",
-                    "multiply 0 1" to "0",
-                    "multiply 0 2" to "0",
-                    "multiply 1 0" to "0",
-                    "multiply 1 1" to "1",
-                    "multiply 1 2" to "2",
-                    "multiply 2 0" to "0",
-                    "multiply 2 1" to "2",
-                    "multiply 2 2" to "4",
+                    "mult 0 0" to "0",
+                    "mult 0 1" to "0",
+                    "mult 0 2" to "0",
+                    "mult 1 0" to "0",
+                    "mult 1 1" to "1",
+                    "mult 1 2" to "2",
+                    "mult 2 0" to "0",
+                    "mult 2 1" to "2",
+                    "mult 2 2" to "4",
                 ).forAll(::shouldEqual)
             }
 
