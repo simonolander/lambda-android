@@ -8,7 +8,6 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.property.Arb
-import io.kotest.property.arbitrary.filter
 import io.kotest.property.arbitrary.map
 import io.kotest.property.arbitrary.pair
 import io.kotest.property.arbitrary.positiveInt
@@ -18,6 +17,26 @@ import kotlin.math.max
 class ReducerTest : FunSpec({
 
     context("reduceAll") {
+        fun shouldEqual(testCase: Pair<String, String>, library: Map<String, Expression>) {
+            val (expression, expectedString) = testCase
+            withClue("`$expression` should reduce to `$expectedString`") {
+                val maxDepth = 10000
+                val actual = normalize(parse(expression), library, maxDepth)
+                val expected = normalize(parse(expectedString), library, maxDepth)
+                actual.shouldNotBeNull()
+                expected.shouldNotBeNull()
+                actual.alphaEquals(expected) shouldBe true
+            }
+        }
+
+        fun shouldReduceTo(initial: String, expected: String, library: Map<String, Expression>) {
+            shouldEqual(initial to expected, library)
+        }
+
+        fun shouldReduceTo(initial: String, expected: Expression, library: Map<String, Expression>) {
+            shouldEqual(initial to expected.toString(), library)
+        }
+
         test("expressions in normal form should not reduce further") {
             listOf(
                 "x",
@@ -117,28 +136,14 @@ class ReducerTest : FunSpec({
                 library.putIfAbsent(index.toString(), expression)
             }
 
-            fun shouldEqual(testCase: Pair<String, String>) {
-                val (expression, expectedString) = testCase
-                withClue("`$expression` should reduce to `$expectedString`") {
-                    val maxDepth = 10000
-                    val actual = normalize(parse(expression), library, maxDepth)
-                    val expected = normalize(parse(expectedString), library, maxDepth)
-                    actual.shouldNotBeNull()
-                    expected.shouldNotBeNull()
-                    actual.alphaEquals(expected) shouldBe true
-                }
-            }
-
-            fun shouldReduceTo(initial: String, expected: String) {
-                shouldEqual(initial to expected)
-            }
-
             context("successor") {
                 listOf(
                     "succ 0" to "1",
                     "succ 1" to "2",
                     "succ 2" to "3",
-                ).forAll(::shouldEqual)
+                ).forAll {
+                    shouldReduceTo(it.first, it.second, library)
+                }
             }
 
             context("addition") {
@@ -152,7 +157,9 @@ class ReducerTest : FunSpec({
                     "add 2 0" to "2",
                     "add 2 1" to "3",
                     "add 2 2" to "4",
-                ).forAll(::shouldEqual)
+                ).forAll {
+                    shouldReduceTo(it.first, it.second, library)
+                }
             }
 
             context("multiplication") {
@@ -166,7 +173,9 @@ class ReducerTest : FunSpec({
                     "mult 2 0" to "0",
                     "mult 2 1" to "2",
                     "mult 2 2" to "4",
-                ).forAll(::shouldEqual)
+                ).forAll {
+                    shouldReduceTo(it.first, it.second, library)
+                }
             }
 
             context("exponentiation") {
@@ -184,7 +193,9 @@ class ReducerTest : FunSpec({
                     "pow 3 3" to "27",
                     "pow 4 1" to "4",
                     "pow 4 2" to "16",
-                ).forAll(::shouldEqual)
+                ).forAll {
+                    shouldReduceTo(it.first, it.second, library)
+                }
             }
 
             context("predecessor") {
@@ -193,7 +204,9 @@ class ReducerTest : FunSpec({
                     "pred 1" to "0",
                     "pred 2" to "1",
                     "pred 3" to "2",
-                ).forAll(::shouldEqual)
+                ).forAll {
+                    shouldReduceTo(it.first, it.second, library)
+                }
             }
 
             context("subtraction") {
@@ -215,7 +228,7 @@ class ReducerTest : FunSpec({
                     )
                 }
                 checkAll(testCases) { (minuend, subtrahend, difference) ->
-                    shouldReduceTo("sub $minuend $subtrahend", difference)
+                    shouldReduceTo("sub $minuend $subtrahend", difference, library)
                 }
             }
 
@@ -232,7 +245,7 @@ class ReducerTest : FunSpec({
                         )
                     }
                 checkAll(testCases) { (initial, expected) ->
-                    shouldReduceTo(initial, expected)
+                    shouldReduceTo(initial, expected, library)
                 }
             }
 
@@ -249,7 +262,26 @@ class ReducerTest : FunSpec({
                         )
                     }
                 checkAll(testCases) { (initial, expected) ->
-                    shouldReduceTo(initial, expected)
+                    shouldReduceTo(initial, expected, library)
+                }
+            }
+        }
+
+        xcontext("church pairs") {
+            val library = mapOf(
+                PAIR,
+                FST,
+                SND,
+                TRUE,
+                FALSE,
+            ) + (0..100).map {
+                churchNumeral(it)
+            }
+
+            context("fst(pair a b) == a") {
+                checkAll(expressionArb) { expression ->
+                    val initial = "first (pair ($expression) x)"
+                    shouldReduceTo(initial, expression, library)
                 }
             }
         }
