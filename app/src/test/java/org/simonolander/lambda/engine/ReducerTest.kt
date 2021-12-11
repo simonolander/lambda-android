@@ -19,11 +19,15 @@ class ReducerTest : FunSpec({
     context("reduceAll") {
         fun shouldEqual(testCase: Pair<String, String>, library: Map<String, Expression>) {
             val (expression, expectedString) = testCase
-            withClue("`$expression` should reduce to `$expectedString`") {
-                val maxDepth = 10000
-                val actual = normalize(parse(expression), library, maxDepth)
+            val maxDepth = 10000
+            val actualReductions = reduceAll(parse(expression), library)
+                .take(maxDepth + 1)
+            if (actualReductions.count() > maxDepth) {
+                fail("$expression did not reduce in $maxDepth steps")
+            }
+            val actual = actualReductions.last().after
+            withClue("`$expression` should reduce to `$expectedString` but was `$actual`\nreductions:\n${actualReductions.joinToString("\n") {it.prettyPrint()}}") {
                 val expected = normalize(parse(expectedString), library, maxDepth)
-                actual.shouldNotBeNull()
                 expected.shouldNotBeNull()
                 actual.alphaEquals(expected) shouldBe true
             }
@@ -267,7 +271,7 @@ class ReducerTest : FunSpec({
             }
         }
 
-        xcontext("church pairs") {
+        context("church pairs") {
             val library = mapOf(
                 PAIR,
                 FST,
@@ -280,7 +284,7 @@ class ReducerTest : FunSpec({
 
             context("fst(pair a b) == a") {
                 checkAll(expressionArb) { expression ->
-                    val initial = "first (pair ($expression) x)"
+                    val initial = "fst (pair ($expression) x)"
                     shouldReduceTo(initial, expression, library)
                 }
             }
