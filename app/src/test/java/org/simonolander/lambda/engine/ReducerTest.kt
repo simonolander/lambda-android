@@ -288,6 +288,13 @@ class ReducerTest : FunSpec({
                     shouldReduceTo(initial, expression, library)
                 }
             }
+
+            context("snd(pair a b) == b") {
+                checkAll(expressionArb) { expression ->
+                    val initial = "snd (pair x ($expression))"
+                    shouldReduceTo(initial, expression, library)
+                }
+            }
         }
     }
 
