@@ -109,6 +109,7 @@ class ReducerTest : FunSpec({
                 "true" to parse("λa b. a"),
                 "false" to parse("λa b. b"),
                 "isZero" to parse("λn. n (λx. false) true"),
+                "leq" to parse("λa b. isZero (sub a b)"),
             )
 
             repeat(150) { index ->
@@ -228,6 +229,23 @@ class ReducerTest : FunSpec({
                         TestCase(
                             "isZero $number",
                             "${number == 0}"
+                        )
+                    }
+                checkAll(testCases) { (initial, expected) ->
+                    shouldReduceTo(initial, expected)
+                }
+            }
+
+            context("less than or equal") {
+                data class TestCase(
+                    val initial: String,
+                    val expected: String,
+                )
+                val testCases = Arb.pair(Arb.positiveInt(10), Arb.positiveInt(10))
+                    .map { (a, b) ->
+                        TestCase(
+                            "leq $a $b",
+                            "${a <= b}"
                         )
                     }
                 checkAll(testCases) { (initial, expected) ->
