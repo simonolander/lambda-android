@@ -11,17 +11,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.simonolander.lambda.data.Exercise
-import org.simonolander.lambda.data.TestCase
+import org.simonolander.lambda.data.identity
 import org.simonolander.lambda.engine.*
 import org.simonolander.lambda.ui.theme.LambdaTheme
-import org.simonolander.lambda.ui.theme.codeStyle
 
 @Composable
 fun ExerciseScreen(exercise: Exercise, onSubmit: (Expression) -> Unit) {
@@ -111,41 +108,10 @@ fun ExerciseScreen(exercise: Exercise, onSubmit: (Expression) -> Unit) {
 @Preview
 @Composable
 private fun DefaultPreview() {
-    val exercise = Exercise(
-        name = "Identity",
-        description = buildAnnotatedString {
-            append("Design a function ")
-            withStyle(codeStyle) { append("id") }
-            append(", that given any single input ")
-            withStyle(codeStyle) { append("x") }
-            append(" produces the same output ")
-            withStyle(codeStyle) { append("x") }
-            append(". ")
-            append("\n\n")
-            append("For example, ")
-            withStyle(codeStyle) { append("id a") }
-            append(" should reduce to ")
-            withStyle(codeStyle) { append("a") }
-            append(".")
-        },
-        testCases = listOf(
-            Identifier("a"),
-            Identifier("value"),
-            Identifier("⛄️"),
-        ).map { arg ->
-            TestCase(
-                input = Application(
-                    function = Identifier("id"),
-                    argument = arg,
-                ),
-                output = arg,
-            )
-        }
-    )
     val context = LocalContext.current
     LambdaTheme {
         Surface {
-            ExerciseScreen(exercise = exercise) {
+            ExerciseScreen(exercise = identity) {
                 Toast.makeText(context, it.prettyPrint(), Toast.LENGTH_SHORT).show()
             }
         }
