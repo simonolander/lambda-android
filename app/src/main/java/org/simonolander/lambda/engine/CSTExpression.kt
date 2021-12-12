@@ -1,7 +1,5 @@
 package org.simonolander.lambda.engine
 
-import java.lang.IllegalArgumentException
-
 /**
  * Grammar
  *
@@ -28,7 +26,7 @@ data class CSTIdentifier(
     val name: String,
 ) : CSTExpression() {
     override fun toExpression(binders: List<String>): Expression {
-        return Identifier(name, binders.reversed().indexOfFirst { it == name })
+        return Identifier(name)
     }
 }
 

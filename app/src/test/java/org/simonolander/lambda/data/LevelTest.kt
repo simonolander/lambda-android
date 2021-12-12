@@ -1,24 +1,24 @@
 package org.simonolander.lambda.data
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import io.kotest.assertions.withClue
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.inspectors.forAll
+import io.kotest.matchers.collections.shouldHaveSingleElement
+import io.kotest.matchers.shouldBe
 
-class LevelTest {
-
-    @Test
-    fun uniqueIds() {
-        val levels = Level.values()
-        levels.forEach { level ->
-            val count = levels.count { it.id == level.id }
-            assertEquals("Multiple occurrences of ${level.id}", 1, count)
+class LevelTest : FunSpec({
+    val levels = Level.values().toList()
+    test("levels should have unique ids") {
+        levels.forAll { level ->
+            withClue("There should only be one level with id $level") {
+                levels shouldHaveSingleElement { it.id == level.id }
+            }
         }
     }
 
-    @Test
-    fun findById() {
-        val levels = Level.values()
-        levels.forEach { level ->
-            assertEquals(level, Level.findById(level.id))
+    test("findById") {
+        levels.forAll { level ->
+            Level.findById(level.id) shouldBe level
         }
     }
-}
+})
