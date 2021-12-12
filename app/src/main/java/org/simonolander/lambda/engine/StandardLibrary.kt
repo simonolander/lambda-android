@@ -28,6 +28,8 @@ fun churchNumeral(n: Int): Pair<String, Expression> {
 }
 
 // Church pairs
-val PAIR = "pair" to parse("λa b c. c a b")
+val PAIR = "pair" to parse("λa b f. f a b")
 val FST = "fst" to parse("λp. p true")
 val SND = "snd" to parse("λp. p false")
+val NULL = "null" to parse("λx. true")
+val IS_NULL = "isNull" to parse("λp. p (λ a b. false)")

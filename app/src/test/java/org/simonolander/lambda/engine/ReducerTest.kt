@@ -8,6 +8,7 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.property.Arb
+import io.kotest.property.PropTestConfig
 import io.kotest.property.arbitrary.map
 import io.kotest.property.arbitrary.pair
 import io.kotest.property.arbitrary.positiveInt
@@ -278,9 +279,9 @@ class ReducerTest : FunSpec({
                 SND,
                 TRUE,
                 FALSE,
-            ) + (0..100).map {
-                churchNumeral(it)
-            }
+                NULL,
+                IS_NULL,
+            )
 
             context("fst(pair a b) == a") {
                 checkAll(expressionArb) { expression ->
@@ -293,6 +294,15 @@ class ReducerTest : FunSpec({
                 checkAll(expressionArb) { expression ->
                     val initial = "snd (pair x ($expression))"
                     shouldReduceTo(initial, expression, library)
+                }
+            }
+
+            context("linked list") {
+                listOf(
+                    "isNull null" to "true",
+                    "isNull (pair x null)" to "false",
+                ).forAll { (initial, expected) ->
+                    shouldReduceTo(initial, expected, library)
                 }
             }
         }
