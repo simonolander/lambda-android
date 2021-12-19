@@ -57,7 +57,7 @@ fun ExerciseScreen(exercise: Exercise, onSubmit: (Expression) -> Unit) {
                 solutionValue = it
                 parserException = null
             },
-            label = { Text(text = "id") },
+            label = { Text(text = exercise.functionName) },
             placeholder = { Text(text = "λa. b") },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(

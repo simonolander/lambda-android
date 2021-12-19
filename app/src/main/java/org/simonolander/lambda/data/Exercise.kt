@@ -9,15 +9,18 @@ import androidx.compose.ui.text.AnnotatedString
 data class Exercise(
     val name: String,
     val description: AnnotatedString,
+    val functionName: String,
     val testCases: List<TestCase>,
 ) {
     constructor(
         name: String,
         description: String,
+        functionName: String,
         testCases: List<TestCase>,
     ): this(
         name,
         AnnotatedString(description),
+        functionName,
         testCases,
     )
 }

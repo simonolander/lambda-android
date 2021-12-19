@@ -23,6 +23,7 @@ val identity = Exercise(
         withStyle(codeStyle) { append("a") }
         append(".")
     },
+    functionName = "id",
     testCases = listOf(
         Identifier("a"),
         Identifier("value"),
