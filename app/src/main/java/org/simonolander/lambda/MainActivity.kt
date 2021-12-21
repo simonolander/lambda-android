@@ -62,28 +62,13 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
                 .getString("levelId")!!
                 .let { LevelId(it) }
             LevelScreen(levelId) {
-                val nextLevel = Level.values().toList()
-                    .dropWhile { it.id != levelId }
-                    .drop(1)
-                    .firstOrNull()
+                val nextLevel = Level.nextLevel(it)
                 if (nextLevel == null) {
                     navController.navigate("overview")
                 }
                 else {
                     navController.navigate("level/${nextLevel.id.value}")
                 }
-            }
-        }
-
-        composable("tutorial/this-is-a-function") {
-            Chapter1Level1 {
-                navController.navigate("tutorial/function-decomposition")
-            }
-        }
-
-        composable("tutorial/function-decomposition") {
-            Chapter1Level2 {
-                navController.navigate("tutorial/this-is-a-function")
             }
         }
     }
@@ -93,47 +78,4 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
 @Composable
 fun DefaultPreview() {
     ChapterOverviewScreen()
-}
-
-@Composable
-fun Chapter1Level1(onClick: () -> Unit) {
-    LambdaTheme {
-        Surface {
-
-        }
-    }
-}
-
-@Composable
-fun Chapter1Level2(onClick: () -> Unit) {
-    LambdaTheme {
-        Surface {
-
-        }
-    }
-}
-
-@Composable
-fun Chapter1Level3(onClick: () -> Unit) {
-    LambdaTheme {
-        Surface {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clickable { onClick() }
-            ) {
-                Text(
-                    text = "(λx. x) y",
-                    style = MaterialTheme.typography.h2,
-                )
-                Text(
-                    text = "We apply the argument y to the function λx. x",
-                    style = MaterialTheme.typography.subtitle1,
-                    textAlign = TextAlign.Center
-                )
-            }
-        }
-    }
 }

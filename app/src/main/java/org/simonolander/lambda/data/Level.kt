@@ -38,5 +38,13 @@ enum class Level(
         fun findById(id: LevelId): Level? {
             return values().firstOrNull { it.id == id }
         }
+
+        fun nextLevel(id: LevelId): Level? {
+            return values()
+                .toList()
+                .dropWhile { it.id != id }
+                .drop(1)
+                .firstOrNull()
+        }
     }
 }
