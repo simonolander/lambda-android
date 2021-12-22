@@ -1,36 +1,36 @@
 package org.simonolander.lambda.data
 
-import org.simonolander.lambda.ui.levels.*
+import org.simonolander.lambda.ui.levels.LevelView
 
 enum class Level(
     val id: LevelId,
     val title: String,
-    val view: LevelViewComposable
+    val view: LevelViewComposable,
 ) {
-    C1L1(
-        id = LevelId("this-is-a-function"),
-        title = "This is a function",
-        view = { C1L1(it) }
+    IDENTITY(
+        id = LevelId("identity"),
+        title = "Identity",
+        view = { LevelView(identity, it) }
     ),
-    C1L2(
-        id = LevelId("function-decomposition"),
-        title = "Parts of a function",
-        view = { C1L2(it) }
+    CONSTANT_FUNCTION(
+        id = LevelId("const-function"),
+        title = "Constant Function",
+        view = { LevelView(constantFunctionExercise, it) }
     ),
-    C1L3(
-        id = LevelId("function-application"),
-        title = "Using functions",
-        view = { C1L3(it) }
+    TRUE(
+        id = LevelId("true"),
+        title = "True",
+        view = { LevelView(trueExercise, it) }
     ),
-    C1L4(
-        id = LevelId("syntactic-sugar"),
-        title = "Syntactic sugar",
-        view = { C1L4(it) }
+    FALSE(
+        id = LevelId("false"),
+        title = "False",
+        view = { LevelView(falseExercise, it) }
     ),
-    C2L1(
-        id = LevelId("boolean-intro"),
-        title = "Boolean introduction",
-        view = { C2L1View(it) }
+    AND(
+        id = LevelId("and"),
+        title = "And",
+        view = { LevelView(andExercise, it) }
     ),
     ;
 

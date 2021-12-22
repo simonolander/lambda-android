@@ -1,6 +1,7 @@
 package org.simonolander.lambda.data
 
 import androidx.compose.ui.text.AnnotatedString
+import org.simonolander.lambda.engine.Expression
 
 /**
  * An exercise represents a problem to which the user must supply a program
@@ -11,16 +12,5 @@ data class Exercise(
     val description: AnnotatedString,
     val functionName: String,
     val testCases: List<TestCase>,
-) {
-    constructor(
-        name: String,
-        description: String,
-        functionName: String,
-        testCases: List<TestCase>,
-    ): this(
-        name,
-        AnnotatedString(description),
-        functionName,
-        testCases,
-    )
-}
+    val library: Map<String, Expression> = emptyMap()
+)

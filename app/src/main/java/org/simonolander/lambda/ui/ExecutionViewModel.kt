@@ -11,6 +11,7 @@ import org.simonolander.lambda.data.Exercise
 import org.simonolander.lambda.data.TestCase
 import org.simonolander.lambda.engine.Expression
 import org.simonolander.lambda.engine.Reduction
+import org.simonolander.lambda.engine.normalize
 import org.simonolander.lambda.engine.reduceOnce
 
 data class ExecutingTestCase(
@@ -52,9 +53,7 @@ class ExecutionViewModel(
     var state by mutableStateOf(State.PAUSED)
         private set
 
-    private val library = mapOf(
-        exercise.functionName to solution
-    )
+    private val library = exercise.library + (exercise.functionName to solution)
 
     fun step() {
         state = State.PAUSED
@@ -75,7 +74,7 @@ class ExecutionViewModel(
                     state = State.TERMINATED
                     break
                 }
-                delay(1000)
+                delay(250)
             }
         }
     }
@@ -107,8 +106,14 @@ class ExecutionViewModel(
                     testCaseToStep.withReduction(reduction)
                 }
                 else {
+                    val maxDepth = 10000
+                    val reducedExpectedOutput = normalize(
+                        testCaseToStep.testCase.output,
+                        library,
+                        maxDepth
+                    ) ?: throw IllegalStateException("Expected output ${testCaseToStep.testCase.output} did not reduce in $maxDepth steps")
                     val nextState =
-                        if (currentExpression.alphaEquals(testCaseToStep.testCase.output)) {
+                        if (currentExpression.alphaEquals(reducedExpectedOutput)) {
                             ExecutingTestCase.State.SUCCEEDED
                         }
                         else {

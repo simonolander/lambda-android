@@ -5,21 +5,21 @@ enum class Chapter(
     val title: String,
     val levels: List<Level>,
 ) {
-    C1(
-        id = ChapterId("tutorial"),
-        title = "Tutorial",
+    INTRODUCTION(
+        id = ChapterId("introduction"),
+        title = "Introduction",
         levels = listOf(
-            Level.C1L1,
-            Level.C1L2,
-            Level.C1L3,
-            Level.C1L4,
+            Level.IDENTITY,
+            Level.CONSTANT_FUNCTION,
         )
     ),
-    C2(
-        id = ChapterId("booleans"),
+    BOOLEAN_LOGIC(
+        id = ChapterId("boolean-logic"),
         title = "Booleans",
         levels = listOf(
-            Level.C2L1
+            Level.TRUE,
+            Level.FALSE,
+            Level.AND,
         )
     ),
     ;

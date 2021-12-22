@@ -1,24 +1,27 @@
 package org.simonolander.lambda.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.simonolander.lambda.data.andExercise
 import org.simonolander.lambda.data.identity
+import org.simonolander.lambda.engine.AND
 import org.simonolander.lambda.engine.TRUE
+import org.simonolander.lambda.engine.parse
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
 @Composable
-fun ExecutionScreen(
+fun ExecutionView(
     viewModel: ExecutionViewModel,
+    onSuccess: () -> Unit,
 ) {
     val exercise = viewModel.exercise
     val testCases = viewModel.executingTestCases
@@ -49,9 +52,11 @@ fun ExecutionScreen(
 
         ControlView(
             state = viewModel.state,
-            onPause = viewModel::pause,
+            testCases = testCases,
             onRun = viewModel::play,
+            onPause = viewModel::pause,
             onStep = viewModel::step,
+            onSuccess = onSuccess
         )
     }
 }
@@ -70,7 +75,7 @@ private fun TestCaseView(testCase: ExecutingTestCase) {
                 modifier = Modifier.fillMaxWidth(0.1f)
             )
             ExecutingTestCase.State.PENDING -> Icon(
-                imageVector = Icons.Default.MoreVert,
+                imageVector = Icons.Default.Schedule,
                 contentDescription = "Pending",
                 modifier = Modifier.fillMaxWidth(0.1f)
             )
@@ -109,9 +114,11 @@ private fun TestCaseView(testCase: ExecutingTestCase) {
 @Composable
 private fun ControlView(
     state: ExecutionViewModel.State,
+    testCases: List<ExecutingTestCase>,
     onRun: () -> Unit,
     onPause: () -> Unit,
     onStep: () -> Unit,
+    onSuccess: () -> Unit,
 ) {
     when (state) {
         ExecutionViewModel.State.PAUSED ->
@@ -132,7 +139,17 @@ private fun ControlView(
             }
         }
         ExecutionViewModel.State.TERMINATED -> {
-            // TODO what here?
+            val successful = testCases.all { it.state == ExecutingTestCase.State.SUCCEEDED }
+            if (successful) {
+                Button(onClick = onSuccess) {
+                    Text("Next level")
+                }
+            }
+            else {
+                Button(onClick = { /*TODO*/ }) {
+                    Text("Back")
+                }
+            }
         }
     }
 }
@@ -140,13 +157,17 @@ private fun ControlView(
 @Preview
 @Composable
 private fun ExecutionScreenPreview() {
+    val context = LocalContext.current
     val viewModel = ExecutionViewModel(
-        identity,
-        solution = TRUE.second
+        andExercise,
+        solution = parse("\\a b. true")
     )
+    repeat(14) { viewModel.step() }
     LambdaTheme {
         Surface {
-            ExecutionScreen(viewModel)
+            ExecutionView(viewModel, onSuccess = {
+                Toast.makeText(context, "onSuccess called", Toast.LENGTH_SHORT).show()
+            })
         }
     }
 }
