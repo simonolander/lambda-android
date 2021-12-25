@@ -37,7 +37,7 @@ data class ExecutingTestCase(
 
     enum class State {
         RUNNING,
-        SUCCEEDED,
+        SUCCESSFUL,
         FAILED,
         PENDING,
     }
@@ -86,7 +86,7 @@ class ExecutionViewModel(
             when (it.state) {
                 ExecutingTestCase.State.PENDING -> true
                 ExecutingTestCase.State.RUNNING -> true
-                ExecutingTestCase.State.SUCCEEDED -> false
+                ExecutingTestCase.State.SUCCESSFUL -> false
                 ExecutingTestCase.State.FAILED -> false
             }
         }
@@ -114,7 +114,7 @@ class ExecutionViewModel(
                     ) ?: throw IllegalStateException("Expected output ${testCaseToStep.testCase.output} did not reduce in $maxDepth steps")
                     val nextState =
                         if (currentExpression.alphaEquals(reducedExpectedOutput)) {
-                            ExecutingTestCase.State.SUCCEEDED
+                            ExecutingTestCase.State.SUCCESSFUL
                         }
                         else {
                             ExecutingTestCase.State.FAILED
@@ -122,7 +122,7 @@ class ExecutionViewModel(
                     testCaseToStep.withState(nextState)
                 }
             }
-            ExecutingTestCase.State.FAILED, ExecutingTestCase.State.SUCCEEDED -> throw IllegalStateException()
+            ExecutingTestCase.State.FAILED, ExecutingTestCase.State.SUCCESSFUL -> throw IllegalStateException()
         }
         executingTestCases[index] = testCaseAfterStep
         this.executingTestCases = executingTestCases.toList()

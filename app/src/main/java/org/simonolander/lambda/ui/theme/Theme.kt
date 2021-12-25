@@ -31,7 +31,8 @@ private val LightColorPalette = lightColors(
 fun LambdaTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
         DarkColorPalette
-    } else {
+    }
+    else {
         LightColorPalette
     }
 
