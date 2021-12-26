@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,12 +26,13 @@ import org.simonolander.lambda.ui.theme.LambdaTheme
 
 @Composable
 fun ExecutionView(
-    viewModel: ExecutionViewModel,
+    state: ExecutionState,
     onSuccess: () -> Unit,
 ) {
-    val exercise = viewModel.exercise
-    val testCases = viewModel.executingTestCases
+    val exercise = state.exercise
+    val testCases = state.executingTestCases
     val scrollState = rememberScrollState()
+    val coroutineScope = rememberCoroutineScope()
     Column(
         Modifier
             .fillMaxSize()
@@ -51,7 +53,7 @@ fun ExecutionView(
         )
 
         Text(
-            text = viewModel.solution.prettyPrint(),
+            text = state.solution.prettyPrint(),
             style = MaterialTheme.typography.subtitle1,
         )
 
@@ -74,11 +76,11 @@ fun ExecutionView(
         Spacer(Modifier.height(10.dp))
 
         ControlView(
-            state = viewModel.state,
+            state = state.state,
             testCases = testCases,
-            onRun = viewModel::play,
-            onPause = viewModel::pause,
-            onStep = viewModel::step,
+            onRun = { state.run(coroutineScope) },
+            onPause = state::pause,
+            onStep = state::step,
             onSuccess = onSuccess
         )
     }
@@ -267,7 +269,7 @@ fun TestCasePendingView(testCase: ExecutingTestCase) {
 
 @Composable
 private fun ControlView(
-    state: ExecutionViewModel.State,
+    state: ExecutionState.State,
     testCases: List<ExecutingTestCase>,
     onRun: () -> Unit,
     onPause: () -> Unit,
@@ -275,7 +277,7 @@ private fun ControlView(
     onSuccess: () -> Unit,
 ) {
     when (state) {
-        ExecutionViewModel.State.PAUSED ->
+        ExecutionState.State.PAUSED ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround
@@ -287,12 +289,12 @@ private fun ControlView(
                     Text(text = "Run")
                 }
             }
-        ExecutionViewModel.State.RUNNING -> {
+        ExecutionState.State.RUNNING -> {
             Button(onClick = onPause) {
                 Text(text = "Pause")
             }
         }
-        ExecutionViewModel.State.TERMINATED -> {
+        ExecutionState.State.TERMINATED -> {
             val successful = testCases.all { it.state == ExecutingTestCase.State.SUCCESSFUL }
             if (successful) {
                 Button(onClick = onSuccess) {
@@ -312,7 +314,7 @@ private fun ControlView(
 @Composable
 private fun ExecutionScreenPreview() {
     val context = LocalContext.current
-    val viewModel = ExecutionViewModel(
+    val viewModel = ExecutionState(
         andExercise,
         solution = parse("\\a b. a b b")
     )

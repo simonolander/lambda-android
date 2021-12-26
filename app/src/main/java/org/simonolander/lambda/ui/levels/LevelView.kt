@@ -6,7 +6,7 @@ import androidx.compose.runtime.remember
 import org.simonolander.lambda.data.Exercise
 import org.simonolander.lambda.engine.Expression
 import org.simonolander.lambda.ui.ExecutionView
-import org.simonolander.lambda.ui.ExecutionViewModel
+import org.simonolander.lambda.ui.ExecutionState
 import org.simonolander.lambda.ui.ExerciseView
 
 @Composable
@@ -22,9 +22,9 @@ fun LevelView(exercise: Exercise, onLevelComplete: () -> Unit) {
         )
     }
     else {
-        val executionViewModel = ExecutionViewModel(exercise, answer)
+        val executionViewModel = ExecutionState(exercise, answer)
         ExecutionView(
-            viewModel = executionViewModel,
+            state = executionViewModel,
             onSuccess = onLevelComplete,
         )
     }

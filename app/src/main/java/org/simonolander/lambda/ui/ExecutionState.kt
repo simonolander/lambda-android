@@ -4,8 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.simonolander.lambda.data.Exercise
@@ -44,10 +43,10 @@ data class ExecutingTestCase(
     }
 }
 
-class ExecutionViewModel(
+class ExecutionState(
     val exercise: Exercise,
     val solution: Expression,
-) : ViewModel() {
+) {
     var executingTestCases by mutableStateOf(exercise.testCases.map { ExecutingTestCase(it) })
         private set
 
@@ -67,9 +66,9 @@ class ExecutionViewModel(
         state = State.PAUSED
     }
 
-    fun play() {
+    fun run(scope: CoroutineScope) {
         state = State.RUNNING
-        viewModelScope.launch {
+        scope.launch {
             while (state == State.RUNNING) {
                 if (!stepOnce()) {
                     state = State.TERMINATED
@@ -82,7 +81,6 @@ class ExecutionViewModel(
 
     @Synchronized
     private fun stepOnce(): Boolean {
-        Log.d(javaClass.simpleName, "Step: ${System.currentTimeMillis()}")
         val executingTestCases = executingTestCases.toMutableList()
         val index = executingTestCases.indexOfFirst {
             when (it.state) {
