@@ -1,5 +1,6 @@
 package org.simonolander.lambda.ui
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -81,6 +82,7 @@ class ExecutionViewModel(
 
     @Synchronized
     private fun stepOnce(): Boolean {
+        Log.d(javaClass.simpleName, "Step: ${System.currentTimeMillis()}")
         val executingTestCases = executingTestCases.toMutableList()
         val index = executingTestCases.indexOfFirst {
             when (it.state) {
@@ -111,7 +113,8 @@ class ExecutionViewModel(
                         testCaseToStep.testCase.output,
                         library,
                         maxDepth
-                    ) ?: throw IllegalStateException("Expected output ${testCaseToStep.testCase.output} did not reduce in $maxDepth steps")
+                    )
+                        ?: throw IllegalStateException("Expected output ${testCaseToStep.testCase.output} did not reduce in $maxDepth steps")
                     val nextState =
                         if (currentExpression.alphaEquals(reducedExpectedOutput)) {
                             ExecutingTestCase.State.SUCCESSFUL

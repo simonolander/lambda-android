@@ -14,6 +14,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -64,10 +65,16 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
             LevelScreen(levelId) {
                 val nextLevel = Level.nextLevel(it)
                 if (nextLevel == null) {
-                    navController.navigate("overview")
+                    val navOptions = NavOptions.Builder()
+                        .setPopUpTo("overview", true)
+                        .build()
+                    navController.navigate("overview", navOptions)
                 }
                 else {
-                    navController.navigate("level/${nextLevel.id.value}")
+                    val navOptions = NavOptions.Builder()
+                        .setPopUpTo("overview", false)
+                        .build()
+                    navController.navigate("level/${nextLevel.id.value}", navOptions)
                 }
             }
         }
