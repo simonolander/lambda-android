@@ -1,5 +1,6 @@
 package org.simonolander.lambda.ui.levels
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,5 +28,8 @@ fun LevelView(exercise: Exercise, onLevelComplete: () -> Unit) {
             state = executionViewModel,
             onSuccess = onLevelComplete,
         )
+        BackHandler {
+            setAnswer(null)
+        }
     }
 }
