@@ -160,6 +160,40 @@ val falseExercise = run {
     )
 }
 
+val notExercise = run {
+    val functionName = "not"
+    Exercise(
+        name = "Not",
+        description = buildAnnotatedString {
+            append("Design a function ")
+            withStyle(codeStyle) { append(functionName) }
+            append(", that takes a boolean input, ")
+            withStyle(codeStyle) { append("x") }
+            append(", and produces the output ")
+            withStyle(codeStyle) { append("¬x") }
+            append(". ")
+            append("\n\n")
+            append("It should satisfy the following truth table:\n")
+            withStyle(codeStyle) {
+                append("$functionName true  | false")
+                append("\n")
+                append("$functionName false | true")
+            }
+        },
+        functionName = functionName,
+        testCases = listOf(true, false).map { a ->
+            TestCase(
+                input = parse("$functionName $a"),
+                output = Identifier("${!a}"),
+            )
+        },
+        library = mapOf(
+            TRUE,
+            FALSE,
+        )
+    )
+}
+
 val andExercise = run {
     val functionName = "and"
     Exercise(
@@ -200,7 +234,100 @@ val andExercise = run {
         },
         library = mapOf(
             TRUE,
-            FALSE
+            FALSE,
+        )
+    )
+}
+
+val orExercise = run {
+    val functionName = "or"
+    Exercise(
+        name = "Or",
+        description = buildAnnotatedString {
+            append("Design a function ")
+            withStyle(codeStyle) { append(functionName) }
+            append(", that takes two boolean inputs, ")
+            withStyle(codeStyle) { append("x") }
+            append(" and ")
+            withStyle(codeStyle) { append("y") }
+            append(", and produces the output ")
+            withStyle(codeStyle) { append("x ∨ y") }
+            append(". ")
+            append("\n\n")
+            append("It should satisfy the following truth table:\n")
+            withStyle(codeStyle) {
+                append("$functionName true true   | true")
+                append("\n")
+                append("$functionName true false  | true")
+                append("\n")
+                append("$functionName false true  | true")
+                append("\n")
+                append("$functionName false false | false")
+            }
+        },
+        functionName = functionName,
+        testCases = listOf(
+            true to true,
+            true to false,
+            false to true,
+            false to false,
+        ).map { (a, b) ->
+            TestCase(
+                input = parse("$functionName $a $b"),
+                output = Identifier("${a || b}"),
+            )
+        },
+        library = mapOf(
+            TRUE,
+            FALSE,
+        )
+    )
+}
+
+val xorExercise = run {
+    val functionName = "xor"
+    Exercise(
+        name = "Exclusive Or",
+        description = buildAnnotatedString {
+            append("Design a function ")
+            withStyle(codeStyle) { append(functionName) }
+            append(", that takes two boolean inputs, ")
+            withStyle(codeStyle) { append("x") }
+            append(" and ")
+            withStyle(codeStyle) { append("y") }
+            append(", and produces the output ")
+            withStyle(codeStyle) { append("x ⊕ y") }
+            append(". ")
+            append("\n\n")
+            append("It should satisfy the following truth table:\n")
+            withStyle(codeStyle) {
+                append("$functionName true true   | false")
+                append("\n")
+                append("$functionName true false  | true")
+                append("\n")
+                append("$functionName false true  | true")
+                append("\n")
+                append("$functionName false false | false")
+            }
+        },
+        functionName = functionName,
+        testCases = listOf(
+            true to true,
+            true to false,
+            false to true,
+            false to false,
+        ).map { (a, b) ->
+            TestCase(
+                input = parse("$functionName $a $b"),
+                output = Identifier("${a xor b}"),
+            )
+        },
+        library = mapOf(
+            TRUE,
+            FALSE,
+            NOT,
+            AND,
+            OR,
         )
     )
 }

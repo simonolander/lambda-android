@@ -19,7 +19,10 @@ enum class Chapter(
         levels = listOf(
             Level.TRUE,
             Level.FALSE,
+            Level.NOT,
             Level.AND,
+            Level.OR,
+            Level.EXCLUSIVE_OR,
         )
     ),
     ;

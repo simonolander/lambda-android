@@ -27,10 +27,25 @@ enum class Level(
         title = "False",
         view = { LevelView(falseExercise, it) }
     ),
+    NOT(
+        id = LevelId("not"),
+        title = "Not",
+        view = { LevelView(notExercise, it) }
+    ),
     AND(
         id = LevelId("and"),
         title = "And",
         view = { LevelView(andExercise, it) }
+    ),
+    OR(
+        id = LevelId("or"),
+        title = "Or",
+        view = { LevelView(orExercise, it) }
+    ),
+    EXCLUSIVE_OR(
+        id = LevelId("xor"),
+        title = "Exclusive Or",
+        view = { LevelView(xorExercise, it) }
     ),
     ;
 

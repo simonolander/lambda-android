@@ -6,7 +6,7 @@ val FALSE = "false" to parse("λa b. b")
 val NOT = "not" to parse("λa. a false true")
 val AND = "and" to parse("λa b. a b a")
 val OR = "or" to parse("λa b. a a b")
-val XOR = "xor" to parse("λa b. and (or a b) (not (and a b))")
+val XOR = "xor" to parse("λa b. a (not b) b") // Alt. λa b. and (or a b) (not (and a b))
 val EQ = "eq" to parse("λa b. not (xor a b)")
 
 // Church numerals
