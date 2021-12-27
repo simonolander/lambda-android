@@ -15,14 +15,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import org.simonolander.lambda.data.Level
 import org.simonolander.lambda.data.LevelId
-import org.simonolander.lambda.ui.ChapterOverviewScreen
-import org.simonolander.lambda.ui.LevelScreen
+import org.simonolander.lambda.engine.parse
+import org.simonolander.lambda.ui.*
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
 class MainActivity : ComponentActivity() {
@@ -58,7 +60,12 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
             }
         }
 
-        composable("level/{levelId}") { backStackEntry ->
+        composable(
+            route = "level/{levelId}",
+            arguments = listOf(
+                navArgument("levelId") { type = NavType.StringType },
+            ),
+        ) { backStackEntry ->
             val levelId = backStackEntry.arguments!!
                 .getString("levelId")!!
                 .let { LevelId(it) }
