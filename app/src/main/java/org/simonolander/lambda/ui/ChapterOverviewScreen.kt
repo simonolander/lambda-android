@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
@@ -17,12 +18,14 @@ import org.simonolander.lambda.data.Level
 import org.simonolander.lambda.data.LevelId
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
+@ExperimentalMaterialApi
 @Composable
 fun ChapterOverviewScreen(chapters: Array<Chapter> = Chapter.values(), onNavigateLevel: (LevelId) -> Unit = {}) {
     val listState = rememberLazyListState()
     LazyColumn(
         state = listState,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .padding(8.dp),
     ) {
         items(chapters) { chapter ->
@@ -33,6 +36,7 @@ fun ChapterOverviewScreen(chapters: Array<Chapter> = Chapter.values(), onNavigat
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 private fun ChapterView(chapter: Chapter, onLevelClick: (Level) -> Unit) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -40,33 +44,41 @@ private fun ChapterView(chapter: Chapter, onLevelClick: (Level) -> Unit) {
             text = chapter.title,
             style = MaterialTheme.typography.h2,
         )
-        FlowRow(
-            crossAxisSpacing = 10.dp,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            chapter.levels.forEach {
-                LevelView(it) {
-                    onLevelClick(it)
-                }
-            }
+        chapter.levels.forEach { level ->
+            LevelView(
+                level = level,
+                onClick = { onLevelClick(level) },
+            )
+            Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun LevelView(level: Level, onClick: () -> Unit) {
-    Button(
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.small,
         onClick = onClick,
-        modifier = Modifier.padding(end = 10.dp)
+        backgroundColor = MaterialTheme.colors.primary,
     ) {
-        Icon(
-            imageVector = Icons.Filled.Star,
-            contentDescription = "completed",
-            modifier = Modifier.size(ButtonDefaults.IconSize)
-        )
+        Column(
+            modifier = Modifier.padding(10.dp)
+        ) {
+            Text(
+                text = level.title,
+                style = MaterialTheme.typography.h6,
+            )
+            Text(
+                text = "Not completed",
+                fontStyle = FontStyle.Italic,
+            )
+        }
     }
 }
 
+@ExperimentalMaterialApi
 @Preview
 @Composable
 private fun DefaultPreview() {

@@ -27,6 +27,7 @@ import org.simonolander.lambda.engine.parse
 import org.simonolander.lambda.ui.*
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
+@ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun LambdaApp() {
     LambdaTheme {
@@ -47,6 +49,7 @@ fun LambdaApp() {
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
     NavHost(
@@ -88,8 +91,9 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
     }
 }
 
-@Preview(name = "light mode", showBackground = true, uiMode = UI_MODE_NIGHT_NO)
+@ExperimentalMaterialApi
 @Composable
+@Preview(name = "light mode", showBackground = true, uiMode = UI_MODE_NIGHT_NO)
 fun DefaultPreview() {
     ChapterOverviewScreen()
 }
