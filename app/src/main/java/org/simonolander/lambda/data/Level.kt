@@ -1,12 +1,24 @@
 package org.simonolander.lambda.data
 
+import org.simonolander.lambda.ui.levels.HelloWorldView
 import org.simonolander.lambda.ui.levels.LevelView
+import org.simonolander.lambda.ui.levels.WhatAreFunctionsView
 
 enum class Level(
     val id: LevelId,
     val title: String,
     val view: LevelViewComposable,
 ) {
+    HELLO_WORLD(
+        id = LevelId("hello"),
+        title = "Hello",
+        view = { HelloWorldView(it) }
+    ),
+    WHAT_ARE_FUNCTIONS(
+        id = LevelId("what-are-functions"),
+        title = "What's a function",
+        view = { WhatAreFunctionsView(it) }
+    ),
     IDENTITY(
         id = LevelId("identity"),
         title = "Identity",

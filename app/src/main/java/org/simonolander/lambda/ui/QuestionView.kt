@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.simonolander.lambda.data.DialogEnd
 import org.simonolander.lambda.data.Question
 import org.simonolander.lambda.data.Response
 import org.simonolander.lambda.ui.theme.LambdaTheme
@@ -57,10 +56,10 @@ private fun Preview() {
                 Question(
                     "Have you had a good day?",
                     listOf(
-                        "Yes, it's been quite chill." to DialogEnd,
-                        "No, I haven't even had time to eat lunch." to DialogEnd,
-                        "Meh." to DialogEnd,
-                        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English" to DialogEnd,
+                        "Yes, it's been quite chill." to null,
+                        "No, I haven't even had time to eat lunch." to null,
+                        "Meh." to null,
+                        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English" to null,
                     )
                 ),
                 onResponse = {}

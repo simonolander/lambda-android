@@ -12,5 +12,6 @@ data class Exercise(
     val description: AnnotatedString,
     val functionName: String,
     val testCases: List<TestCase>,
-    val library: Map<String, Expression> = emptyMap()
+    val library: Map<String, Expression> = emptyMap(),
+    val dialog: Dialog? = null,
 )

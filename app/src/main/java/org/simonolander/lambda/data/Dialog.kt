@@ -3,47 +3,50 @@ package org.simonolander.lambda.data
 sealed interface Dialog
 
 data class Message(
-    val text: String,
-    val next: Dialog = DialogEnd
-): Dialog {
-    fun withNext(next: Dialog): Message {
-        return Message(
-            text = this.text,
-            next = next
-        )
-    }
-}
+    val text: String = "< To be continued >",
+    val next: Dialog? = null,
+) : Dialog
 
 data class Question(
     val text: String,
-    val responses: List<Response>
-): Dialog
+    val responses: List<Response>,
+) : Dialog
 
-typealias Response = Pair<String, Dialog>
-
-object DialogEnd: Dialog
+typealias Response = Pair<String, Dialog?>
 
 class DialogBuilder {
-    private val messages = mutableListOf<Message>()
-    private var question: Question? = null
-
-    fun message(text: String): DialogBuilder {
-        messages += Message(text)
-        return this
+    fun message(text: String): DialogNonNullBuilder {
+        return DialogNonNullBuilder(text)
     }
 
-    fun choice(text: String, vararg responses: Pair<String, Dialog>): Dialog {
-        question = Question(text, responses.toList())
-        return build()
-    }
-
-    fun build(): Dialog {
-        return messages.foldRight(question ?: DialogEnd) { message, dialog ->
-            message.withNext(dialog)
-        }
+    fun question(text: String, vararg responses: Response): Dialog {
+        return Question(text, responses.toList())
     }
 }
 
-fun buildDialog(builderAction: DialogBuilder.() -> Unit): Dialog {
-    return DialogBuilder().apply(builderAction).build()
+class DialogNonNullBuilder(initialMessage: String) {
+
+    private val messages = mutableListOf(initialMessage)
+
+    fun message(text: String): DialogNonNullBuilder {
+        messages += text
+        return this
+    }
+
+    fun question(text: String, vararg responses: Response): Dialog {
+        return build(Question(text, responses.toList()))
+    }
+
+    fun build(): Dialog {
+        require(messages.isNotEmpty())
+        return messages.foldRight<String, Message?>(null) { text, acc ->
+            Message(text, acc)
+        }!!
+    }
+
+    fun build(tail: Dialog): Dialog {
+        return messages.foldRight(tail) { text, acc ->
+            Message(text, acc)
+        }
+    }
 }
