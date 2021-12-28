@@ -1,27 +1,35 @@
 package org.simonolander.lambda.ui
 
 import android.widget.Toast
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.simonolander.lambda.data.Exercise
-import org.simonolander.lambda.data.identity
-import org.simonolander.lambda.engine.*
+import org.simonolander.lambda.data.andExercise
+import org.simonolander.lambda.engine.Expression
+import org.simonolander.lambda.engine.ParserException
+import org.simonolander.lambda.engine.parse
 import org.simonolander.lambda.ui.theme.LambdaTheme
+import org.simonolander.lambda.ui.theme.codeStyle
 
 @Composable
-fun ExerciseScreen(exercise: Exercise, onSubmit: (Expression) -> Unit) {
+fun ExerciseView(exercise: Exercise, onSubmit: (Expression) -> Unit) {
     var solutionValue by remember {
         mutableStateOf(TextFieldValue())
     }
@@ -29,18 +37,24 @@ fun ExerciseScreen(exercise: Exercise, onSubmit: (Expression) -> Unit) {
         mutableStateOf(null)
     }
 
+    val scrollState = rememberScrollState()
+
     fun validateAndSubmit() {
         try {
             val expression = parse(solutionValue.text)
             onSubmit(expression)
-        } catch (e: ParserException) {
+        }
+        catch (e: ParserException) {
             parserException = e
         }
     }
+
     Column(
-        Modifier
+        modifier = Modifier
             .fillMaxSize()
             .padding(10.dp)
+            .scrollable(scrollState, Orientation.Vertical)
+            .verticalScroll(scrollState)
     ) {
         Text(
             text = exercise.name,
@@ -102,6 +116,31 @@ fun ExerciseScreen(exercise: Exercise, onSubmit: (Expression) -> Unit) {
         ) {
             Text(text = "Go")
         }
+
+        if (exercise.library.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                text = "The following library functions are available to you:",
+                style = MaterialTheme.typography.subtitle1,
+            )
+
+            exercise.library.forEach { (name, expr) ->
+                Row(Modifier.fillMaxWidth()) {
+                    Text(
+                        text = AnnotatedString(name, codeStyle),
+                        style = MaterialTheme.typography.subtitle1,
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    Text(
+                        text = AnnotatedString(expr.prettyPrint(), codeStyle),
+                        style = MaterialTheme.typography.subtitle1,
+                        modifier = Modifier.weight(2f)
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -111,7 +150,7 @@ private fun DefaultPreview() {
     val context = LocalContext.current
     LambdaTheme {
         Surface {
-            ExerciseScreen(exercise = identity) {
+            ExerciseView(exercise = andExercise) {
                 Toast.makeText(context, it.prettyPrint(), Toast.LENGTH_SHORT).show()
             }
         }

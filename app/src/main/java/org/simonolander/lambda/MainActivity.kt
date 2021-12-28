@@ -14,16 +14,20 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import org.simonolander.lambda.data.Level
 import org.simonolander.lambda.data.LevelId
-import org.simonolander.lambda.ui.ChapterOverviewScreen
-import org.simonolander.lambda.ui.LevelScreen
+import org.simonolander.lambda.engine.parse
+import org.simonolander.lambda.ui.*
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
+@ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +37,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun LambdaApp() {
     LambdaTheme {
@@ -44,6 +49,7 @@ fun LambdaApp() {
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
     NavHost(
@@ -57,83 +63,37 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
             }
         }
 
-        composable("level/{levelId}") { backStackEntry ->
+        composable(
+            route = "level/{levelId}",
+            arguments = listOf(
+                navArgument("levelId") { type = NavType.StringType },
+            ),
+        ) { backStackEntry ->
             val levelId = backStackEntry.arguments!!
                 .getString("levelId")!!
                 .let { LevelId(it) }
             LevelScreen(levelId) {
-                val nextLevel = Level.values().toList()
-                    .dropWhile { it.id != levelId }
-                    .drop(1)
-                    .firstOrNull()
+                val nextLevel = Level.nextLevel(it)
                 if (nextLevel == null) {
-                    navController.navigate("overview")
+                    val navOptions = NavOptions.Builder()
+                        .setPopUpTo("overview", true)
+                        .build()
+                    navController.navigate("overview", navOptions)
                 }
                 else {
-                    navController.navigate("level/${nextLevel.id.value}")
+                    val navOptions = NavOptions.Builder()
+                        .setPopUpTo("overview", false)
+                        .build()
+                    navController.navigate("level/${nextLevel.id.value}", navOptions)
                 }
             }
         }
-
-        composable("tutorial/this-is-a-function") {
-            Chapter1Level1 {
-                navController.navigate("tutorial/function-decomposition")
-            }
-        }
-
-        composable("tutorial/function-decomposition") {
-            Chapter1Level2 {
-                navController.navigate("tutorial/this-is-a-function")
-            }
-        }
     }
 }
 
-@Preview(name = "light mode", showBackground = true, uiMode = UI_MODE_NIGHT_NO)
+@ExperimentalMaterialApi
 @Composable
+@Preview(name = "light mode", showBackground = true, uiMode = UI_MODE_NIGHT_NO)
 fun DefaultPreview() {
     ChapterOverviewScreen()
-}
-
-@Composable
-fun Chapter1Level1(onClick: () -> Unit) {
-    LambdaTheme {
-        Surface {
-
-        }
-    }
-}
-
-@Composable
-fun Chapter1Level2(onClick: () -> Unit) {
-    LambdaTheme {
-        Surface {
-
-        }
-    }
-}
-
-@Composable
-fun Chapter1Level3(onClick: () -> Unit) {
-    LambdaTheme {
-        Surface {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clickable { onClick() }
-            ) {
-                Text(
-                    text = "(λx. x) y",
-                    style = MaterialTheme.typography.h2,
-                )
-                Text(
-                    text = "We apply the argument y to the function λx. x",
-                    style = MaterialTheme.typography.subtitle1,
-                    textAlign = TextAlign.Center
-                )
-            }
-        }
-    }
 }

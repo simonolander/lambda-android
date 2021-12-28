@@ -1,16 +1,17 @@
 package org.simonolander.lambda.ui
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.simonolander.lambda.data.Exercise
 import org.simonolander.lambda.data.TestCase
 import org.simonolander.lambda.engine.Expression
 import org.simonolander.lambda.engine.Reduction
+import org.simonolander.lambda.engine.normalize
 import org.simonolander.lambda.engine.reduceOnce
 
 data class ExecutingTestCase(
@@ -36,25 +37,23 @@ data class ExecutingTestCase(
 
     enum class State {
         RUNNING,
-        SUCCEEDED,
+        SUCCESSFUL,
         FAILED,
         PENDING,
     }
 }
 
-class ExecutionViewModel(
+class ExecutionState(
     val exercise: Exercise,
     val solution: Expression,
-) : ViewModel() {
+) {
     var executingTestCases by mutableStateOf(exercise.testCases.map { ExecutingTestCase(it) })
         private set
 
     var state by mutableStateOf(State.PAUSED)
         private set
 
-    private val library = mapOf(
-        exercise.functionName to solution
-    )
+    private val library = exercise.library + (exercise.functionName to solution)
 
     fun step() {
         state = State.PAUSED
@@ -67,15 +66,15 @@ class ExecutionViewModel(
         state = State.PAUSED
     }
 
-    fun play() {
+    fun run(scope: CoroutineScope) {
         state = State.RUNNING
-        viewModelScope.launch {
+        scope.launch {
             while (state == State.RUNNING) {
                 if (!stepOnce()) {
                     state = State.TERMINATED
                     break
                 }
-                delay(1000)
+                delay(250)
             }
         }
     }
@@ -87,7 +86,7 @@ class ExecutionViewModel(
             when (it.state) {
                 ExecutingTestCase.State.PENDING -> true
                 ExecutingTestCase.State.RUNNING -> true
-                ExecutingTestCase.State.SUCCEEDED -> false
+                ExecutingTestCase.State.SUCCESSFUL -> false
                 ExecutingTestCase.State.FAILED -> false
             }
         }
@@ -107,9 +106,16 @@ class ExecutionViewModel(
                     testCaseToStep.withReduction(reduction)
                 }
                 else {
+                    val maxDepth = 10000
+                    val reducedExpectedOutput = normalize(
+                        testCaseToStep.testCase.output,
+                        library,
+                        maxDepth
+                    )
+                        ?: throw IllegalStateException("Expected output ${testCaseToStep.testCase.output} did not reduce in $maxDepth steps")
                     val nextState =
-                        if (currentExpression.alphaEquals(testCaseToStep.testCase.output)) {
-                            ExecutingTestCase.State.SUCCEEDED
+                        if (currentExpression.alphaEquals(reducedExpectedOutput)) {
+                            ExecutingTestCase.State.SUCCESSFUL
                         }
                         else {
                             ExecutingTestCase.State.FAILED
@@ -117,7 +123,7 @@ class ExecutionViewModel(
                     testCaseToStep.withState(nextState)
                 }
             }
-            ExecutingTestCase.State.FAILED, ExecutingTestCase.State.SUCCEEDED -> throw IllegalStateException()
+            ExecutingTestCase.State.FAILED, ExecutingTestCase.State.SUCCESSFUL -> throw IllegalStateException()
         }
         executingTestCases[index] = testCaseAfterStep
         this.executingTestCases = executingTestCases.toList()

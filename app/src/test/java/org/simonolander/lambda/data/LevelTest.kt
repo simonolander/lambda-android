@@ -21,4 +21,21 @@ class LevelTest : FunSpec({
             Level.findById(level.id) shouldBe level
         }
     }
+
+    test("nextLevel should return next level if exists") {
+        levels.zipWithNext()
+            .forAll { (l1, l2) ->
+                Level.nextLevel(l1.id) shouldBe l2
+            }
+    }
+
+    test("nextLevel should return null if last level") {
+        Level.nextLevel(levels.last().id) shouldBe null
+    }
+
+    test("nextLevel should return null if level doesn't exist") {
+        val doesNotExist = LevelId(levels.joinToString("-") { it.id.value })
+        Level.findById(doesNotExist) shouldBe null // Sanity check
+        Level.nextLevel(doesNotExist) shouldBe null
+    }
 })
