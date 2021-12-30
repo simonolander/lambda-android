@@ -1,8 +1,8 @@
 package org.simonolander.lambda.ui.levels
 
 import android.widget.Toast
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -10,21 +10,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import org.simonolander.lambda.data.DialogBuilder
-import org.simonolander.lambda.data.Exercise
-import org.simonolander.lambda.data.andExercise
-import org.simonolander.lambda.engine.Expression
-import org.simonolander.lambda.ui.ExecutionState
-import org.simonolander.lambda.ui.ExecutionView
-import org.simonolander.lambda.ui.ExerciseView
+import org.simonolander.lambda.data.Message
+import org.simonolander.lambda.misc.lambda
+import org.simonolander.lambda.misc.lambdaCalculus
 import org.simonolander.lambda.ui.theme.LambdaTheme
 import org.simonolander.lambda.ui.view.DialogView
 
-private val helloWorldDialog = run {
+private val helloDialog = run {
     val notAtAll = DialogBuilder()
         .message("Great!")
         .message("I hope I'll be able to give you a nice introduction.")
@@ -43,12 +38,22 @@ private val helloWorldDialog = run {
         .build()
 
     DialogBuilder()
-        .message("Hello!")
+        .message("Hello! 👋") {
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Text(
+                    text = "👋",
+                    modifier = Modifier.align(Alignment.Center),
+                    style = MaterialTheme.typography.h1
+                )
+            }
+        }
         .message("Welcome to Lambda!")
-        .message("I will be your guide here, as we go through the wondrous world of lambda calculus.")
-        .message("First off, how familiar are you with lambda calculus?")
+        .message("I will be your guide here, as we go through the wondrous world of $lambdaCalculus. $lambda is a Greek symbol pronounced lambda. Most of the time, I'll write $lambdaCalculus and not lambda calculus.")
+        .message("First off, how familiar are you with $lambdaCalculus?")
         .question(
-            "How familiar are you with lambda calculus?",
+            "How familiar are you with $lambdaCalculus?",
             "Not at all" to notAtAll,
             "Somewhat familiar" to somewhatFamiliar,
             "Quite familiar" to quiteFamiliar,
@@ -56,19 +61,27 @@ private val helloWorldDialog = run {
 }
 
 @Composable
-fun HelloWorldView(onLevelComplete: () -> Unit) {
+fun HelloView(onLevelComplete: () -> Unit) {
     val (dialog, setDialog) = remember {
-        mutableStateOf(helloWorldDialog)
+        mutableStateOf(helloDialog)
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Box(modifier = Modifier.align(Alignment.BottomCenter)) {
+    val (view, setView) = remember {
+        mutableStateOf((dialog as? Message)?.view)
+    }
+
+    Column(modifier = Modifier.fillMaxSize()) {
+        Box(Modifier.weight(1f)) {
+            view?.invoke()
+        }
+        Box {
             DialogView(
                 dialog = dialog,
                 animationSpeed = 30f,
                 onNextDialog = {
                     if (it != null) {
                         setDialog(it)
+                        setView((it as? Message)?.view ?: view)
                     }
                     else {
                         onLevelComplete()
@@ -85,7 +98,7 @@ private fun LevelViewPreview() {
     val context = LocalContext.current
     Surface {
         LambdaTheme {
-            HelloWorldView {
+            HelloView {
                 Toast.makeText(
                     context,
                     "Called onLevelComplete",

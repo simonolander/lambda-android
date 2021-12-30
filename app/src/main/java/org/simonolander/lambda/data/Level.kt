@@ -1,6 +1,6 @@
 package org.simonolander.lambda.data
 
-import org.simonolander.lambda.ui.levels.HelloWorldView
+import org.simonolander.lambda.ui.levels.HelloView
 import org.simonolander.lambda.ui.levels.LevelView
 import org.simonolander.lambda.ui.levels.WhatAreFunctionsView
 
@@ -9,10 +9,10 @@ enum class Level(
     val title: String,
     val view: LevelViewComposable,
 ) {
-    HELLO_WORLD(
+    HELLO(
         id = LevelId("hello"),
         title = "Hello",
-        view = { HelloWorldView(it) }
+        view = { HelloView(it) }
     ),
     WHAT_ARE_FUNCTIONS(
         id = LevelId("what-are-functions"),

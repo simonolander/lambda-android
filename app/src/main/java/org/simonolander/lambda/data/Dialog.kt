@@ -1,9 +1,12 @@
 package org.simonolander.lambda.data
 
+import androidx.compose.runtime.Composable
+
 sealed interface Dialog
 
 data class Message(
     val text: String = "< To be continued >",
+    val view: (@Composable () -> Unit)? = null,
     val next: Dialog? = null,
 ) : Dialog
 
@@ -15,21 +18,19 @@ data class Question(
 typealias Response = Pair<String, Dialog?>
 
 class DialogBuilder {
-    fun message(text: String): DialogNonNullBuilder {
-        return DialogNonNullBuilder(text)
-    }
-
-    fun question(text: String, vararg responses: Response): Dialog {
-        return Question(text, responses.toList())
+    fun message(text: String, view: @Composable (() -> Unit)? = null): DialogNonNullBuilder {
+        return DialogNonNullBuilder(Message(text, view))
     }
 }
 
-class DialogNonNullBuilder(initialMessage: String) {
+class DialogNonNullBuilder(initialMessage: Message) {
 
-    private val messages = mutableListOf(initialMessage)
+    private var lastMessage = initialMessage
+    private val messages = mutableListOf<Message>()
 
-    fun message(text: String): DialogNonNullBuilder {
-        messages += text
+    fun message(text: String, view: @Composable (() -> Unit)? = null): DialogNonNullBuilder {
+        messages += lastMessage
+        lastMessage = Message(text, view)
         return this
     }
 
@@ -38,15 +39,27 @@ class DialogNonNullBuilder(initialMessage: String) {
     }
 
     fun build(): Dialog {
-        require(messages.isNotEmpty())
-        return messages.foldRight<String, Message?>(null) { text, acc ->
-            Message(text, acc)
-        }!!
+        return messages.foldRight(lastMessage) { message, acc ->
+            Message(
+                text = message.text,
+                view = message.view,
+                next = acc,
+            )
+        }
     }
 
     fun build(tail: Dialog): Dialog {
-        return messages.foldRight(tail) { text, acc ->
-            Message(text, acc)
+        val lastMessage = Message(
+            text = lastMessage.text,
+            view = lastMessage.view,
+            next = tail,
+        )
+        return messages.foldRight(lastMessage) { message, acc ->
+            Message(
+                text = message.text,
+                view = message.view,
+                next = acc,
+            )
         }
     }
 }

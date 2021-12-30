@@ -9,7 +9,7 @@ enum class Chapter(
         id = ChapterId("introduction"),
         title = "Introduction",
         levels = listOf(
-            Level.HELLO_WORLD,
+            Level.HELLO,
             Level.WHAT_ARE_FUNCTIONS,
             Level.IDENTITY,
             Level.CONSTANT_FUNCTION,
