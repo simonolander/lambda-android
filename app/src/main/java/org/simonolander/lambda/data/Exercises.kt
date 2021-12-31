@@ -284,6 +284,44 @@ val orExercise = run {
     )
 }
 
+val ifExercise = run {
+    val functionName = "if"
+    Exercise(
+        name = "If-then-else",
+        description = buildAnnotatedString {
+            append("Design a function ")
+            withStyle(codeStyle) { append(functionName) }
+            append(", that takes one boolean input, ")
+            withStyle(codeStyle) { append("p") }
+            append(" and two arbitrary inputs ")
+            withStyle(codeStyle) { append("x") }
+            append(" and ")
+            withStyle(codeStyle) { append("y") }
+            append(". If ")
+            withStyle(codeStyle) { append("p") }
+            append(" is true, then it should return ")
+            withStyle(codeStyle) { append("x") }
+            append(" otherwise ")
+            withStyle(codeStyle) { append("y") }
+            append(".")
+        },
+        functionName = functionName,
+        testCases = listOf(
+            Triple(true, "a", "b"),
+            Triple(false, "a", "b"),
+        ).map { (a, b, c) ->
+            TestCase(
+                input = parse("$functionName $a $b $c"),
+                output = Identifier(if (a) b else c),
+            )
+        },
+        library = mapOf(
+            TRUE,
+            FALSE,
+        )
+    )
+}
+
 val xorExercise = run {
     val functionName = "xor"
     Exercise(
@@ -328,6 +366,7 @@ val xorExercise = run {
             NOT,
             AND,
             OR,
+            IF,
         )
     )
 }

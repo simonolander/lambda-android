@@ -24,6 +24,7 @@ enum class Chapter(
             Level.NOT,
             Level.AND,
             Level.OR,
+            Level.IF_THEN_ELSE,
             Level.EXCLUSIVE_OR,
         )
     ),

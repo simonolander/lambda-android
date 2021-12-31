@@ -54,6 +54,11 @@ enum class Level(
         title = "Or",
         view = { LevelView(orExercise, it) }
     ),
+    IF_THEN_ELSE(
+        id = LevelId("if"),
+        title = "If-then-else",
+        view = { LevelView(ifExercise, it) }
+    ),
     EXCLUSIVE_OR(
         id = LevelId("xor"),
         title = "Exclusive Or",
