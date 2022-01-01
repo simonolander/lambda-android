@@ -1,6 +1,8 @@
 package org.simonolander.lambda.ui.view
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -9,9 +11,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
+import org.simonolander.lambda.R
 import org.simonolander.lambda.data.Dialog
 import org.simonolander.lambda.data.Message
 import org.simonolander.lambda.data.Question
@@ -62,8 +66,7 @@ private fun MessageView(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .defaultMinSize(minHeight = 200.dp)
-            .border(width = 8.dp, color = Color.LightGray),
+            .defaultMinSize(minHeight = 200.dp),
         onClick = {
             if (animating) {
                 numberOfCharactersToShow = message.text.length
@@ -73,11 +76,24 @@ private fun MessageView(
             }
         },
     ) {
-        Text(
-            text = message.text.take(numberOfCharactersToShow),
-            style = MaterialTheme.typography.h6,
-            modifier = Modifier.padding(16.dp),
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .border(width = 8.dp, color = Color.LightGray)
+                .padding(8.dp)
+        ) {
+            Image(
+                painterResource(R.drawable.robot),
+                contentDescription = "Robot avatar",
+                modifier = Modifier.weight(1f, false)
+                    .aspectRatio(1f)
+            )
+            Text(
+                text = message.text.take(numberOfCharactersToShow),
+                style = MaterialTheme.typography.h6,
+                modifier = Modifier.padding(8.dp)
+                    .weight(4f)
+            )
+        }
         if (!animating) {
             Box {
                 Icon(
