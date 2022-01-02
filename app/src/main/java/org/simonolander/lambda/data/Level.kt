@@ -1,8 +1,10 @@
 package org.simonolander.lambda.data
 
-import org.simonolander.lambda.ui.levels.HelloView
+import org.simonolander.lambda.content.Dialog.helloDialog
+import org.simonolander.lambda.content.Dialog.applicationSyntaxDialog
+import org.simonolander.lambda.content.Dialog.whatAreFunctionsDialog
 import org.simonolander.lambda.ui.levels.LevelView
-import org.simonolander.lambda.ui.levels.WhatAreFunctionsView
+import org.simonolander.lambda.ui.view.SimpleDialogLevelView
 
 enum class Level(
     val id: LevelId,
@@ -12,12 +14,17 @@ enum class Level(
     HELLO(
         id = LevelId("hello"),
         title = "Hello",
-        view = { HelloView(it) }
+        view = { SimpleDialogLevelView(helloDialog, it) }
     ),
     WHAT_ARE_FUNCTIONS(
         id = LevelId("what-are-functions"),
         title = "What's a function",
-        view = { WhatAreFunctionsView(it) }
+        view = { SimpleDialogLevelView(whatAreFunctionsDialog, it) }
+    ),
+    SYNTAX(
+        id = LevelId("syntax"),
+        title = "Syntax",
+        view = { SimpleDialogLevelView(applicationSyntaxDialog, it) }
     ),
     IDENTITY(
         id = LevelId("identity"),

@@ -11,6 +11,7 @@ enum class Chapter(
         levels = listOf(
             Level.HELLO,
             Level.WHAT_ARE_FUNCTIONS,
+            Level.SYNTAX,
             Level.IDENTITY,
             Level.CONSTANT_FUNCTION,
         )

@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 sealed interface Dialog
 
 data class Message(
-    val text: String = "< To be continued >",
+    val text: String,
     val view: (@Composable () -> Unit)? = null,
     val next: Dialog? = null,
 ) : Dialog

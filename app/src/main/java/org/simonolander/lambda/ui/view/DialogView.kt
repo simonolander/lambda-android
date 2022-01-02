@@ -2,11 +2,12 @@ package org.simonolander.lambda.ui.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.SportsScore
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -77,27 +78,37 @@ private fun MessageView(
         },
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .border(width = 8.dp, color = Color.LightGray)
                 .padding(8.dp)
         ) {
             Image(
                 painterResource(R.drawable.robot),
                 contentDescription = "Robot avatar",
-                modifier = Modifier.weight(1f, false)
+                modifier = Modifier
+                    .weight(1f, false)
                     .aspectRatio(1f)
             )
             Text(
                 text = message.text.take(numberOfCharactersToShow),
                 style = MaterialTheme.typography.h6,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier
+                    .padding(8.dp)
                     .weight(4f)
             )
         }
         if (!animating) {
             Box {
+                val imageVector =
+                    if (message.next != null) {
+                        Icons.Default.PlayArrow
+                    }
+                    else {
+                        Icons.Default.SportsScore
+                    }
                 Icon(
-                    imageVector = Icons.Default.PlayArrow,
+                    imageVector = imageVector,
                     contentDescription = "Next",
                     modifier = Modifier
                         .size(64.dp)
