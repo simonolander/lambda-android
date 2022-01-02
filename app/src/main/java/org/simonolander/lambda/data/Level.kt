@@ -2,7 +2,9 @@ package org.simonolander.lambda.data
 
 import org.simonolander.lambda.content.Dialog.helloDialog
 import org.simonolander.lambda.content.Dialog.applicationSyntaxDialog
-import org.simonolander.lambda.content.Dialog.whatAreFunctionsDialog
+import org.simonolander.lambda.content.Dialog.functionSyntaxDialog
+import org.simonolander.lambda.content.Dialog.whatIsLambdaCalculusDialog
+import org.simonolander.lambda.misc.lambdaCalculus
 import org.simonolander.lambda.ui.levels.LevelView
 import org.simonolander.lambda.ui.view.SimpleDialogLevelView
 
@@ -16,15 +18,20 @@ enum class Level(
         title = "Hello",
         view = { SimpleDialogLevelView(helloDialog, it) }
     ),
-    WHAT_ARE_FUNCTIONS(
-        id = LevelId("what-are-functions"),
-        title = "What's a function",
-        view = { SimpleDialogLevelView(whatAreFunctionsDialog, it) }
+    WHAT_IS_LAMBDA_CALCULUS(
+        id = LevelId("what-is-lambda-calculus"),
+        title = "What is $lambdaCalculus",
+        view = { SimpleDialogLevelView(whatIsLambdaCalculusDialog, it) }
     ),
-    SYNTAX(
-        id = LevelId("syntax"),
-        title = "Syntax",
+    APPLICATION_SYNTAX(
+        id = LevelId("application-syntax"),
+        title = "Application Syntax",
         view = { SimpleDialogLevelView(applicationSyntaxDialog, it) }
+    ),
+    FUNCTION_SYNTAX(
+        id = LevelId("function-syntax"),
+        title = "Function Syntax",
+        view = { SimpleDialogLevelView(functionSyntaxDialog, it) }
     ),
     IDENTITY(
         id = LevelId("identity"),

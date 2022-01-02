@@ -16,7 +16,7 @@ import org.simonolander.lambda.misc.lambdaCalculus
 import org.simonolander.lambda.ui.levels.CodeBlock
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
-val whatAreFunctionsDialog = run {
+val whatIsLambdaCalculusDialog = run {
     val doesNotKnowProgramming = DialogBuilder()
         .message("That's alright.")
         .message("Have you seen functions like f(x)=x+1 in mathematics?")
@@ -102,9 +102,9 @@ val whatAreFunctionsDialog = run {
         )
 
     DialogBuilder()
-        .message("Welcome to lesson 2! We're going to talk about what $lambdaCalculus really is.")
+        .message("Welcome to lesson 2! What is $lambdaCalculus about?")
         .message("At its core, $lambdaCalculus is a tiny symbol manipulation framework.")
-        .message("It's used for describing computation. Fun fact, any computation can be described using $lambdaCalculus.")
+        .message("It's used for describing computation. Fun fact: any computation can be described using $lambdaCalculus!")
         .message("But we're getting ahead of ourselves.")
         .message("$lambdaCalculus is all about functions.")
         .message("Before we dive deeper, I would like to know if you're familiar with some programming language.")
@@ -211,7 +211,7 @@ private fun JavascriptCurrying() {
 
 @Preview
 @Composable
-private fun WhatAreFunctionsPreview() {
+private fun WhatIsLambdaCalculusPreview() {
     Surface {
         LambdaTheme {
             JavascriptCurrying()
