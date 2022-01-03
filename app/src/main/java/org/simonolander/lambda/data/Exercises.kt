@@ -6,42 +6,6 @@ import org.simonolander.lambda.engine.*
 import org.simonolander.lambda.engine.Function
 import org.simonolander.lambda.ui.theme.codeStyle
 
-val constantFunctionExercise = run {
-    val functionName = "always_a"
-    Exercise(
-        name = "Constant Function",
-        description = buildAnnotatedString {
-            append("Design a function ")
-            withStyle(codeStyle) { append("always_a") }
-            append(", that for every input ")
-            withStyle(codeStyle) { append("x") }
-            append(" produces the output ")
-            withStyle(codeStyle) { append("a") }
-            append(". ")
-            append("\n\n")
-            append("For example, ")
-            withStyle(codeStyle) { append("always_a x") }
-            append(" should reduce to ")
-            withStyle(codeStyle) { append("a") }
-            append(".")
-        },
-        functionName = functionName,
-        testCases = listOf(
-            Identifier("x"),
-            Identifier("a"),
-            Function("x", Identifier("x")),
-        ).map { arg ->
-            TestCase(
-                input = Application(
-                    function = Identifier(functionName),
-                    argument = arg,
-                ),
-                output = Identifier("a"),
-            )
-        }
-    )
-}
-
 val trueExercise = run {
     val functionName = "true"
     Exercise(
