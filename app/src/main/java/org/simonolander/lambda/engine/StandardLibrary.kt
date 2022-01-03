@@ -1,6 +1,10 @@
 package org.simonolander.lambda.engine
 
+// Basic
 val ID = "id" to parse("λ x. x")
+val CONST = "const" to parse("λx y. x")
+val KITE = "ki" to parse("λx y. y")
+val APPLY = "apply" to parse("λf x. f x")
 
 // Boolean logic
 val TRUE = "true" to parse("λa b. a")

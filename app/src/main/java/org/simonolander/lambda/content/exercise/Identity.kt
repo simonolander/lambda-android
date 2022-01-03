@@ -12,6 +12,7 @@ import org.simonolander.lambda.misc.lambda
 import org.simonolander.lambda.ui.theme.codeStyle
 
 val identityExercise = run {
+    val name = "Identity"
     val functionName = "id"
 
     val description = buildAnnotatedString {
@@ -55,7 +56,7 @@ val identityExercise = run {
         .build()
 
     Exercise(
-        name = "Identity",
+        name = name,
         description = description,
         functionName = functionName,
         testCases = testCases,

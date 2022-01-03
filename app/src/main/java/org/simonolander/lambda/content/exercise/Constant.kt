@@ -11,7 +11,8 @@ import org.simonolander.lambda.engine.Identifier
 import org.simonolander.lambda.ui.theme.codeStyle
 
 val constantExercise = run {
-    val functionName = "always_a"
+    val name = "A constant function"
+    val functionName = "const_a"
     val description = buildAnnotatedString {
         append("Design a function ")
         withStyle(codeStyle) { append(functionName) }
@@ -47,7 +48,7 @@ val constantExercise = run {
         .build()
 
     Exercise(
-        name = "Constant Function",
+        name = name,
         description = description,
         functionName = functionName,
         testCases = testCases,
