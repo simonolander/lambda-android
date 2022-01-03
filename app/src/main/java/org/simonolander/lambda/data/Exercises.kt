@@ -6,42 +6,6 @@ import org.simonolander.lambda.engine.*
 import org.simonolander.lambda.engine.Function
 import org.simonolander.lambda.ui.theme.codeStyle
 
-val identity = run {
-    val functionName = "id"
-    Exercise(
-        name = "Identity",
-        description = buildAnnotatedString {
-            append("Design a function ")
-            withStyle(codeStyle) { append("id") }
-            append(", that given any single input ")
-            withStyle(codeStyle) { append("x") }
-            append(" produces the same output ")
-            withStyle(codeStyle) { append("x") }
-            append(". ")
-            append("\n\n")
-            append("For example, ")
-            withStyle(codeStyle) { append("id a") }
-            append(" should reduce to ")
-            withStyle(codeStyle) { append("a") }
-            append(".")
-        },
-        functionName = functionName,
-        testCases = listOf(
-            Identifier("a"),
-            Identifier("value"),
-            Identifier("⛄️"),
-        ).map { arg ->
-            TestCase(
-                input = Application(
-                    function = Identifier(functionName),
-                    argument = arg,
-                ),
-                output = arg,
-            )
-        }
-    )
-}
-
 val constantFunctionExercise = run {
     val functionName = "always_a"
     Exercise(

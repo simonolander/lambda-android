@@ -4,6 +4,7 @@ import org.simonolander.lambda.content.dialog.helloDialog
 import org.simonolander.lambda.content.dialog.applicationSyntaxDialog
 import org.simonolander.lambda.content.dialog.functionSyntaxDialog
 import org.simonolander.lambda.content.dialog.whatIsLambdaCalculusDialog
+import org.simonolander.lambda.content.exercise.identityExercise
 import org.simonolander.lambda.misc.lambdaCalculus
 import org.simonolander.lambda.ui.levels.LevelView
 import org.simonolander.lambda.ui.view.SimpleDialogLevelView
@@ -36,7 +37,7 @@ enum class Level(
     IDENTITY(
         id = LevelId("identity"),
         title = "Identity",
-        view = { LevelView(identity, it) }
+        view = { LevelView(identityExercise, it) }
     ),
     CONSTANT_FUNCTION(
         id = LevelId("const-function"),
