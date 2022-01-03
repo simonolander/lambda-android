@@ -1,4 +1,4 @@
-package org.simonolander.lambda.content.Dialog
+package org.simonolander.lambda.content.dialog
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
