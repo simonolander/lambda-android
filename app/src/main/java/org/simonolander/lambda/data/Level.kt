@@ -1,21 +1,68 @@
 package org.simonolander.lambda.data
 
+import org.simonolander.lambda.content.dialog.helloDialog
+import org.simonolander.lambda.content.dialog.applicationSyntaxDialog
+import org.simonolander.lambda.content.dialog.functionSyntaxDialog
+import org.simonolander.lambda.content.dialog.whatIsLambdaCalculusDialog
+import org.simonolander.lambda.content.exercise.*
+import org.simonolander.lambda.misc.lambdaCalculus
 import org.simonolander.lambda.ui.levels.LevelView
+import org.simonolander.lambda.ui.view.SimpleDialogLevelView
 
 enum class Level(
     val id: LevelId,
     val title: String,
     val view: LevelViewComposable,
 ) {
+    HELLO(
+        id = LevelId("hello"),
+        title = "Hello",
+        view = { SimpleDialogLevelView(helloDialog, it) }
+    ),
+    WHAT_IS_LAMBDA_CALCULUS(
+        id = LevelId("what-is-lambda-calculus"),
+        title = "What is $lambdaCalculus",
+        view = { SimpleDialogLevelView(whatIsLambdaCalculusDialog, it) }
+    ),
+    APPLICATION_SYNTAX(
+        id = LevelId("application-syntax"),
+        title = "Application Syntax",
+        view = { SimpleDialogLevelView(applicationSyntaxDialog, it) }
+    ),
+    FUNCTION_SYNTAX(
+        id = LevelId("function-syntax"),
+        title = "Function Syntax",
+        view = { SimpleDialogLevelView(functionSyntaxDialog, it) }
+    ),
     IDENTITY(
         id = LevelId("identity"),
         title = "Identity",
-        view = { LevelView(identity, it) }
+        view = { LevelView(identityExercise, it) }
     ),
     CONSTANT_FUNCTION(
         id = LevelId("const-function"),
         title = "Constant Function",
-        view = { LevelView(constantFunctionExercise, it) }
+        view = { LevelView(constantExercise, it) }
+    ),
+    KESTREL(
+        id = LevelId("kestrel"),
+        title = "Const",
+        view = { LevelView(kestrelExercise, it) }
+    ),
+    KITE(
+        id = LevelId("kite"),
+        title = "Kite",
+        view = { LevelView(kiteExercise, it) }
+    ),
+    APPLICATOR(
+        id = LevelId("applicator"),
+        title = "Apply",
+        view = { LevelView(applicatorExercise, it) }
+    ),
+    CARDINAL(
+        id = LevelId("cardinal"),
+        title = "Flip",
+        view = { LevelView(cardinalExercise, it) }
     ),
     TRUE(
         id = LevelId("true"),
@@ -41,6 +88,11 @@ enum class Level(
         id = LevelId("or"),
         title = "Or",
         view = { LevelView(orExercise, it) }
+    ),
+    IF_THEN_ELSE(
+        id = LevelId("if"),
+        title = "If-then-else",
+        view = { LevelView(ifExercise, it) }
     ),
     EXCLUSIVE_OR(
         id = LevelId("xor"),

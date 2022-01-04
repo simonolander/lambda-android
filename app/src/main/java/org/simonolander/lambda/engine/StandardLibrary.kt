@@ -1,11 +1,18 @@
 package org.simonolander.lambda.engine
 
+// Basic
+val ID = "id" to parse("λ x. x")
+val CONST = "const" to parse("λx y. x")
+val KITE = "ki" to parse("λx y. y")
+val APPLY = "apply" to parse("λf x. f x")
+
 // Boolean logic
 val TRUE = "true" to parse("λa b. a")
 val FALSE = "false" to parse("λa b. b")
 val NOT = "not" to parse("λa. a false true")
 val AND = "and" to parse("λa b. a b a")
 val OR = "or" to parse("λa b. a a b")
+val IF = "if" to parse("λp x y. p x y")
 val XOR = "xor" to parse("λa b. a (not b) b") // Alt. λa b. and (or a b) (not (and a b))
 val EQ = "eq" to parse("λa b. not (xor a b)")
 

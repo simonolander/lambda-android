@@ -1,22 +1,19 @@
 package org.simonolander.lambda.ui
 
 import android.widget.Toast
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,46 +31,50 @@ fun ExecutionView(
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
     Column(
-        Modifier
-            .fillMaxSize()
-            .padding(10.dp)
-            .scrollable(scrollState, Orientation.Vertical)
-            .verticalScroll(scrollState)
+        verticalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier.fillMaxSize(),
     ) {
-        Text(
-            text = exercise.name,
-            style = MaterialTheme.typography.h2,
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp)
+                .scrollable(scrollState, Orientation.Vertical)
+                .verticalScroll(scrollState)
+                .weight(1f)
+        ) {
+            Text(
+                text = exercise.name,
+                style = MaterialTheme.typography.h2,
+            )
 
-        Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(10.dp))
 
-        Text(
-            text = "Your answer",
-            style = MaterialTheme.typography.h6,
-        )
+            Text(
+                text = "Your answer",
+                style = MaterialTheme.typography.h6,
+            )
 
-        Text(
-            text = state.solution.prettyPrint(),
-            style = MaterialTheme.typography.subtitle1,
-        )
+            Text(
+                text = state.solution.prettyPrint(),
+                style = MaterialTheme.typography.subtitle1,
+            )
 
-        Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(10.dp))
 
-        Text(
-            text = "Test cases",
-            style = MaterialTheme.typography.h6,
-        )
+            Text(
+                text = "Test cases",
+                style = MaterialTheme.typography.h6,
+            )
 
-        Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(10.dp))
 
-        Column(Modifier.fillMaxWidth()) {
-            testCases.forEach { testCase ->
-                TestCaseView(testCase)
-                Spacer(modifier = Modifier.height(5.dp))
+            Column(Modifier.fillMaxWidth()) {
+                testCases.forEach { testCase ->
+                    TestCaseView(testCase)
+                    Spacer(modifier = Modifier.height(5.dp))
+                }
             }
         }
-
-        Spacer(Modifier.height(10.dp))
 
         ControlView(
             state = state.state,
@@ -81,7 +82,8 @@ fun ExecutionView(
             onRun = { state.run(coroutineScope) },
             onPause = state::pause,
             onStep = state::step,
-            onSuccess = onSuccess
+            onSuccess = onSuccess,
+            onReset = state::reset,
         )
     }
 }
@@ -275,38 +277,93 @@ private fun ControlView(
     onPause: () -> Unit,
     onStep: () -> Unit,
     onSuccess: () -> Unit,
+    onReset: () -> Unit,
 ) {
-    when (state) {
-        ExecutionState.State.PAUSED ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Button(onClick = onStep) {
-                    Text(text = "Step")
+    Surface(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .background(Color.LightGray)
+                .padding(8.dp)
+        ) {
+            when (state) {
+                ExecutionState.State.PAUSED -> {
+                    ResetButton(onReset)
+                    RunButton(onRun)
+                    StepButton(onStep)
                 }
-                Button(onClick = onRun) {
-                    Text(text = "Run")
+                ExecutionState.State.RUNNING -> {
+                    PauseButton(onPause)
                 }
-            }
-        ExecutionState.State.RUNNING -> {
-            Button(onClick = onPause) {
-                Text(text = "Pause")
+                ExecutionState.State.TERMINATED -> {
+                    ResetButton(onReset)
+                    val successful = testCases.all { it.state == ExecutingTestCase.State.SUCCESSFUL }
+                    if (successful) {
+                        Button(onClick = onSuccess) {
+                            Text("Next level")
+                        }
+                    }
+                }
             }
         }
-        ExecutionState.State.TERMINATED -> {
-            val successful = testCases.all { it.state == ExecutingTestCase.State.SUCCESSFUL }
-            if (successful) {
-                Button(onClick = onSuccess) {
-                    Text("Next level")
-                }
-            }
-            else {
-                Button(onClick = { /*TODO*/ }) {
-                    Text("Back")
-                }
-            }
-        }
+    }
+}
+
+@Composable
+private fun ResetButton(onClick: () -> Unit) {
+    ControlButton(
+        imageVector = Icons.Default.Replay,
+        contentDescription = "Reset",
+        onClick = onClick,
+    )
+}
+
+@Composable
+private fun PauseButton(onClick: () -> Unit) {
+    ControlButton(
+        imageVector = Icons.Default.Pause,
+        contentDescription = "Pause",
+        onClick = onClick,
+    )
+}
+
+@Composable
+private fun RunButton(onClick: () -> Unit) {
+    ControlButton(
+        imageVector = Icons.Default.PlayArrow,
+        contentDescription = "Run",
+        onClick = onClick,
+    )
+}
+
+@Composable
+private fun StepButton(onClick: () -> Unit) {
+    ControlButton(
+        imageVector = Icons.Default.SkipNext,
+        contentDescription = "Step",
+        onClick = onClick,
+    )
+}
+
+@Composable
+private fun ControlButton(
+    imageVector: ImageVector,
+    contentDescription: String,
+    onClick: () -> Unit,
+) {
+    FloatingActionButton(
+        onClick = onClick,
+        elevation = FloatingActionButtonDefaults.elevation(0.dp),
+        backgroundColor = Color.DarkGray,
+        contentColor = Color.White,
+    ) {
+        Icon(
+            imageVector = imageVector,
+            contentDescription = contentDescription,
+        )
     }
 }
 

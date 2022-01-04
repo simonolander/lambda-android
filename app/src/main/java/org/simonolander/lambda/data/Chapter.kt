@@ -9,8 +9,22 @@ enum class Chapter(
         id = ChapterId("introduction"),
         title = "Introduction",
         levels = listOf(
+            Level.HELLO,
+            Level.WHAT_IS_LAMBDA_CALCULUS,
+            Level.APPLICATION_SYNTAX,
+            Level.FUNCTION_SYNTAX,
+        )
+    ),
+    BASIC_EXERCISES(
+        id = ChapterId("basic-exercises"),
+        title = "Basics",
+        levels = listOf(
             Level.IDENTITY,
             Level.CONSTANT_FUNCTION,
+            Level.KESTREL,
+            Level.KITE,
+            Level.APPLICATOR,
+            Level.CARDINAL,
         )
     ),
     BOOLEAN_LOGIC(
@@ -22,6 +36,7 @@ enum class Chapter(
             Level.NOT,
             Level.AND,
             Level.OR,
+            Level.IF_THEN_ELSE,
             Level.EXCLUSIVE_OR,
         )
     ),

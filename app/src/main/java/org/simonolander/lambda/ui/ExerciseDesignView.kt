@@ -29,7 +29,7 @@ import org.simonolander.lambda.ui.theme.LambdaTheme
 import org.simonolander.lambda.ui.theme.codeStyle
 
 @Composable
-fun ExerciseView(exercise: Exercise, onSubmit: (Expression) -> Unit) {
+fun ExerciseDesignView(exercise: Exercise, onSubmit: (Expression) -> Unit) {
     var solutionValue by remember {
         mutableStateOf(TextFieldValue())
     }
@@ -150,7 +150,7 @@ private fun DefaultPreview() {
     val context = LocalContext.current
     LambdaTheme {
         Surface {
-            ExerciseView(exercise = andExercise) {
+            ExerciseDesignView(exercise = andExercise) {
                 Toast.makeText(context, it.prettyPrint(), Toast.LENGTH_SHORT).show()
             }
         }

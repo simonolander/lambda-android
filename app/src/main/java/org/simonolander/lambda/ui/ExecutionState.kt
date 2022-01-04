@@ -79,6 +79,11 @@ class ExecutionState(
         }
     }
 
+    fun reset() {
+        state = State.PAUSED
+        executingTestCases = exercise.testCases.map { ExecutingTestCase(it) }
+    }
+
     @Synchronized
     private fun stepOnce(): Boolean {
         val executingTestCases = executingTestCases.toMutableList()

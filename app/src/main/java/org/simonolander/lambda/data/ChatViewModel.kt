@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class ChatViewModel(dialog: Dialog) : ViewModel() {
+class ChatViewModel(dialog: Dialog?) : ViewModel() {
     val chatMessages = mutableStateListOf<ChatMessage>()
     var currentDialog by mutableStateOf(dialog)
         private set
