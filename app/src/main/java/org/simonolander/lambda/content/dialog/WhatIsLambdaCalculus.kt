@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.simonolander.lambda.data.DialogBuilder
+import org.simonolander.lambda.domain.DialogBuilder
 import org.simonolander.lambda.misc.javascript
 import org.simonolander.lambda.misc.lambda
 import org.simonolander.lambda.misc.lambdaCalculus

@@ -3,8 +3,8 @@ package org.simonolander.lambda.ui
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import org.simonolander.lambda.data.Level
-import org.simonolander.lambda.data.LevelId
+import org.simonolander.lambda.domain.Level
+import org.simonolander.lambda.domain.LevelId
 
 @Composable
 fun LevelScreen(levelId: LevelId, onLevelCompleted: (LevelId) -> Unit) {

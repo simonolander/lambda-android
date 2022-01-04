@@ -5,17 +5,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.flowlayout.FlowRow
-import org.simonolander.lambda.data.Chapter
-import org.simonolander.lambda.data.Level
-import org.simonolander.lambda.data.LevelId
+import org.simonolander.lambda.domain.Chapter
+import org.simonolander.lambda.domain.Level
+import org.simonolander.lambda.domain.LevelId
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
 @ExperimentalMaterialApi

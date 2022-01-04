@@ -1,4 +1,4 @@
-package org.simonolander.lambda.data
+package org.simonolander.lambda.domain
 
 import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec

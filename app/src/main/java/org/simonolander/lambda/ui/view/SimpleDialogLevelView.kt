@@ -12,8 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.simonolander.lambda.data.Dialog
-import org.simonolander.lambda.data.Message
+import org.simonolander.lambda.domain.Dialog
+import org.simonolander.lambda.domain.Message
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
 /**

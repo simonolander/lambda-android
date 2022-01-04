@@ -1,14 +1,13 @@
 package org.simonolander.lambda.ui
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.simonolander.lambda.data.Exercise
-import org.simonolander.lambda.data.TestCase
+import org.simonolander.lambda.domain.Exercise
+import org.simonolander.lambda.domain.TestCase
 import org.simonolander.lambda.engine.Expression
 import org.simonolander.lambda.engine.Reduction
 import org.simonolander.lambda.engine.normalize

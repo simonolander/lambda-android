@@ -1,4 +1,4 @@
-package org.simonolander.lambda.data
+package org.simonolander.lambda.domain
 
 import org.simonolander.lambda.content.dialog.helloDialog
 import org.simonolander.lambda.content.dialog.applicationSyntaxDialog

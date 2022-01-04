@@ -2,9 +2,9 @@ package org.simonolander.lambda.content.exercise
 
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
-import org.simonolander.lambda.data.DialogBuilder
-import org.simonolander.lambda.data.Exercise
-import org.simonolander.lambda.data.TestCase
+import org.simonolander.lambda.domain.DialogBuilder
+import org.simonolander.lambda.domain.Exercise
+import org.simonolander.lambda.domain.TestCase
 import org.simonolander.lambda.engine.Application
 import org.simonolander.lambda.engine.Function
 import org.simonolander.lambda.engine.Identifier

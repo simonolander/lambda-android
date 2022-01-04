@@ -1,9 +1,8 @@
-package org.simonolander.lambda.data
+package org.simonolander.lambda.domain
 
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import org.simonolander.lambda.engine.*
-import org.simonolander.lambda.engine.Function
 import org.simonolander.lambda.ui.theme.codeStyle
 
 val trueExercise = run {
