@@ -4,20 +4,16 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.simonolander.lambda.domain.LevelId
-import java.time.Instant
 import java.util.*
 
 @Entity
 data class Solution(
     @PrimaryKey
-    val id: UUID,
-
-    @ColumnInfo(name = "value")
-    val value: String,
-
+    val id: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "level_id")
     val levelId: LevelId,
-
+    @ColumnInfo(name = "value")
+    val value: String? = null,
     @ColumnInfo(name = "created_time")
-    val createdTime: Instant,
+    val createdTime: Long = System.currentTimeMillis(),
 )

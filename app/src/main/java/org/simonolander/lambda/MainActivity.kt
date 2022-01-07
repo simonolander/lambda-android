@@ -5,8 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.NavType
@@ -15,6 +16,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import kotlinx.coroutines.launch
+import org.simonolander.lambda.database.LambdaDatabase
+import org.simonolander.lambda.database.Solution
 import org.simonolander.lambda.domain.Chapter
 import org.simonolander.lambda.domain.ChapterId
 import org.simonolander.lambda.domain.Level
@@ -46,6 +50,12 @@ fun LambdaApp() {
 
 @Composable
 fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
+    val database = LambdaDatabase.getInstance(LocalContext.current)
+    val coroutineScope = rememberCoroutineScope()
+    val solutions by database.solutionDao().getAll().collectAsState(emptyList())
+    val completedLevelsIds by derivedStateOf {
+        solutions.map { it.levelId }.toSet()
+    }
     NavHost(
         navController = navController,
         startDestination = "chapters",
@@ -54,7 +64,7 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
         composable(route = "chapters") {
             ChaptersScreen(
                 chapters = Chapter.values().toList(),
-                completedLessonIds = emptySet(),
+                completedLessonIds = completedLevelsIds,
                 onChapterClicked = {
                     navController.navigate("chapters/${it.value}")
                 },
@@ -74,7 +84,7 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
 
             ChapterScreen(
                 chapterId = chapterId,
-                completedLevelIds = emptySet(),
+                completedLevelIds = completedLevelsIds,
                 onLevelClick = { levelId ->
                     navController.navigate("levels/{$levelId}")
                 }
@@ -95,6 +105,9 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
             LevelScreen(
                 levelId = levelId,
                 onLevelCompleted = {
+                    coroutineScope.launch {
+                        database.solutionDao().insert(Solution(levelId = levelId))
+                    }
                     val nextLevel = Level.nextLevel(levelId)
                     if (nextLevel == null) {
                         val navOptions = NavOptions.Builder()
