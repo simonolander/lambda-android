@@ -7,11 +7,9 @@ import org.simonolander.lambda.domain.Level
 import org.simonolander.lambda.domain.LevelId
 
 @Composable
-fun LevelScreen(levelId: LevelId, onLevelCompleted: (LevelId) -> Unit) {
-    val level = Level.findById(levelId) ?: return LevelNotFound(levelId)
-    level.view {
-        onLevelCompleted(level.id)
-    }
+fun LevelScreen(levelId: LevelId, onLevelCompleted: () -> Unit) {
+    Level.findById(levelId)?.view?.invoke(onLevelCompleted)
+        ?: LevelNotFound(levelId)
 }
 
 @Composable

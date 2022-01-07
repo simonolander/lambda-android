@@ -17,7 +17,7 @@ enum class Chapter(
     ),
     BASIC_EXERCISES(
         id = ChapterId("basic-exercises"),
-        title = "Basics",
+        title = "Basic functions",
         levels = listOf(
             Level.IDENTITY,
             Level.CONSTANT_FUNCTION,

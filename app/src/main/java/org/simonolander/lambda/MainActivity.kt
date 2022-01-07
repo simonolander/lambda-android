@@ -1,14 +1,12 @@
 package org.simonolander.lambda
 
-import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.NavType
@@ -17,12 +15,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import org.simonolander.lambda.domain.Chapter
+import org.simonolander.lambda.domain.ChapterId
 import org.simonolander.lambda.domain.Level
 import org.simonolander.lambda.domain.LevelId
-import org.simonolander.lambda.ui.*
+import org.simonolander.lambda.ui.LevelScreen
+import org.simonolander.lambda.ui.screen.ChapterScreen
+import org.simonolander.lambda.ui.screen.ChaptersScreen
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
-@ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +33,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@ExperimentalMaterialApi
 @Composable
 fun LambdaApp() {
     LambdaTheme {
@@ -44,51 +44,72 @@ fun LambdaApp() {
     }
 }
 
-@ExperimentalMaterialApi
 @Composable
 fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
     NavHost(
         navController = navController,
-        startDestination = "overview",
+        startDestination = "chapters",
         modifier = modifier,
     ) {
-        composable("overview") {
-            ChapterOverviewScreen {
-                navController.navigate("level/${it.value}")
-            }
+        composable(route = "chapters") {
+            ChaptersScreen(
+                chapters = Chapter.values().toList(),
+                completedLessonIds = emptySet(),
+                onChapterClicked = {
+                    navController.navigate("chapters/${it.value}")
+                },
+            )
         }
 
         composable(
-            route = "level/{levelId}",
+            route = "chapters/{chapterId}",
+            arguments = listOf(
+                navArgument("chapterId") { type = NavType.StringType },
+            ),
+        ) { backStackEntry ->
+            val chapterId = backStackEntry.arguments
+                ?.getString("chapterId")
+                ?.let { ChapterId(it) }
+                ?: throw IllegalStateException("Missing navArgument: chapterId")
+
+            ChapterScreen(
+                chapterId = chapterId,
+                completedLevelIds = emptySet(),
+                onLevelClick = { levelId ->
+                    navController.navigate("levels/{$levelId}")
+                }
+            )
+        }
+
+        composable(
+            route = "levels/{levelId}",
             arguments = listOf(
                 navArgument("levelId") { type = NavType.StringType },
             ),
         ) { backStackEntry ->
-            val levelId = backStackEntry.arguments!!
-                .getString("levelId")!!
-                .let { LevelId(it) }
-            LevelScreen(levelId) {
-                val nextLevel = Level.nextLevel(it)
-                if (nextLevel == null) {
-                    val navOptions = NavOptions.Builder()
-                        .setPopUpTo("overview", true)
-                        .build()
-                    navController.navigate("overview", navOptions)
+            val levelId = backStackEntry.arguments
+                ?.getString("levelId")
+                ?.let { LevelId(it) }
+                ?: throw IllegalStateException("Missing navArgument: levelId")
+
+            LevelScreen(
+                levelId = levelId,
+                onLevelCompleted = {
+                    val nextLevel = Level.nextLevel(levelId)
+                    if (nextLevel == null) {
+                        val navOptions = NavOptions.Builder()
+                            .setPopUpTo("chapters", true)
+                            .build()
+                        navController.navigate("chapters", navOptions)
+                    }
+                    else {
+                        val navOptions = NavOptions.Builder()
+                            .setPopUpTo("chapters", false)
+                            .build()
+                        navController.navigate("levels/${nextLevel.id.value}", navOptions)
+                    }
                 }
-                else {
-                    val navOptions = NavOptions.Builder()
-                        .setPopUpTo("overview", false)
-                        .build()
-                    navController.navigate("level/${nextLevel.id.value}", navOptions)
-                }
-            }
+            )
         }
     }
-}
-
-@ExperimentalMaterialApi
-@Composable
-@Preview(name = "light mode", showBackground = true, uiMode = UI_MODE_NIGHT_NO)
-fun DefaultPreview() {
-    ChapterOverviewScreen()
 }
