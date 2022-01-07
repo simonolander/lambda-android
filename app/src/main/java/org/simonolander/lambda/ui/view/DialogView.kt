@@ -83,7 +83,7 @@ private fun MessageView(
                 .padding(8.dp)
         ) {
             Image(
-                painterResource(R.drawable.robot),
+                painterResource(R.drawable.lambert),
                 contentDescription = "Robot avatar",
                 modifier = Modifier
                     .weight(1f, false)
