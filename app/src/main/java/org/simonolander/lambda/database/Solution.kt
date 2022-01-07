@@ -11,7 +11,7 @@ data class Solution(
     @PrimaryKey
     val id: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "level_id")
-    val levelId: LevelId,
+    val levelId: String,
     @ColumnInfo(name = "value")
     val value: String? = null,
     @ColumnInfo(name = "created_time")

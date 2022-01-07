@@ -54,7 +54,7 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
     val coroutineScope = rememberCoroutineScope()
     val solutions by database.solutionDao().getAll().collectAsState(emptyList())
     val completedLevelsIds by derivedStateOf {
-        solutions.map { it.levelId }.toSet()
+        solutions.map { LevelId(it.levelId) }.toSet()
     }
     NavHost(
         navController = navController,
@@ -65,8 +65,8 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
             ChaptersScreen(
                 chapters = Chapter.values().toList(),
                 completedLessonIds = completedLevelsIds,
-                onChapterClicked = {
-                    navController.navigate("chapters/${it.value}")
+                onChapterClicked = { chapterId ->
+                    navController.navigate("chapters/${chapterId.value}")
                 },
             )
         }
@@ -86,7 +86,7 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
                 chapterId = chapterId,
                 completedLevelIds = completedLevelsIds,
                 onLevelClick = { levelId ->
-                    navController.navigate("levels/{$levelId}")
+                    navController.navigate("levels/${levelId.value}")
                 }
             )
         }
@@ -106,7 +106,7 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
                 levelId = levelId,
                 onLevelCompleted = {
                     coroutineScope.launch {
-                        database.solutionDao().insert(Solution(levelId = levelId))
+                        database.solutionDao().insert(Solution(levelId = levelId.value))
                     }
                     val nextLevel = Level.nextLevel(levelId)
                     if (nextLevel == null) {
