@@ -41,7 +41,7 @@ enum class Level(
     ),
     CONSTANT_FUNCTION(
         id = LevelId("const-function"),
-        title = "Constant Function",
+        title = "Constant function",
         view = { LevelView(constantExercise, it) }
     ),
     KESTREL(

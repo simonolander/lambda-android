@@ -123,3 +123,20 @@ private fun ChapterScreenPreview() {
         }
     }
 }
+
+@Preview
+@Composable
+private fun ChapterNotFoundScreenPreview() {
+    Surface {
+        LambdaTheme {
+            ChapterScreen(
+                chapterId = ChapterId("ad92k3"),
+                completedLevelIds = Level.values()
+                    .filter { it.ordinal % 3 != 0 }
+                    .map { it.id }
+                    .toSet(),
+                onLevelClick = {},
+            )
+        }
+    }
+}
