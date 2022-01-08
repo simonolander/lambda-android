@@ -8,6 +8,7 @@ data class Message(
     val text: String,
     val view: (@Composable () -> Unit)? = null,
     val next: Dialog? = null,
+    val speaker: Character = Character.Lambert,
 ) : Dialog
 
 data class Question(

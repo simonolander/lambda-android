@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import org.simonolander.lambda.R
+import org.simonolander.lambda.domain.Character
 import org.simonolander.lambda.domain.Dialog
 import org.simonolander.lambda.domain.Message
 import org.simonolander.lambda.domain.Question
@@ -83,10 +84,11 @@ private fun MessageView(
                 .padding(8.dp)
         ) {
             Image(
-                painterResource(R.drawable.lambert),
+                painterResource(message.speaker.profilePicture),
                 contentDescription = "Robot avatar",
                 modifier = Modifier
                     .weight(1f, false)
+                    .padding(8.dp)
                     .aspectRatio(1f)
             )
             Text(
