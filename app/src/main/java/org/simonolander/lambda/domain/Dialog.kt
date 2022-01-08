@@ -9,7 +9,11 @@ data class Message(
     val view: (@Composable () -> Unit)? = null,
     val next: Dialog? = null,
     val speaker: Character = Character.Lambert,
-) : Dialog
+) : Dialog {
+    fun withNext(next: Dialog?): Message {
+        return Message(text, view, next, speaker)
+    }
+}
 
 data class Question(
     val text: String,
@@ -19,8 +23,16 @@ data class Question(
 typealias Response = Pair<String, Dialog?>
 
 class DialogBuilder {
-    fun message(text: String, view: @Composable (() -> Unit)? = null): DialogNonNullBuilder {
-        return DialogNonNullBuilder(Message(text, view))
+    fun message(
+        text: String,
+        speaker: Character = Character.Lambert,
+        view: @Composable (() -> Unit)? = null,
+    ): DialogNonNullBuilder {
+        return DialogNonNullBuilder(Message(
+            text = text,
+            speaker = speaker,
+            view = view,
+        ))
     }
 }
 
@@ -29,9 +41,13 @@ class DialogNonNullBuilder(initialMessage: Message) {
     private var lastMessage = initialMessage
     private val messages = mutableListOf<Message>()
 
-    fun message(text: String, view: @Composable (() -> Unit)? = null): DialogNonNullBuilder {
+    fun message(
+        text: String,
+        speaker: Character = Character.Lambert,
+        view: @Composable (() -> Unit)? = null,
+    ): DialogNonNullBuilder {
         messages += lastMessage
-        lastMessage = Message(text, view)
+        lastMessage = Message(text, view, speaker = speaker)
         return this
     }
 
@@ -39,28 +55,9 @@ class DialogNonNullBuilder(initialMessage: Message) {
         return build(Question(text, responses.toList()))
     }
 
-    fun build(): Dialog {
-        return messages.foldRight(lastMessage) { message, acc ->
-            Message(
-                text = message.text,
-                view = message.view,
-                next = acc,
-            )
-        }
-    }
-
-    fun build(tail: Dialog): Dialog {
-        val lastMessage = Message(
-            text = lastMessage.text,
-            view = lastMessage.view,
-            next = tail,
-        )
-        return messages.foldRight(lastMessage) { message, acc ->
-            Message(
-                text = message.text,
-                view = message.view,
-                next = acc,
-            )
+    fun build(tail: Dialog? = null): Dialog {
+        return messages.foldRight(lastMessage.withNext(tail)) { message, acc ->
+            message.withNext(acc)
         }
     }
 }

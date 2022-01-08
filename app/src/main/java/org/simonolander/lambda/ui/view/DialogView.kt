@@ -85,7 +85,7 @@ private fun MessageView(
         ) {
             Image(
                 painterResource(message.speaker.profilePicture),
-                contentDescription = "Robot avatar",
+                contentDescription = "Profile picture",
                 modifier = Modifier
                     .weight(1f, false)
                     .padding(8.dp)

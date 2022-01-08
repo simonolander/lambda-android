@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.simonolander.lambda.domain.Character
 import org.simonolander.lambda.domain.DialogBuilder
 import org.simonolander.lambda.misc.javascript
 import org.simonolander.lambda.misc.lambda
@@ -17,49 +18,6 @@ import org.simonolander.lambda.ui.levels.CodeBlock
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
 val whatIsLambdaCalculusDialog = run {
-    val doesNotKnowProgramming = DialogBuilder()
-        .message("That's alright.")
-        .message("Have you seen functions like f(x)=x+1 in mathematics?")
-        .question(
-            "Are you familiar with functions in mathematics?",
-            "Yes" to null,
-            "No" to null,
-        )
-
-    val noneAbove = DialogBuilder()
-        .message("Oh.")
-        .message("We'll add more languages to the introduction, but that's going to be in the future.")
-        .build(doesNotKnowProgramming)
-
-    val applicationView = @Composable {
-        Box(Modifier.fillMaxSize()) {
-            Column(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            ) {
-                Text(
-                    text = javascript,
-                    style = MaterialTheme.typography.h6,
-                )
-                CodeBlock("(x => x)(y)")
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = lambdaCalculus,
-                    style = MaterialTheme.typography.h6,
-                )
-                CodeBlock("(λ x. x) y")
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "Result",
-                    style = MaterialTheme.typography.h6,
-                )
-                CodeBlock("y")
-            }
-        }
-    }
-
     val knowsJavascript = DialogBuilder()
         .message("$javascript is perfect. As I said, $lambdaCalculus is all about functions.")
         .message("Here's a function in $javascript, and the same function written in $lambdaCalculus.") {
@@ -76,8 +34,9 @@ val whatIsLambdaCalculusDialog = run {
         """.trimIndent())
         .message(
             "Here's an example of a function application. We take the same function we just looked at, and apply it to the argument y.",
-            applicationView,
-        )
+        ) {
+            ApplicationView()
+        }
         .message("In both $javascript and $lambdaCalculus, the result is just y.")
         .message("In $javascript, it's common to define functions with multiple parameters, or none at all!") {
             JavascriptMultipleParameters()
@@ -91,6 +50,35 @@ val whatIsLambdaCalculusDialog = run {
         .message("This new function is then applied to the argument y, which returns the final result.")
         .message("As a side note, plus doesn't exist as a symbol in this way in $lambdaCalculus. We'll revisit that in chapter 3.")
         .build()
+
+    val noneAbove = DialogBuilder()
+        .message("Oh.")
+        .message("Hi, developer here. I'll likely add additional languages for introduction here.",
+            Character.Developer)
+        .message("For now you'll have to make do with $javascript.", Character.Developer)
+        .build(knowsJavascript) // TODO
+
+    val knowsMathematics = DialogBuilder()
+        .message("Hi, developer here. Great that you know mathematical functions.",
+            Character.Developer)
+        .message("Unfortunately, I haven't completed this part of the introduction.", Character.Developer)
+        .message("For now, you'll have to make do with the $javascript introduction.", Character.Developer)
+        .build(knowsJavascript) // TODO
+
+    val doesNotKnowMathematics = DialogBuilder()
+        .message("Hi, developer here. Unfortunately I haven't had time to complete this part of the introduction.",
+            Character.Developer)
+        .message("For now, you'll have to make do with the $javascript introduction.", Character.Developer)
+        .build(knowsJavascript) // TODO
+
+    val doesNotKnowProgramming = DialogBuilder()
+        .message("That's alright.")
+        .message("Have you seen functions like f(x)=x+1 in mathematics?")
+        .question(
+            "Are you familiar with functions in mathematics?",
+            "Yes" to knowsMathematics,
+            "No" to doesNotKnowMathematics,
+        )
 
     val knowsProgramming = DialogBuilder()
         .message("That's great! It will make my job explaining functions easier.")
@@ -113,6 +101,36 @@ val whatIsLambdaCalculusDialog = run {
             "Yes" to knowsProgramming,
             "No" to doesNotKnowProgramming,
         )
+}
+
+@Composable
+private fun ApplicationView() {
+    Box(Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Text(
+                text = javascript,
+                style = MaterialTheme.typography.h6,
+            )
+            CodeBlock("(x => x)(y)")
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = lambdaCalculus,
+                style = MaterialTheme.typography.h6,
+            )
+            CodeBlock("(λ x. x) y")
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "Result",
+                style = MaterialTheme.typography.h6,
+            )
+            CodeBlock("y")
+        }
+    }
 }
 
 @Composable
