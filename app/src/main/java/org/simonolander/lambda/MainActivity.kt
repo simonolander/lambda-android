@@ -104,9 +104,14 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
 
             LevelScreen(
                 levelId = levelId,
-                onLevelCompleted = {
+                onLevelCompleted = { answer ->
                     coroutineScope.launch {
-                        database.solutionDao().insert(Solution(levelId = levelId.value))
+                        database.solutionDao().insert(
+                            Solution(
+                                levelId = levelId.value,
+                                value = answer?.prettyPrint(),
+                            )
+                        )
                     }
                     val nextLevel = Level.nextLevel(levelId)
                     if (nextLevel == null) {

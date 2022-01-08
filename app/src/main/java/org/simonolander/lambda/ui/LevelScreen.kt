@@ -5,9 +5,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import org.simonolander.lambda.domain.Level
 import org.simonolander.lambda.domain.LevelId
+import org.simonolander.lambda.engine.Expression
 
 @Composable
-fun LevelScreen(levelId: LevelId, onLevelCompleted: () -> Unit) {
+fun LevelScreen(levelId: LevelId, onLevelCompleted: (Expression?) -> Unit) {
     Level.findById(levelId)?.view?.invoke(onLevelCompleted)
         ?: LevelNotFound(levelId)
 }
