@@ -1,4 +1,4 @@
-package org.simonolander.lambda.data
+package org.simonolander.lambda.domain
 
 import androidx.compose.ui.text.AnnotatedString
 import org.simonolander.lambda.engine.Expression

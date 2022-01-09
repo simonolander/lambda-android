@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.simonolander.lambda.data.andExercise
+import org.simonolander.lambda.domain.andExercise
 import org.simonolander.lambda.engine.parse
 import org.simonolander.lambda.ui.theme.LambdaTheme
 

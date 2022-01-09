@@ -6,7 +6,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.simonolander.lambda.data.DialogBuilder
+import org.simonolander.lambda.domain.DialogBuilder
 import org.simonolander.lambda.misc.lambda
 import org.simonolander.lambda.misc.lambdaCalculus
 

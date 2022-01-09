@@ -12,8 +12,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.simonolander.lambda.data.Dialog
-import org.simonolander.lambda.data.Message
+import org.simonolander.lambda.domain.Dialog
+import org.simonolander.lambda.domain.Message
+import org.simonolander.lambda.engine.Expression
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
 /**
@@ -23,7 +24,7 @@ import org.simonolander.lambda.ui.theme.LambdaTheme
 @Composable
 fun SimpleDialogLevelView(
     initialDialog: Dialog?,
-    onLevelComplete: () -> Unit,
+    onLevelComplete: (Expression?) -> Unit,
 ) {
     val (dialog, setDialog) = remember(initialDialog) {
         mutableStateOf(initialDialog)
@@ -65,7 +66,7 @@ fun SimpleDialogLevelView(
                     style = MaterialTheme.typography.h2,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = onLevelComplete) {
+                Button(onClick = { onLevelComplete(null) }) {
                     Text(text = "Next level")
                 }
             }

@@ -1,4 +1,4 @@
-package org.simonolander.lambda.data
+package org.simonolander.lambda.domain
 
 data class Chat(
     val messages: List<ChatMessage>,

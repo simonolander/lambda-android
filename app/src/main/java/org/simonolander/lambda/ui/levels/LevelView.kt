@@ -10,8 +10,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import org.simonolander.lambda.data.Exercise
-import org.simonolander.lambda.data.andExercise
+import org.simonolander.lambda.domain.Exercise
+import org.simonolander.lambda.domain.andExercise
 import org.simonolander.lambda.engine.Expression
 import org.simonolander.lambda.ui.ExecutionState
 import org.simonolander.lambda.ui.ExecutionView
@@ -20,7 +20,7 @@ import org.simonolander.lambda.ui.theme.LambdaTheme
 import org.simonolander.lambda.ui.view.DialogView
 
 @Composable
-fun LevelView(exercise: Exercise, onLevelComplete: () -> Unit) {
+fun LevelView(exercise: Exercise, onLevelComplete: (Expression?) -> Unit) {
     val (answer, setAnswer) = remember {
         mutableStateOf<Expression?>(null)
     }
@@ -49,7 +49,7 @@ fun LevelView(exercise: Exercise, onLevelComplete: () -> Unit) {
         val executionViewModel = ExecutionState(exercise, answer)
         ExecutionView(
             state = executionViewModel,
-            onSuccess = onLevelComplete,
+            onSuccess = { onLevelComplete(answer) },
         )
         BackHandler {
             setAnswer(null)

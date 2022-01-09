@@ -1,4 +1,4 @@
-package org.simonolander.lambda.data
+package org.simonolander.lambda.domain
 
 enum class Chapter(
     val id: ChapterId,
@@ -17,7 +17,7 @@ enum class Chapter(
     ),
     BASIC_EXERCISES(
         id = ChapterId("basic-exercises"),
-        title = "Basics",
+        title = "Basic functions",
         levels = listOf(
             Level.IDENTITY,
             Level.CONSTANT_FUNCTION,

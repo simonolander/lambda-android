@@ -5,7 +5,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.SportsScore
 import androidx.compose.runtime.*
@@ -17,9 +16,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import org.simonolander.lambda.R
-import org.simonolander.lambda.data.Dialog
-import org.simonolander.lambda.data.Message
-import org.simonolander.lambda.data.Question
+import org.simonolander.lambda.domain.Character
+import org.simonolander.lambda.domain.Dialog
+import org.simonolander.lambda.domain.Message
+import org.simonolander.lambda.domain.Question
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
 @Composable
@@ -84,10 +84,11 @@ private fun MessageView(
                 .padding(8.dp)
         ) {
             Image(
-                painterResource(R.drawable.robot),
-                contentDescription = "Robot avatar",
+                painterResource(message.speaker.profilePicture),
+                contentDescription = "Profile picture",
                 modifier = Modifier
                     .weight(1f, false)
+                    .padding(8.dp)
                     .aspectRatio(1f)
             )
             Text(

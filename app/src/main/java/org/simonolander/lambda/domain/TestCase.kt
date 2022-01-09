@@ -1,4 +1,4 @@
-package org.simonolander.lambda.data
+package org.simonolander.lambda.domain
 
 import org.simonolander.lambda.engine.Expression
 import org.simonolander.lambda.engine.parse
