@@ -2,6 +2,7 @@ package org.simonolander.lambda.domain
 
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
+import org.simonolander.lambda.content.dialog.booleanDialog
 import org.simonolander.lambda.engine.*
 import org.simonolander.lambda.ui.theme.codeStyle
 
@@ -42,7 +43,8 @@ val trueExercise = run {
                 ),
                 output = a,
             )
-        }
+        },
+        dialog = booleanDialog,
     )
 }
 
