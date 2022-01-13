@@ -7,7 +7,6 @@ import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.simonolander.lambda.domain.DialogBuilder
-import org.simonolander.lambda.misc.lambda
 import org.simonolander.lambda.misc.lambdaCalculus
 
 val helloDialog = run {
@@ -42,7 +41,7 @@ val helloDialog = run {
         }
         .message("Welcome to Lambda!")
         .message("I will be your guide here, as we go through the wondrous world of $lambdaCalculus.")
-        .message("$lambda is a Greek symbol pronounced lambda. Most of the time, I'll write $lambdaCalculus and not lambda calculus.")
+        .message("λ is a Greek symbol pronounced lambda. Most of the time, I'll write $lambdaCalculus and not lambda calculus.")
         .message("First off, how familiar are you with $lambdaCalculus?")
         .question(
             "How familiar are you with $lambdaCalculus?",

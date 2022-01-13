@@ -1,6 +1,10 @@
 package org.simonolander.lambda.domain
 
-import org.simonolander.lambda.content.dialog.*
+import org.simonolander.lambda.content.dialog.applicationSyntaxDialog
+import org.simonolander.lambda.content.dialog.functionSyntaxDialog
+import org.simonolander.lambda.content.dialog.helloDialog
+import org.simonolander.lambda.content.dialog.numbers.naturalNumbersDialog
+import org.simonolander.lambda.content.dialog.whatIsLambdaCalculusDialog
 import org.simonolander.lambda.content.exercise.*
 import org.simonolander.lambda.misc.lambdaCalculus
 import org.simonolander.lambda.ui.levels.LevelView
@@ -95,6 +99,11 @@ enum class Level(
         id = LevelId("xor"),
         title = "Exclusive Or",
         view = { LevelView(xorExercise, it) },
+    ),
+    NATURAL_NUMBERS(
+        id = LevelId("natural-numbers"),
+        title = "Natural numbers",
+        view = { SimpleDialogLevelView(naturalNumbersDialog, it) },
     ),
     ;
 

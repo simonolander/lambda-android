@@ -7,7 +7,6 @@ import org.simonolander.lambda.domain.Exercise
 import org.simonolander.lambda.domain.TestCase
 import org.simonolander.lambda.engine.Application
 import org.simonolander.lambda.engine.Identifier
-import org.simonolander.lambda.misc.lambda
 import org.simonolander.lambda.ui.theme.codeStyle
 
 val identityExercise = run {
@@ -50,7 +49,7 @@ val identityExercise = run {
         .message("Here, you need to enter an the expression that satisfies the given exercise.")
         .message("In this instance, I'm asking you to design the identity function.")
         .message("Write it in the text field called id.")
-        .message("If you don't have a $lambda on your keyboard, you can simply click the icon in the text field.")
+        .message("If you don't have a λ on your keyboard, you can simply click the icon in the text field.")
         .message("Once you're happy with your function, click go and we'll see if it works!")
         .build()
 

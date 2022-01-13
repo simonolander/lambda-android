@@ -40,6 +40,13 @@ enum class Chapter(
             Level.EXCLUSIVE_OR,
         )
     ),
+    NATURAL_NUMBERS(
+        id = ChapterId("church-numerals"),
+        title = "Natural numbers",
+        levels = listOf(
+            Level.NATURAL_NUMBERS,
+        )
+    ),
     ;
 
     companion object {
