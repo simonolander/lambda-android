@@ -45,6 +45,7 @@ enum class Chapter(
         title = "Natural numbers",
         levels = listOf(
             Level.NATURAL_NUMBERS,
+            Level.SUCCESSOR,
         )
     ),
     ;
