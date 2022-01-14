@@ -6,7 +6,8 @@ import org.simonolander.lambda.content.dialog.intro.helloDialog
 import org.simonolander.lambda.content.dialog.intro.whatIsLambdaCalculusDialog
 import org.simonolander.lambda.content.dialog.numbers.naturalNumbersDialog
 import org.simonolander.lambda.content.exercise.*
-import org.simonolander.lambda.content.exercise.numbers.addExercise
+import org.simonolander.lambda.content.exercise.numbers.additionExercise
+import org.simonolander.lambda.content.exercise.numbers.multiplicationExercise
 import org.simonolander.lambda.content.exercise.numbers.successorExercise
 import org.simonolander.lambda.misc.lambdaCalculus
 import org.simonolander.lambda.ui.levels.LevelView
@@ -115,7 +116,12 @@ enum class Level(
     ADDITION(
         id = LevelId("addition"),
         title = "Addition",
-        view = { LevelView(addExercise, it) },
+        view = { LevelView(additionExercise, it) },
+    ),
+    MULTIPLICATION(
+        id = LevelId("multiplication"),
+        title = "Multiplication",
+        view = { LevelView(multiplicationExercise, it) },
     ),
     ;
 

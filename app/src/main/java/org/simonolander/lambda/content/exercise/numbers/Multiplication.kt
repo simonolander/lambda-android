@@ -8,9 +8,9 @@ import org.simonolander.lambda.domain.TestCase
 import org.simonolander.lambda.engine.*
 import org.simonolander.lambda.ui.theme.codeStyle
 
-val addExercise = run {
-    val name = "Addition"
-    val functionName = "add"
+val multiplicationExercise = run {
+    val name = "Multiplication"
+    val functionName = "mult"
     val description = buildAnnotatedString {
         append("Design a function ")
         withStyle(codeStyle) { append(functionName) }
@@ -19,27 +19,29 @@ val addExercise = run {
         append(" and ")
         withStyle(codeStyle) { append("b") }
         append(", and produces ")
-        withStyle(codeStyle) { append("a + b") }
+        withStyle(codeStyle) { append("a · b") }
         append(". ")
         append("\n\n")
         append("For example, ")
         withStyle(codeStyle) { append("$functionName 3 4") }
         append(" should reduce to ")
-        withStyle(codeStyle) { append("7") }
+        withStyle(codeStyle) { append("12") }
         append(".")
     }
 
     val testCases = listOf(
-        "$functionName 1 1" to "2",
-        "$functionName 3 2" to "5",
-        "$functionName 2 0" to "2",
         "$functionName 0 0" to "0",
-        "$functionName 0 4" to "4",
-        "$functionName 3 3" to "6",
+        "$functionName 0 2" to "0",
+        "$functionName 1 0" to "0",
+        "$functionName 1 1" to "1",
+        "$functionName 5 1" to "5",
+        "$functionName 3 2" to "6",
+        "$functionName 4 3" to "12",
     ).map(::TestCase)
 
     val library = mapOf(
         SUCC,
+        ADD,
         churchNumeral(0),
         churchNumeral(1),
         churchNumeral(2),
@@ -47,11 +49,10 @@ val addExercise = run {
         churchNumeral(4),
         churchNumeral(5),
         churchNumeral(6),
+        churchNumeral(12),
     )
 
-    val dialog = DialogBuilder()
-        .message("Lets see if you can use the successor function to create a function that adds two numbers!")
-        .build()
+    val dialog = null
 
     Exercise(
         name = name,

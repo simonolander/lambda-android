@@ -47,6 +47,7 @@ enum class Chapter(
             Level.NATURAL_NUMBERS,
             Level.SUCCESSOR,
             Level.ADDITION,
+            Level.MULTIPLICATION,
         )
     ),
     ;
