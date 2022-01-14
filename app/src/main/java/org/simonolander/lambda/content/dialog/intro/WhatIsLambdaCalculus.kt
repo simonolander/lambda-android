@@ -1,4 +1,4 @@
-package org.simonolander.lambda.content.dialog
+package org.simonolander.lambda.content.dialog.intro
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -25,7 +25,7 @@ val whatIsLambdaCalculusDialog = run {
         .message("As you can see, the function takes an input x, and returns the same value x.")
         .message("The $lambdaCalculus function works the same way.")
         .message("""
-            The ${"λ"} marks the start of a function.
+            The λ marks the start of a function.
             
             The x before the dot is the name of the parameter.
             

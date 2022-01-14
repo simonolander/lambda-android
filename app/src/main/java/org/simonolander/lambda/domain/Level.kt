@@ -1,10 +1,10 @@
 package org.simonolander.lambda.domain
 
-import org.simonolander.lambda.content.dialog.applicationSyntaxDialog
-import org.simonolander.lambda.content.dialog.functionSyntaxDialog
-import org.simonolander.lambda.content.dialog.helloDialog
+import org.simonolander.lambda.content.dialog.intro.applicationSyntaxDialog
+import org.simonolander.lambda.content.dialog.intro.functionSyntaxDialog
+import org.simonolander.lambda.content.dialog.intro.helloDialog
+import org.simonolander.lambda.content.dialog.intro.whatIsLambdaCalculusDialog
 import org.simonolander.lambda.content.dialog.numbers.naturalNumbersDialog
-import org.simonolander.lambda.content.dialog.whatIsLambdaCalculusDialog
 import org.simonolander.lambda.content.exercise.*
 import org.simonolander.lambda.content.exercise.numbers.addExercise
 import org.simonolander.lambda.content.exercise.numbers.successorExercise
