@@ -6,6 +6,7 @@ import org.simonolander.lambda.content.dialog.intro.helloDialog
 import org.simonolander.lambda.content.dialog.intro.whatIsLambdaCalculusDialog
 import org.simonolander.lambda.content.dialog.numbers.naturalNumbersDialog
 import org.simonolander.lambda.content.exercise.basic.*
+import org.simonolander.lambda.content.exercise.booleans.*
 import org.simonolander.lambda.content.exercise.numbers.additionExercise
 import org.simonolander.lambda.content.exercise.numbers.exponentiationExercise
 import org.simonolander.lambda.content.exercise.numbers.multiplicationExercise
@@ -97,7 +98,7 @@ enum class Level(
     IF_THEN_ELSE(
         id = LevelId("if"),
         title = "If-then-else",
-        view = { LevelView(ifExercise, it) },
+        view = { LevelView(ifThenElseExercise, it) },
     ),
     EXCLUSIVE_OR(
         id = LevelId("xor"),

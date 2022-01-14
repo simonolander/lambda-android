@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import org.simonolander.lambda.domain.Exercise
-import org.simonolander.lambda.domain.andExercise
+import org.simonolander.lambda.content.exercise.booleans.andExercise
 import org.simonolander.lambda.engine.Expression
 import org.simonolander.lambda.ui.ExecutionState
 import org.simonolander.lambda.ui.ExecutionView
