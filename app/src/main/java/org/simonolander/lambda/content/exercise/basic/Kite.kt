@@ -1,4 +1,4 @@
-package org.simonolander.lambda.content.exercise
+package org.simonolander.lambda.content.exercise.basic
 
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle

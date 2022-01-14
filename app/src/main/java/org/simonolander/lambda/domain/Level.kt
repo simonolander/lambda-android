@@ -5,7 +5,7 @@ import org.simonolander.lambda.content.dialog.intro.functionSyntaxDialog
 import org.simonolander.lambda.content.dialog.intro.helloDialog
 import org.simonolander.lambda.content.dialog.intro.whatIsLambdaCalculusDialog
 import org.simonolander.lambda.content.dialog.numbers.naturalNumbersDialog
-import org.simonolander.lambda.content.exercise.*
+import org.simonolander.lambda.content.exercise.basic.*
 import org.simonolander.lambda.content.exercise.numbers.additionExercise
 import org.simonolander.lambda.content.exercise.numbers.exponentiationExercise
 import org.simonolander.lambda.content.exercise.numbers.multiplicationExercise
