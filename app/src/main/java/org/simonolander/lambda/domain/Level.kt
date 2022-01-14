@@ -112,9 +112,9 @@ enum class Level(
         title = "Successor",
         view = { LevelView(successorExercise, it) },
     ),
-    ADD(
-        id = LevelId("add"),
-        title = "Add",
+    ADDITION(
+        id = LevelId("addition"),
+        title = "Addition",
         view = { LevelView(addExercise, it) },
     ),
     ;

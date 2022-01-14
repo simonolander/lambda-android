@@ -9,7 +9,7 @@ import org.simonolander.lambda.engine.*
 import org.simonolander.lambda.ui.theme.codeStyle
 
 val addExercise = run {
-    val name = "Add"
+    val name = "Addition"
     val functionName = "add"
     val description = buildAnnotatedString {
         append("Design a function ")
