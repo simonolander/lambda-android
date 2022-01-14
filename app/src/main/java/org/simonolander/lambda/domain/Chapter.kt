@@ -49,6 +49,7 @@ enum class Chapter(
             Level.ADDITION,
             Level.MULTIPLICATION,
             Level.EXPONENTIATION,
+            Level.IS_ZERO,
         )
     ),
     ;

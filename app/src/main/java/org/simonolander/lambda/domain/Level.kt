@@ -7,10 +7,7 @@ import org.simonolander.lambda.content.dialog.intro.whatIsLambdaCalculusDialog
 import org.simonolander.lambda.content.dialog.numbers.naturalNumbersDialog
 import org.simonolander.lambda.content.exercise.basic.*
 import org.simonolander.lambda.content.exercise.booleans.*
-import org.simonolander.lambda.content.exercise.numbers.additionExercise
-import org.simonolander.lambda.content.exercise.numbers.exponentiationExercise
-import org.simonolander.lambda.content.exercise.numbers.multiplicationExercise
-import org.simonolander.lambda.content.exercise.numbers.successorExercise
+import org.simonolander.lambda.content.exercise.numbers.*
 import org.simonolander.lambda.misc.lambdaCalculus
 import org.simonolander.lambda.ui.levels.LevelView
 import org.simonolander.lambda.ui.view.SimpleDialogLevelView
@@ -129,6 +126,11 @@ enum class Level(
         id = LevelId("exponentiation"),
         title = "Exponentiation",
         view = { LevelView(exponentiationExercise, it) },
+    ),
+    IS_ZERO(
+        id = LevelId("is-zero"),
+        title = "Is zero",
+        view = { LevelView(isZeroExercise, it) },
     ),
     ;
 
