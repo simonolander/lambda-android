@@ -48,6 +48,7 @@ enum class Chapter(
             Level.SUCCESSOR,
             Level.ADDITION,
             Level.MULTIPLICATION,
+            Level.EXPONENTIATION,
         )
     ),
     ;

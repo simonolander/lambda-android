@@ -34,6 +34,11 @@ fun churchNumeral(n: Int): Pair<String, Expression> {
     return "$n" to parse("λf x." + "f(".repeat(n) + "x" + ")".repeat(n))
 }
 
+fun churchNumerals(n: Int): Array<Pair<String, Expression>> {
+    assert(n >= 0)
+    return (0..n).map(::churchNumeral).toTypedArray()
+}
+
 // Church pairs
 val PAIR = "pair" to parse("λa b f. f a b")
 val FST = "fst" to parse("λp. p true")
