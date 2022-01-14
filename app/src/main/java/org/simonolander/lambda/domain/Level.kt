@@ -132,6 +132,11 @@ enum class Level(
         title = "Is zero",
         view = { LevelView(isZeroExercise, it) },
     ),
+    PREDECESSOR(
+        id = LevelId("predecessor"),
+        title = "Predecessor",
+        view = { LevelView(predecessorExercise, it) },
+    ),
     ;
 
     companion object {
