@@ -6,6 +6,7 @@ import org.simonolander.lambda.content.dialog.helloDialog
 import org.simonolander.lambda.content.dialog.numbers.naturalNumbersDialog
 import org.simonolander.lambda.content.dialog.whatIsLambdaCalculusDialog
 import org.simonolander.lambda.content.exercise.*
+import org.simonolander.lambda.content.exercise.numbers.addExercise
 import org.simonolander.lambda.content.exercise.numbers.successorExercise
 import org.simonolander.lambda.misc.lambdaCalculus
 import org.simonolander.lambda.ui.levels.LevelView
@@ -110,6 +111,11 @@ enum class Level(
         id = LevelId("successor"),
         title = "Successor",
         view = { LevelView(successorExercise, it) },
+    ),
+    ADD(
+        id = LevelId("add"),
+        title = "Add",
+        view = { LevelView(addExercise, it) },
     ),
     ;
 
