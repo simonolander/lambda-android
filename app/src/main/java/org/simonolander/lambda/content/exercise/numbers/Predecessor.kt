@@ -26,7 +26,7 @@ val predecessorExercise = run {
         withStyle(codeStyle) { append("$functionName 3") }
         append(" should reduce to ")
         withStyle(codeStyle) { append("2") }
-        append(", and")
+        append(", and ")
         withStyle(codeStyle) { append("$functionName 0") }
         append(" should reduce to ")
         withStyle(codeStyle) { append("0") }
