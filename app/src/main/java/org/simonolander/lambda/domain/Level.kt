@@ -132,10 +132,20 @@ enum class Level(
         title = "Is zero",
         view = { LevelView(isZeroExercise, it) },
     ),
+    IS_ODD(
+        id = LevelId("is-idd"),
+        title = "Odd",
+        view = { LevelView(isZeroExercise, it) },
+    ),
     PREDECESSOR(
         id = LevelId("predecessor"),
         title = "Predecessor",
         view = { LevelView(predecessorExercise, it) },
+    ),
+    SUBTRACTION(
+        id = LevelId("subtraction"),
+        title = "Subtraction",
+        view = { LevelView(subtractionExercise, it) },
     ),
     ;
 
