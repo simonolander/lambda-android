@@ -1,12 +1,13 @@
 package org.simonolander.lambda.domain
 
-import org.simonolander.lambda.content.dialog.applicationSyntaxDialog
-import org.simonolander.lambda.content.dialog.functionSyntaxDialog
-import org.simonolander.lambda.content.dialog.helloDialog
+import org.simonolander.lambda.content.dialog.intro.applicationSyntaxDialog
+import org.simonolander.lambda.content.dialog.intro.functionSyntaxDialog
+import org.simonolander.lambda.content.dialog.intro.helloDialog
+import org.simonolander.lambda.content.dialog.intro.whatIsLambdaCalculusDialog
 import org.simonolander.lambda.content.dialog.numbers.naturalNumbersDialog
-import org.simonolander.lambda.content.dialog.whatIsLambdaCalculusDialog
-import org.simonolander.lambda.content.exercise.*
-import org.simonolander.lambda.content.exercise.numbers.successorExercise
+import org.simonolander.lambda.content.exercise.basic.*
+import org.simonolander.lambda.content.exercise.booleans.*
+import org.simonolander.lambda.content.exercise.numbers.*
 import org.simonolander.lambda.misc.lambdaCalculus
 import org.simonolander.lambda.ui.levels.LevelView
 import org.simonolander.lambda.ui.view.SimpleDialogLevelView
@@ -94,7 +95,7 @@ enum class Level(
     IF_THEN_ELSE(
         id = LevelId("if"),
         title = "If-then-else",
-        view = { LevelView(ifExercise, it) },
+        view = { LevelView(ifThenElseExercise, it) },
     ),
     EXCLUSIVE_OR(
         id = LevelId("xor"),
@@ -110,6 +111,51 @@ enum class Level(
         id = LevelId("successor"),
         title = "Successor",
         view = { LevelView(successorExercise, it) },
+    ),
+    ADDITION(
+        id = LevelId("addition"),
+        title = "Addition",
+        view = { LevelView(additionExercise, it) },
+    ),
+    MULTIPLICATION(
+        id = LevelId("multiplication"),
+        title = "Multiplication",
+        view = { LevelView(multiplicationExercise, it) },
+    ),
+    EXPONENTIATION(
+        id = LevelId("exponentiation"),
+        title = "Exponentiation",
+        view = { LevelView(exponentiationExercise, it) },
+    ),
+    IS_ZERO(
+        id = LevelId("is-zero"),
+        title = "Is zero",
+        view = { LevelView(isZeroExercise, it) },
+    ),
+    IS_ODD(
+        id = LevelId("is-idd"),
+        title = "Odd",
+        view = { LevelView(isZeroExercise, it) },
+    ),
+    PREDECESSOR(
+        id = LevelId("predecessor"),
+        title = "Predecessor",
+        view = { LevelView(predecessorExercise, it) },
+    ),
+    SUBTRACTION(
+        id = LevelId("subtraction"),
+        title = "Subtraction",
+        view = { LevelView(subtractionExercise, it) },
+    ),
+    LESS_THAN_OR_EQUAL(
+        id = LevelId("less-than-or-equal"),
+        title = "Less than or equal",
+        view = { LevelView(lessThanOrEqualExercise, it) },
+    ),
+    EQUALS(
+        id = LevelId("equals"),
+        title = "Equals",
+        view = { LevelView(equalExercise, it) },
     ),
     ;
 

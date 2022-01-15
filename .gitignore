@@ -15,4 +15,5 @@
 .cxx
 local.properties
 /secret
-/app
+/app/build
+/app/release

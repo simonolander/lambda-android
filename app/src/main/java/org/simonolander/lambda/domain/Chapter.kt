@@ -46,6 +46,15 @@ enum class Chapter(
         levels = listOf(
             Level.NATURAL_NUMBERS,
             Level.SUCCESSOR,
+            Level.ADDITION,
+            Level.MULTIPLICATION,
+            Level.EXPONENTIATION,
+            Level.IS_ZERO,
+            Level.IS_ODD,
+            Level.PREDECESSOR,
+            Level.SUBTRACTION,
+            Level.LESS_THAN_OR_EQUAL,
+            Level.EQUALS,
         )
     ),
     ;

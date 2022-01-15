@@ -1,4 +1,4 @@
-package org.simonolander.lambda.content.exercise
+package org.simonolander.lambda.content.exercise.numbers
 
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
@@ -8,44 +8,47 @@ import org.simonolander.lambda.domain.TestCase
 import org.simonolander.lambda.engine.*
 import org.simonolander.lambda.ui.theme.codeStyle
 
-val cardinalExercise = run {
-    val name = "Flip"
-    val functionName = "flip"
-
+val equalExercise = run {
+    val name = "Equals"
+    val functionName = "eq"
     val description = buildAnnotatedString {
         append("Design a function ")
         withStyle(codeStyle) { append(functionName) }
-        append(", so that ")
-        withStyle(codeStyle) { append("$functionName f x y") }
-        append(" equals ")
-        withStyle(codeStyle) { append("f y x") }
+        append(", that takes two numbers ")
+        withStyle(codeStyle) { append("a") }
+        append(" and ")
+        withStyle(codeStyle) { append("b") }
+        append(", and produces ")
+        withStyle(codeStyle) { append("a = b") }
         append(".")
         append("\n\n")
         append("For example, ")
-        withStyle(codeStyle) { append("$functionName const x y") }
+        withStyle(codeStyle) { append("$functionName 1 2") }
         append(" should reduce to ")
-        withStyle(codeStyle) { append("y") }
+        withStyle(codeStyle) { append("false") }
+        append(", and ")
+        withStyle(codeStyle) { append("$functionName 2 2") }
+        append(" should reduce to ")
+        withStyle(codeStyle) { append("true") }
         append(".")
     }
 
     val testCases = listOf(
-        "$functionName const x y" to "y",
-        "$functionName const" to "ki",
-        "$functionName ki" to "const",
-        "$functionName apply x id" to "x",
-        "$functionName f x y" to "f y x",
-    ).map(::TestCase)
+        5 to 2,
+        3 to 3,
+        0 to 1,
+    ).map { (a, b) ->
+        TestCase("$functionName $a $b", a == b)
+    }
 
     val library = mapOf(
-        ID,
-        KITE,
-        CONST,
-        APPLY,
+        PRED,
+        SUB,
+        *churchNumerals(5),
     )
 
     val dialog = DialogBuilder()
-        .message("The flip function, or the cardinal as it's sometimes called, is quite handy!")
-        .message("It swaps the first two arguments of a function.")
+        .message("Let's design some comparison functions!")
         .build()
 
     Exercise(
