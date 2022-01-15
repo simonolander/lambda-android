@@ -28,7 +28,7 @@ val isZeroExercise = run {
         withStyle(codeStyle) { append("$functionName 0") }
         append(" should reduce to ")
         withStyle(codeStyle) { append("true") }
-        append(", and")
+        append(", and ")
         withStyle(codeStyle) { append("$functionName 5") }
         append(" should reduce to ")
         withStyle(codeStyle) { append("false") }
