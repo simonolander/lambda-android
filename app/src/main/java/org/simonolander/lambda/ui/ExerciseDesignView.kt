@@ -20,8 +20,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.simonolander.lambda.domain.Exercise
 import org.simonolander.lambda.content.exercise.booleans.andExercise
+import org.simonolander.lambda.domain.Exercise
 import org.simonolander.lambda.engine.Expression
 import org.simonolander.lambda.engine.ParserException
 import org.simonolander.lambda.engine.parse

@@ -29,7 +29,8 @@ fun ChaptersScreen(
     Column(
         modifier = Modifier
             .scrollable(scrollState, Orientation.Vertical)
-            .verticalScroll(scrollState),
+            .verticalScroll(scrollState)
+            .padding(8.dp),
     ) {
         Text(
             text = "Chapters",
