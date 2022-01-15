@@ -14,7 +14,6 @@ val AND = "and" to parse("λa b. a b a")
 val OR = "or" to parse("λa b. a a b")
 val IF = "if" to parse("λp x y. p x y")
 val XOR = "xor" to parse("λa b. a (not b) b") // Alt. λa b. and (or a b) (not (and a b))
-val EQ = "eq" to parse("λa b. not (xor a b)")
 
 // Church numerals
 val SUCC = "succ" to parse("λa f x. f (a f x)")
@@ -28,6 +27,7 @@ val ONE = "1" to parse("λf x. f x")
 val TWO = "2" to parse("λf x. f (f x)")
 val IS_ZERO = "isZero" to parse("λn. n (λx. false) true")
 val LEQ = "leq" to parse("λa b. isZero (sub a b)")
+val EQ = "eq" to parse("λa b. and (leq a b) (leq b a)")
 
 fun churchNumeral(n: Int): Pair<String, Expression> {
     assert(n >= 0)

@@ -121,25 +121,20 @@ class ReducerTest : FunSpec({
 
         context("church numerals") {
             val library = mutableMapOf(
-                "succ" to parse("λa f x. f (a f x)"),
-                "add" to parse("λa b f x. a f (b f x)"),
-                "mult" to parse("λa b f. a (b f)"),
-                "pow" to parse("λa b. b a"),
-                "pred" to parse("λn f x. n (λg h. h (g f)) (λu.x) λu.u"),
-                "sub" to parse("λa b. b pred a"),
-                "0" to parse("λf x. x"),
-                "1" to parse("λf x. f x"),
-                "2" to parse("λf x. f (f x)"),
-                "true" to parse("λa b. a"),
-                "false" to parse("λa b. b"),
-                "isZero" to parse("λn. n (λx. false) true"),
-                "leq" to parse("λa b. isZero (sub a b)"),
+                SUCC,
+                ADD,
+                MULT,
+                POW,
+                PRED,
+                SUB,
+                TRUE,
+                FALSE,
+                AND,
+                IS_ZERO,
+                LEQ,
+                EQ,
+                *churchNumerals(150)
             )
-
-            repeat(150) { index ->
-                val expression = parse("λf x." + "f(".repeat(index) + "x" + ")".repeat(index))
-                library.putIfAbsent(index.toString(), expression)
-            }
 
             context("successor") {
                 listOf(
@@ -264,6 +259,23 @@ class ReducerTest : FunSpec({
                         TestCase(
                             "leq $a $b",
                             "${a <= b}"
+                        )
+                    }
+                checkAll(testCases) { (initial, expected) ->
+                    shouldReduceTo(initial, expected, library)
+                }
+            }
+
+            context("equals") {
+                data class TestCase(
+                    val initial: String,
+                    val expected: String,
+                )
+                val testCases = Arb.pair(Arb.positiveInt(10), Arb.positiveInt(10))
+                    .map { (a, b) ->
+                        TestCase(
+                            "eq $a $b",
+                            "${a == b}"
                         )
                     }
                 checkAll(testCases) { (initial, expected) ->
