@@ -53,6 +53,8 @@ enum class Chapter(
             Level.IS_ODD,
             Level.PREDECESSOR,
             Level.SUBTRACTION,
+            Level.LESS_THAN_OR_EQUAL,
+            Level.EQUALS,
         )
     ),
     ;

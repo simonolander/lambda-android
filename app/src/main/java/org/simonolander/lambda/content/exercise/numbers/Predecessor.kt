@@ -7,6 +7,7 @@ import org.simonolander.lambda.domain.Exercise
 import org.simonolander.lambda.domain.TestCase
 import org.simonolander.lambda.engine.*
 import org.simonolander.lambda.ui.theme.codeStyle
+import kotlin.math.max
 
 val predecessorExercise = run {
     val name = "Predecessor"
@@ -34,11 +35,13 @@ val predecessorExercise = run {
     }
 
     val testCases = listOf(
-        "$functionName 3" to "2",
-        "$functionName 2" to "1",
-        "$functionName 1" to "0",
-        "$functionName 0" to "0",
-    ).map(::TestCase)
+        3,
+        2,
+        1,
+        0,
+    ).map { n ->
+        TestCase("$functionName $n", max(n - 1, 0))
+    }
 
     val library = mapOf(
         TRUE,

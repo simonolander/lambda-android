@@ -36,11 +36,13 @@ val isZeroExercise = run {
     }
 
     val testCases = listOf(
-        "$functionName 0" to "true",
-        "$functionName 1" to "false",
-        "$functionName 2" to "false",
-        "$functionName 3" to "false",
-    ).map(::TestCase)
+        0,
+        1,
+        2,
+        3,
+    ).map { n ->
+        TestCase("$functionName $n", n == 0)
+    }
 
     val library = mapOf(
         TRUE,

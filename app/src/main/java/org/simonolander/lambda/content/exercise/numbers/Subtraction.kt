@@ -46,7 +46,7 @@ val subtractionExercise = run {
         0 to 4,
         1 to 0,
     ).map { (a, b) ->
-        TestCase("$functionName a b", maxOf(a - b, 0))
+        TestCase("$functionName $a $b", maxOf(a - b, 0))
     }
 
     val library = mapOf(

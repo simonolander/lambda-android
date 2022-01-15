@@ -147,6 +147,16 @@ enum class Level(
         title = "Subtraction",
         view = { LevelView(subtractionExercise, it) },
     ),
+    LESS_THAN_OR_EQUAL(
+        id = LevelId("less-than-or-equal"),
+        title = "Less than or equal",
+        view = { LevelView(lessThanOrEqualExercise, it) },
+    ),
+    EQUALS(
+        id = LevelId("equals"),
+        title = "Equals",
+        view = { LevelView(equalExercise, it) },
+    ),
     ;
 
     companion object {
