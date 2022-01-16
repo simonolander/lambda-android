@@ -32,21 +32,21 @@ private fun expression(tokens: Queue<Token>): CSTExpression {
 }
 
 private fun function(tokens: Queue<Token>): CSTFunction {
-    val lambda = tokens.poll() ?: throw ParserException()
+    val lambda = tokens.poll() ?: throw ParserException("Expected a λ, but there's no more expression")
     if (lambda.type != TokenType.Lambda) {
-        throw ParserException()
+        throw ParserException("Expected a λ, but found $lambda")
     }
     val parameters = mutableListOf<CSTIdentifier>()
     while (true) {
-        val identifierOrDot = tokens.poll() ?: throw ParserException()
+        val identifierOrDot = tokens.poll() ?: throw ParserException("Expected either an identifier or a dot, but there's no more expression")
         when (identifierOrDot.type) {
             TokenType.Identifier -> parameters += CSTIdentifier(identifierOrDot.text)
             TokenType.Dot -> break
-            else -> throw ParserException()
+            else -> throw ParserException("Expected either an identifier or a dot, but found $identifierOrDot")
         }
     }
     if (parameters.isEmpty()) {
-        throw ParserException()
+        throw throw ParserException("The function needs at least one parameter")
     }
     val body = expression(tokens)
     return CSTFunction(parameters, body)
