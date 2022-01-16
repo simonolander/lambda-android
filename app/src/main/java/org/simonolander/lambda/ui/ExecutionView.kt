@@ -1,10 +1,15 @@
 package org.simonolander.lambda.ui
 
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.widget.Toast
-import androidx.compose.foundation.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -100,8 +105,14 @@ private fun TestCaseView(testCase: ExecutingTestCase) {
 
 @Composable
 fun TestCaseRunningView(testCase: ExecutingTestCase) {
+    val backgroundColor = if (isSystemInDarkTheme()) {
+        Color(0xFF4A148C)
+    }
+    else {
+        Color(0xFFCBD2F7)
+    }
     Surface(
-        color = Color(0xFFCBD2F7)
+        color = backgroundColor
     ) {
         Row(
             modifier = Modifier
@@ -159,8 +170,14 @@ fun TestCaseRunningView(testCase: ExecutingTestCase) {
 
 @Composable
 fun TestCaseSuccessfulView(testCase: ExecutingTestCase) {
+    val backgroundColor = if (isSystemInDarkTheme()) {
+        Color(0xFF004D40)
+    }
+    else {
+        Color(0xffd3f7cb)
+    }
     Surface(
-        color = Color(0xffd3f7cb)
+        color = backgroundColor
     ) {
         Row(
             modifier = Modifier
@@ -194,8 +211,14 @@ fun TestCaseSuccessfulView(testCase: ExecutingTestCase) {
 
 @Composable
 fun TestCaseFailedView(testCase: ExecutingTestCase) {
+    val backgroundColor = if (isSystemInDarkTheme()) {
+        Color(0xFFBF360C)
+    }
+    else {
+        Color(0xfff7d0cb)
+    }
     Surface(
-        color = Color(0xfff7d0cb)
+        color = backgroundColor
     ) {
         Row(
             modifier = Modifier
@@ -247,8 +270,14 @@ fun TestCaseFailedView(testCase: ExecutingTestCase) {
 
 @Composable
 fun TestCasePendingView(testCase: ExecutingTestCase) {
+    val backgroundColor = if (isSystemInDarkTheme()) {
+        Color(0xFF6F6F6F)
+    }
+    else {
+        Color(0xFFECECEC)
+    }
     Surface(
-        color = Color(0xFFECECEC)
+        color = backgroundColor
     ) {
         Row(
             modifier = Modifier
@@ -282,11 +311,17 @@ private fun ControlView(
     Surface(
         modifier = Modifier.fillMaxWidth()
     ) {
+        val backgroundColor = if (isSystemInDarkTheme()) {
+            Color(36, 36, 36, 255)
+        }
+        else {
+            Color.LightGray
+        }
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .background(Color.LightGray)
+                .background(backgroundColor)
                 .padding(8.dp)
         ) {
             when (state) {
@@ -300,7 +335,8 @@ private fun ControlView(
                 }
                 ExecutionState.State.TERMINATED -> {
                     ResetButton(onReset)
-                    val successful = testCases.all { it.state == ExecutingTestCase.State.SUCCESSFUL }
+                    val successful =
+                        testCases.all { it.state == ExecutingTestCase.State.SUCCESSFUL }
                     if (successful) {
                         Button(onClick = onSuccess) {
                             Text("Next level")
@@ -354,11 +390,17 @@ private fun ControlButton(
     contentDescription: String,
     onClick: () -> Unit,
 ) {
+    val (backgroundColor, contentColor) = if (isSystemInDarkTheme()) {
+        Color.DarkGray to Color.White
+    }
+    else {
+        Color(0xFF555555) to Color.White
+    }
     FloatingActionButton(
         onClick = onClick,
         elevation = FloatingActionButtonDefaults.elevation(0.dp),
-        backgroundColor = Color.DarkGray,
-        contentColor = Color.White,
+        backgroundColor = backgroundColor,
+        contentColor = contentColor,
     ) {
         Icon(
             imageVector = imageVector,
@@ -367,15 +409,15 @@ private fun ControlButton(
     }
 }
 
-@Preview
+@Preview(uiMode = UI_MODE_NIGHT_NO)
 @Composable
 private fun ExecutionScreenPreview() {
     val context = LocalContext.current
     val viewModel = ExecutionState(
         andExercise,
-        solution = parse("\\a b. a b b")
+        solution = parse("\\a b. true")
     )
-    repeat(19) { viewModel.step() }
+    repeat(13) { viewModel.step() }
     LambdaTheme {
         Surface {
             ExecutionView(viewModel, onSuccess = {
