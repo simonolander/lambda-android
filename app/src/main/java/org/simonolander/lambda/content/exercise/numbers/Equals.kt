@@ -44,12 +44,13 @@ val equalExercise = run {
     val library = mapOf(
         PRED,
         SUB,
+        AND,
+        LEQ,
+        OR,
         *churchNumerals(5),
     )
 
-    val dialog = DialogBuilder()
-        .message("Let's design some comparison functions!")
-        .build()
+    val dialog = null
 
     Exercise(
         name = name,
