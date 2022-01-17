@@ -47,6 +47,8 @@ val equalExercise = run {
         AND,
         LEQ,
         OR,
+        IS_ZERO,
+        FALSE,
         *churchNumerals(5),
     )
 
