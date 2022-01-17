@@ -8,9 +8,9 @@ import org.simonolander.lambda.domain.TestCase
 import org.simonolander.lambda.engine.*
 import org.simonolander.lambda.ui.theme.codeStyle
 
-val isZeroExercise = run {
+val zeroExercise = run {
     val name = "Is zero"
-    val functionName = "isZero"
+    val functionName = "zero"
     val description = buildAnnotatedString {
         append("Design a function ")
         withStyle(codeStyle) { append(functionName) }

@@ -45,6 +45,7 @@ val lessThanOrEqualExercise = run {
     val library = mapOf(
         PRED,
         SUB,
+        ZERO,
         *churchNumerals(5),
     )
 

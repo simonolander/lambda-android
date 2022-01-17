@@ -50,7 +50,7 @@ enum class Chapter(
             Level.MULTIPLICATION,
             Level.EXPONENTIATION,
             Level.IS_ZERO,
-            Level.IS_ODD,
+            Level.IS_EVEN,
             Level.PREDECESSOR,
             Level.SUBTRACTION,
             Level.LESS_THAN_OR_EQUAL,

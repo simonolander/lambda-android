@@ -2,13 +2,12 @@ package org.simonolander.lambda.content.exercise.numbers
 
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
-import org.simonolander.lambda.domain.DialogBuilder
 import org.simonolander.lambda.domain.Exercise
 import org.simonolander.lambda.domain.TestCase
 import org.simonolander.lambda.engine.*
 import org.simonolander.lambda.ui.theme.codeStyle
 
-val equalExercise = run {
+val equalsExercise = run {
     val name = "Equals"
     val functionName = "eq"
     val description = buildAnnotatedString {
@@ -47,8 +46,9 @@ val equalExercise = run {
         AND,
         LEQ,
         OR,
-        IS_ZERO,
+        ZERO,
         FALSE,
+        TRUE,
         *churchNumerals(5),
     )
 
