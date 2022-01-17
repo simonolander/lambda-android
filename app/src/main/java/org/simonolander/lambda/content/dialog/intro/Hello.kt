@@ -4,8 +4,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import org.simonolander.lambda.domain.DialogBuilder
 import org.simonolander.lambda.misc.lambdaCalculus
 
@@ -28,19 +30,9 @@ val helloDialog = run {
         .build()
 
     DialogBuilder()
-        .message("Hello!") {
-            Box(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                Text(
-                    text = "👋",
-                    modifier = Modifier.align(Alignment.Center),
-                    style = MaterialTheme.typography.h2
-                )
-            }
-        }
-        .message("Welcome to Lambda!")
-        .message("I will be your guide here, as we go through the wondrous world of $lambdaCalculus.")
+        .message("Hello!") { Wave() }
+        .message("Welcome to my class!")
+        .message("I'm Lambert, and I will be your tutor here as we explore $lambdaCalculus.")
         .message("λ is a Greek symbol pronounced lambda. Most of the time, I'll write $lambdaCalculus and not lambda calculus.")
         .message("First off, how familiar are you with $lambdaCalculus?")
         .question(
@@ -49,4 +41,18 @@ val helloDialog = run {
             "Somewhat familiar" to somewhatFamiliar,
             "Quite familiar" to quiteFamiliar,
         )
+}
+
+@Preview
+@Composable
+private fun Wave() {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Text(
+            text = "👋",
+            modifier = Modifier.align(Alignment.Center),
+            style = MaterialTheme.typography.h2
+        )
+    }
 }
