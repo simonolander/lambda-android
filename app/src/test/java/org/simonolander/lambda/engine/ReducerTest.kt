@@ -8,7 +8,6 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.property.Arb
-import io.kotest.property.PropTestConfig
 import io.kotest.property.arbitrary.map
 import io.kotest.property.arbitrary.pair
 import io.kotest.property.arbitrary.positiveInt
@@ -130,7 +129,7 @@ class ReducerTest : FunSpec({
                 TRUE,
                 FALSE,
                 AND,
-                IS_ZERO,
+                ZERO,
                 LEQ,
                 EQ,
                 *churchNumerals(150)
@@ -240,7 +239,7 @@ class ReducerTest : FunSpec({
                 val testCases = Arb.positiveInt(10)
                     .map { number ->
                         TestCase(
-                            "isZero $number",
+                            "zero $number",
                             "${number == 0}"
                         )
                     }

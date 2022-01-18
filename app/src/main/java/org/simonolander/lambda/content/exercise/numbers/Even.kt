@@ -8,9 +8,9 @@ import org.simonolander.lambda.domain.TestCase
 import org.simonolander.lambda.engine.*
 import org.simonolander.lambda.ui.theme.codeStyle
 
-val oddExercise = run {
-    val name = "Odd numbers"
-    val functionName = "odd"
+val evenExercise = run {
+    val name = "Even numbers"
+    val functionName = "even"
     val description = buildAnnotatedString {
         append("Design a function ")
         withStyle(codeStyle) { append(functionName) }
@@ -18,18 +18,18 @@ val oddExercise = run {
         withStyle(codeStyle) { append("n") }
         append(", and produces ")
         withStyle(codeStyle) { append("true") }
-        append(" if the number is odd, and ")
+        append(" if the number is even, and ")
         withStyle(codeStyle) { append("false") }
-        append(" if the number is even. ")
+        append(" if the number is odd. ")
         append("\n\n")
         append("For example, ")
         withStyle(codeStyle) { append("$functionName 0") }
         append(" should reduce to ")
-        withStyle(codeStyle) { append("false") }
+        withStyle(codeStyle) { append("true") }
         append(", and ")
         withStyle(codeStyle) { append("$functionName 5") }
         append(" should reduce to ")
-        withStyle(codeStyle) { append("true") }
+        withStyle(codeStyle) { append("false") }
         append(".")
     }
 
@@ -40,7 +40,7 @@ val oddExercise = run {
         3,
         5,
     ).map { n ->
-        TestCase("$functionName $n", n % 2 == 1)
+        TestCase("$functionName $n", n % 2 == 0)
     }
 
     val library = mapOf(

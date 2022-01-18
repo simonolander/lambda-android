@@ -48,7 +48,8 @@ val predecessorExercise = run {
         FALSE,
         IF,
         CONST,
-        IS_ZERO,
+        ZERO,
+        ID,
         *churchNumerals(3),
     )
 

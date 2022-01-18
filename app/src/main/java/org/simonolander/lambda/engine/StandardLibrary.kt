@@ -22,8 +22,8 @@ val MULT = "mult" to parse("λa b f. a (b f)")
 val POW = "pow" to parse("λa b. b a")
 val PRED = "pred" to parse("λn f x. n (λg h. h (g f)) (λu.x) λu.u")
 val SUB = "sub" to parse("λa b. b pred a")
-val IS_ZERO = "isZero" to parse("λn. n (λx. false) true")
-val LEQ = "leq" to parse("λa b. isZero (sub a b)")
+val ZERO = "zero" to parse("λn. n (λx. false) true")
+val LEQ = "leq" to parse("λa b. zero (sub a b)")
 val EQ = "eq" to parse("λa b. and (leq a b) (leq b a)")
 
 fun churchNumeral(n: Int): Pair<String, Expression> {

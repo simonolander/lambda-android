@@ -129,13 +129,13 @@ enum class Level(
     ),
     IS_ZERO(
         id = LevelId("is-zero"),
-        title = "Is zero",
-        view = { LevelView(isZeroExercise, it) },
+        title = "Zero",
+        view = { LevelView(zeroExercise, it) },
     ),
-    IS_ODD(
-        id = LevelId("is-idd"),
-        title = "Odd",
-        view = { LevelView(isZeroExercise, it) },
+    IS_EVEN(
+        id = LevelId("is-even"),
+        title = "Even",
+        view = { LevelView(evenExercise, it) },
     ),
     PREDECESSOR(
         id = LevelId("predecessor"),
@@ -155,7 +155,7 @@ enum class Level(
     EQUALS(
         id = LevelId("equals"),
         title = "Equals",
-        view = { LevelView(equalExercise, it) },
+        view = { LevelView(equalsExercise, it) },
     ),
     ;
 
