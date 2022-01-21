@@ -1,5 +1,7 @@
 package org.simonolander.lambda.ui.levels
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,8 +19,18 @@ import org.simonolander.lambda.ui.theme.codeStyle
 
 @Composable
 fun CodeBlock(text: String) {
+    val backgroundColor =
+        if (isSystemInDarkTheme())
+            Color.DarkGray
+        else
+            Color.LightGray
+    val textColor =
+        if (isSystemInDarkTheme())
+            Color.White
+        else
+            Color.Black
     Surface(
-        color = Color.LightGray,
+        color = backgroundColor,
         shape = MaterialTheme.shapes.small,
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -26,15 +38,16 @@ fun CodeBlock(text: String) {
             Text(
                 text = text,
                 style = TextStyle.Default.plus(codeStyle),
+                color = textColor,
             )
         }
     }
 }
 
 @Composable
-@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 fun CodeBlockPreview() {
-    androidx.compose.material.Surface {
+    Surface {
         LambdaTheme {
             CodeBlock(text = """
                 fun functionName(a, b) {
