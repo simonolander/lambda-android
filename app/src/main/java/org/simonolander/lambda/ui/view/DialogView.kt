@@ -1,7 +1,9 @@
 package org.simonolander.lambda.ui.view
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -15,8 +17,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
-import org.simonolander.lambda.R
-import org.simonolander.lambda.domain.Character
 import org.simonolander.lambda.domain.Dialog
 import org.simonolander.lambda.domain.Message
 import org.simonolander.lambda.domain.Question
@@ -80,7 +80,7 @@ private fun MessageView(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(width = 8.dp, color = Color.LightGray)
+                .border(width = 8.dp, color = borderColor(isSystemInDarkTheme()))
                 .padding(8.dp)
         ) {
             Image(
@@ -128,7 +128,7 @@ private fun QuestionView(question: Question, onNextDialog: (Dialog?) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .defaultMinSize(minHeight = 200.dp)
-            .border(width = 8.dp, color = Color.LightGray),
+            .border(width = 8.dp, color = borderColor(isSystemInDarkTheme())),
     ) {
         Column(
             modifier = Modifier
@@ -154,8 +154,15 @@ private fun QuestionView(question: Question, onNextDialog: (Dialog?) -> Unit) {
     }
 }
 
+private fun borderColor(isSystemInDarkTheme: Boolean): Color {
+    return if (isSystemInDarkTheme)
+        Color.DarkGray
+    else
+        Color.LightGray
+}
+
 @Composable
-@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 private fun MessageViewPreview() {
     val message = Message(
         "In mathematics, Church encoding is a means of representing data and operators in the lambda calculus.",
@@ -169,7 +176,7 @@ private fun MessageViewPreview() {
 }
 
 @Composable
-@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 private fun QuestionViewPreview() {
     val question = Question(
         "How familiar are you with lambda calculus?",
