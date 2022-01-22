@@ -10,3 +10,6 @@ const val javascript = "Javascript"
 fun String.nonBreaking(): String =
     replace(' ', ' ')
         .replace('-', '‑')
+
+fun pair(a: Any, b: Any) =
+    "⟨$a, $b⟩".nonBreaking()

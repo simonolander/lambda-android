@@ -5,6 +5,7 @@ import org.simonolander.lambda.content.dialog.intro.functionSyntaxDialog
 import org.simonolander.lambda.content.dialog.intro.helloDialog
 import org.simonolander.lambda.content.dialog.intro.whatIsLambdaCalculusDialog
 import org.simonolander.lambda.content.dialog.numbers.naturalNumbersDialog
+import org.simonolander.lambda.content.dialog.pair.pairsDialog
 import org.simonolander.lambda.content.exercise.basic.*
 import org.simonolander.lambda.content.exercise.booleans.*
 import org.simonolander.lambda.content.exercise.numbers.*
@@ -156,6 +157,11 @@ enum class Level(
         id = LevelId("equals"),
         title = "Equals",
         view = { LevelView(equalsExercise, it) },
+    ),
+    PAIRS(
+        id = LevelId("pairs"),
+        title = "Defining the pair",
+        view = { SimpleDialogLevelView(pairsDialog, it) },
     ),
     ;
 
