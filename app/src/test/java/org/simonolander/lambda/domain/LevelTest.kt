@@ -5,9 +5,15 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldHaveSingleElement
 import io.kotest.matchers.shouldBe
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.filter
+import io.kotest.property.arbitrary.map
+import io.kotest.property.arbitrary.string
+import io.kotest.property.forAll
 
 class LevelTest : FunSpec({
     val levels = Level.values().toList()
+    val chapters = Chapter.values().toList()
     test("levels should have unique ids") {
         levels.forAll { level ->
             withClue("There should only be one level with id $level") {
@@ -26,6 +32,23 @@ class LevelTest : FunSpec({
         levels.zipWithNext()
             .forAll { (l1, l2) ->
                 Level.nextLevel(l1.id) shouldBe l2
+            }
+    }
+
+    test("isLastInChapter should return whether the given id is the last level in any chapter") {
+        val lastLevelIds = chapters.mapNotNull { it.levels.lastOrNull()?.id }
+        levels.map { it.id }
+            .forAll { levelId ->
+                Level.isLastInChapter(levelId) shouldBe (levelId in lastLevelIds)
+            }
+    }
+
+    context("isLastInChapter of unknown level id should return false") {
+        Arb.string()
+            .map { LevelId(it) }
+            .filter { Level.findById(it) == null }
+            .forAll(1) { nonExistingLevelId ->
+                !Level.isLastInChapter(nonExistingLevelId)
             }
     }
 

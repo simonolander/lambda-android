@@ -177,5 +177,11 @@ enum class Level(
                 .drop(1)
                 .firstOrNull()
         }
+
+        fun isLastInChapter(id: LevelId): Boolean {
+            return Chapter.values()
+                .mapNotNull { it.levels.lastOrNull() }
+                .any { it.id == id }
+        }
     }
 }
