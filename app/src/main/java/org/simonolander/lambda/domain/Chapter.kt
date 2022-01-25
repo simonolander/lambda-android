@@ -62,6 +62,8 @@ enum class Chapter(
         title = "Pairs",
         levels = listOf(
             Level.PAIRS,
+            Level.FIRST,
+            Level.SECOND,
         )
     ),
     ;

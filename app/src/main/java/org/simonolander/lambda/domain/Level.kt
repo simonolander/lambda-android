@@ -9,6 +9,8 @@ import org.simonolander.lambda.content.dialog.pair.pairsDialog
 import org.simonolander.lambda.content.exercise.basic.*
 import org.simonolander.lambda.content.exercise.booleans.*
 import org.simonolander.lambda.content.exercise.numbers.*
+import org.simonolander.lambda.content.exercise.pairs.firstExercise
+import org.simonolander.lambda.content.exercise.pairs.secondExercise
 import org.simonolander.lambda.misc.lambdaCalculus
 import org.simonolander.lambda.ui.levels.LevelView
 import org.simonolander.lambda.ui.view.SimpleDialogLevelView
@@ -162,6 +164,16 @@ enum class Level(
         id = LevelId("pairs"),
         title = "Defining the pair",
         view = { SimpleDialogLevelView(pairsDialog, it) },
+    ),
+    FIRST(
+        id = LevelId("fst"),
+        title = "First",
+        view = { LevelView(firstExercise, it) },
+    ),
+    SECOND(
+        id = LevelId("snd"),
+        title = "Second",
+        view = { LevelView(secondExercise, it) },
     ),
     ;
 

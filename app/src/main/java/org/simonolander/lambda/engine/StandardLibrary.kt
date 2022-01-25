@@ -5,6 +5,7 @@ val ID = "id" to parse("λ x. x")
 val CONST = "const" to parse("λx y. x")
 val KITE = "ki" to parse("λx y. y")
 val APPLY = "apply" to parse("λf x. f x")
+val FLIP = "flip" to parse("λf a b. f b a")
 
 // Boolean logic
 val TRUE = "true" to parse("λa b. a")
