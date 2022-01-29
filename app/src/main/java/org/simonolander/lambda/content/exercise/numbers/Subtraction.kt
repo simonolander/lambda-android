@@ -5,7 +5,8 @@ import androidx.compose.ui.text.withStyle
 import org.simonolander.lambda.domain.DialogBuilder
 import org.simonolander.lambda.domain.Exercise
 import org.simonolander.lambda.domain.TestCase
-import org.simonolander.lambda.engine.*
+import org.simonolander.lambda.engine.PRED
+import org.simonolander.lambda.engine.churchNumerals
 import org.simonolander.lambda.ui.theme.codeStyle
 
 val subtractionExercise = run {

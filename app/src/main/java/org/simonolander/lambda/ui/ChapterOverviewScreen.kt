@@ -20,7 +20,10 @@ import org.simonolander.lambda.ui.theme.LambdaTheme
 
 @ExperimentalMaterialApi
 @Composable
-fun ChapterOverviewScreen(chapters: Array<Chapter> = Chapter.values(), onNavigateLevel: (LevelId) -> Unit = {}) {
+fun ChapterOverviewScreen(
+    chapters: Array<Chapter> = Chapter.values(),
+    onNavigateLevel: (LevelId) -> Unit = {},
+) {
     val listState = rememberLazyListState()
     val context = LocalContext.current
     val db = remember {

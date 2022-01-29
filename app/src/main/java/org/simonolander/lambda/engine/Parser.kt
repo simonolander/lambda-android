@@ -32,13 +32,15 @@ private fun expression(tokens: Queue<Token>): CSTExpression {
 }
 
 private fun function(tokens: Queue<Token>): CSTFunction {
-    val lambda = tokens.poll() ?: throw ParserException("Expected a λ, but there's no more expression")
+    val lambda =
+        tokens.poll() ?: throw ParserException("Expected a λ, but there's no more expression")
     if (lambda.type != TokenType.Lambda) {
         throw ParserException("Expected a λ, but found $lambda")
     }
     val parameters = mutableListOf<CSTIdentifier>()
     while (true) {
-        val identifierOrDot = tokens.poll() ?: throw ParserException("Expected either an identifier or a dot, but there's no more expression")
+        val identifierOrDot = tokens.poll()
+            ?: throw ParserException("Expected either an identifier or a dot, but there's no more expression")
         when (identifierOrDot.type) {
             TokenType.Identifier -> parameters += CSTIdentifier(identifierOrDot.text)
             TokenType.Dot -> break
@@ -72,7 +74,8 @@ private fun application(tokens: Queue<Token>): CSTExpression {
 }
 
 private fun identifier(tokens: Queue<Token>): CSTIdentifier {
-    val identifier = tokens.poll() ?: throw ParserException("Expected an identifier, but there's no more expression")
+    val identifier = tokens.poll()
+        ?: throw ParserException("Expected an identifier, but there's no more expression")
     if (identifier.type != TokenType.Identifier) {
         throw throw ParserException("Expected an identifier, but found $identifier")
     }
@@ -80,12 +83,14 @@ private fun identifier(tokens: Queue<Token>): CSTIdentifier {
 }
 
 private fun parenthesizedExpression(tokens: Queue<Token>): CSTParenthesizedExpression {
-    val leftParenthesis = tokens.poll() ?: throw ParserException("Expected a left parenthesis, but there's no more expression")
+    val leftParenthesis = tokens.poll()
+        ?: throw ParserException("Expected a left parenthesis, but there's no more expression")
     if (leftParenthesis.type != TokenType.LeftParenthesis) {
         throw ParserException("Expected a left parenthesis, but found $leftParenthesis")
     }
     val expr = expression(tokens)
-    val rightParenthesis = tokens.poll() ?: throw ParserException("Expected a right parenthesis, but there's no more expression")
+    val rightParenthesis = tokens.poll()
+        ?: throw ParserException("Expected a right parenthesis, but there's no more expression")
     if (rightParenthesis.type != TokenType.RightParenthesis) {
         throw ParserException("Expected a right parenthesis, but found $leftParenthesis")
     }

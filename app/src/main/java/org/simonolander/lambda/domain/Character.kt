@@ -5,8 +5,8 @@ import org.simonolander.lambda.R
 
 enum class Character(
     @DrawableRes
-    val profilePicture: Int
-){
+    val profilePicture: Int,
+) {
     Lambert(R.drawable.lambert),
     Developer(R.drawable.simon),
 }

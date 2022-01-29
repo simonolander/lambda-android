@@ -16,7 +16,7 @@ fun normalize(
 
 fun reduceAll(
     expression: Expression,
-    library: Map<String, Expression> = emptyMap()
+    library: Map<String, Expression> = emptyMap(),
 ): Sequence<Reduction> {
     return generateSequence(
         seedFunction = { reduceOnce(expression, library) },
@@ -103,7 +103,8 @@ private fun alphaRename(search: String, replace: Expression, subject: Expression
             val functionReduction = alphaRename(search, replace, function)
             if (functionReduction != null) {
                 ApplicationFunctionReduction(functionReduction, argument)
-            } else {
+            }
+            else {
                 alphaRename(search, replace, argument)?.let {
                     ApplicationArgumentReduction(function, it)
                 }
@@ -114,7 +115,8 @@ private fun alphaRename(search: String, replace: Expression, subject: Expression
             if (parameterName in replace.freeVariables) {
                 val newParameterName = nextName(subject.freeVariables + replace.freeVariables)
                 AlphaRenaming(subject, subject.unsafeRenameParameter(newParameterName))
-            } else {
+            }
+            else {
                 alphaRename(search, replace, body)?.let {
                     FunctionBodyReduction(parameterName, it)
                 }
