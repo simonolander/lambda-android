@@ -1,7 +1,5 @@
 package org.simonolander.lambda.ui.screen
 
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -18,6 +16,7 @@ import org.simonolander.lambda.domain.ChapterId
 import org.simonolander.lambda.domain.Level
 import org.simonolander.lambda.domain.LevelId
 import org.simonolander.lambda.ui.theme.LambdaTheme
+import org.simonolander.lambda.ui.view.scrollableNoFling
 
 @Composable
 fun ChapterScreen(
@@ -49,7 +48,7 @@ fun ChapterView(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .scrollable(scrollState, Orientation.Vertical)
+            .scrollableNoFling(scrollState)
             .verticalScroll(scrollState)
             .padding(8.dp)
     ) {

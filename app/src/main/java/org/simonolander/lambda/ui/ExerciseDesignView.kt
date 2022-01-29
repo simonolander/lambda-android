@@ -1,8 +1,6 @@
 package org.simonolander.lambda.ui
 
 import android.widget.Toast
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
@@ -27,6 +25,7 @@ import org.simonolander.lambda.engine.ParserException
 import org.simonolander.lambda.engine.parse
 import org.simonolander.lambda.ui.theme.LambdaTheme
 import org.simonolander.lambda.ui.theme.codeStyle
+import org.simonolander.lambda.ui.view.scrollableNoFling
 
 @Composable
 fun ExerciseDesignView(exercise: Exercise, onSubmit: (Expression) -> Unit) {
@@ -53,7 +52,7 @@ fun ExerciseDesignView(exercise: Exercise, onSubmit: (Expression) -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .padding(10.dp)
-            .scrollable(scrollState, Orientation.Vertical)
+            .scrollableNoFling(scrollState)
             .verticalScroll(scrollState)
     ) {
         Text(

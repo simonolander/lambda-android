@@ -18,6 +18,8 @@ import org.simonolander.lambda.domain.ChapterId
 import org.simonolander.lambda.domain.Level
 import org.simonolander.lambda.domain.LevelId
 import org.simonolander.lambda.ui.theme.LambdaTheme
+import org.simonolander.lambda.ui.view.NoFlingBehaviour
+import org.simonolander.lambda.ui.view.scrollableNoFling
 
 @Composable
 fun ChaptersScreen(
@@ -28,7 +30,7 @@ fun ChaptersScreen(
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
-            .scrollable(scrollState, Orientation.Vertical)
+            .scrollableNoFling(scrollState)
             .verticalScroll(scrollState)
             .padding(8.dp),
     ) {

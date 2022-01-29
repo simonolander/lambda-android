@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import org.simonolander.lambda.content.exercise.booleans.andExercise
 import org.simonolander.lambda.engine.parse
 import org.simonolander.lambda.ui.theme.LambdaTheme
+import org.simonolander.lambda.ui.view.scrollableNoFling
 
 @Composable
 fun ExecutionView(
@@ -43,7 +44,7 @@ fun ExecutionView(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp)
-                .scrollable(scrollState, Orientation.Vertical)
+                .scrollableNoFling(scrollState)
                 .verticalScroll(scrollState)
                 .weight(1f)
         ) {
