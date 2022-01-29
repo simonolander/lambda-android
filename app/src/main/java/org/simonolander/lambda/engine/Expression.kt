@@ -65,7 +65,8 @@ data class Function(
     fun unsafeRenameParameter(newParameterName: String): Function {
         return if (newParameterName == parameterName) {
             this
-        } else {
+        }
+        else {
             Function(
                 newParameterName, body.substitute(
                     parameterName,
@@ -99,7 +100,8 @@ data class Function(
                     unsafeRenameParameter(other.parameterName).body
                 )
                 else -> {
-                    val newParameterName = nextName(unsafeParameterNames + other.unsafeParameterNames)
+                    val newParameterName =
+                        nextName(unsafeParameterNames + other.unsafeParameterNames)
                     val thisBody = unsafeRenameParameter(newParameterName).body
                     val otherBody = other.unsafeRenameParameter(newParameterName).body
                     thisBody.alphaEquals(otherBody)

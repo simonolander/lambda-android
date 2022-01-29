@@ -158,7 +158,8 @@ fun expressionArb(boundNames: List<String>, maxDepth: Int): Arb<Expression> {
     ) {
         if (maxDepth <= 1) {
             identifierArb(boundNames).bind()
-        } else {
+        }
+        else {
             when (val case = it.random.nextInt(3)) {
                 0 -> identifierArb(boundNames).bind()
                 1 -> functionArb(boundNames, maxDepth).bind()
@@ -174,7 +175,8 @@ fun identifierArb(boundNames: List<String>): Arb<Identifier> {
         if (boundNames.isNotEmpty() && Arb.boolean().bind()) {
             val name = Arb.element(boundNames).bind()
             Identifier(name)
-        } else {
+        }
+        else {
             val name = parameterNameArb(boundNames).bind()
             Identifier(name)
         }

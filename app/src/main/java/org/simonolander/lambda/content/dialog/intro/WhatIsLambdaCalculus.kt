@@ -60,14 +60,17 @@ val whatIsLambdaCalculusDialog = run {
     val knowsMathematics = DialogBuilder()
         .message("Hi, developer here. Great that you know mathematical functions.",
             Character.Developer)
-        .message("Unfortunately, I haven't completed this part of the introduction.", Character.Developer)
-        .message("For now, you'll have to make do with the $javascript introduction.", Character.Developer)
+        .message("Unfortunately, I haven't completed this part of the introduction.",
+            Character.Developer)
+        .message("For now, you'll have to make do with the $javascript introduction.",
+            Character.Developer)
         .build(knowsJavascript) // TODO
 
     val doesNotKnowMathematics = DialogBuilder()
         .message("Hi, developer here. Unfortunately I haven't had time to complete this part of the introduction.",
             Character.Developer)
-        .message("For now, you'll have to make do with the $javascript introduction.", Character.Developer)
+        .message("For now, you'll have to make do with the $javascript introduction.",
+            Character.Developer)
         .build(knowsJavascript) // TODO
 
     val doesNotKnowProgramming = DialogBuilder()

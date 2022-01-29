@@ -9,8 +9,8 @@ import androidx.room.RoomDatabase
     entities = [Solution::class],
     version = 1
 )
-abstract class LambdaDatabase: RoomDatabase() {
-    abstract fun solutionDao() : SolutionDao
+abstract class LambdaDatabase : RoomDatabase() {
+    abstract fun solutionDao(): SolutionDao
 
     companion object {
         private var instance: LambdaDatabase? = null

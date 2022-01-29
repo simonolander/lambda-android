@@ -2,7 +2,9 @@ package org.simonolander.lambda.ui.levels
 
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -10,8 +12,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import org.simonolander.lambda.domain.Exercise
 import org.simonolander.lambda.content.exercise.booleans.andExercise
+import org.simonolander.lambda.domain.Exercise
 import org.simonolander.lambda.engine.Expression
 import org.simonolander.lambda.ui.ExecutionState
 import org.simonolander.lambda.ui.ExecutionView

@@ -14,7 +14,8 @@ import org.simonolander.lambda.misc.lambdaCalculus
 val helloDialog = run {
     val notAtAll = DialogBuilder()
         .message("Cool!")
-        .message("I hope I'll be able to give you a nice introduction.")
+        .message("The λ in $lambdaCalculus is a Greek symbol called lambda.")
+        .message("Most of the time, I'll say $lambdaCalculus and not lambda calculus.")
         .message("You'll get a hang of things in no time!")
         .build()
 
@@ -26,14 +27,13 @@ val helloDialog = run {
     val quiteFamiliar = DialogBuilder()
         .message("Great!")
         .message("In that case, the first few lessons will be a breeze.")
-        .message("I hope you'll find the game entertaining regardless.")
+        .message("I hope you'll find the game entertaining.")
         .build()
 
     DialogBuilder()
         .message("Hello!") { Wave() }
-        .message("Welcome to my class!")
-        .message("I'm Lambert, and I will be your tutor here as we explore $lambdaCalculus.")
-        .message("λ is a Greek symbol pronounced lambda. Most of the time, I'll write $lambdaCalculus and not lambda calculus.")
+        .message("Are you here to learn about $lambdaCalculus?")
+        .message("Great! I'm Lambert, and I will be your guide.")
         .message("First off, how familiar are you with $lambdaCalculus?")
         .question(
             "How familiar are you with $lambdaCalculus?",

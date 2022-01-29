@@ -57,6 +57,15 @@ enum class Chapter(
             Level.EQUALS,
         )
     ),
+    PAIRS(
+        id = ChapterId("pairs"),
+        title = "Pairs",
+        levels = listOf(
+            Level.PAIRS,
+            Level.FIRST,
+            Level.SECOND,
+        )
+    ),
     ;
 
     companion object {

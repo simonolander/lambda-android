@@ -4,4 +4,12 @@ const val lambda = "λ"
 const val lambdaCalculus = "λ‑calculus" // Non-breaking dash
 const val javascript = "Javascript"
 
-fun String.nonBreaking(): String = replace(" ", " ")
+/**
+ * Replace spaces and dashes with their non-breaking counterparts
+ */
+fun String.nonBreaking(): String =
+    replace(' ', ' ')
+        .replace('-', '‑')
+
+fun pair(a: Any, b: Any) =
+    "⟨$a, $b⟩".nonBreaking()

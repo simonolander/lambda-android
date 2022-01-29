@@ -114,7 +114,7 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
                         )
                     }
                     val nextLevel = Level.nextLevel(levelId)
-                    if (nextLevel == null) {
+                    if (nextLevel == null || Level.isLastInChapter(levelId)) {
                         val navOptions = NavOptions.Builder()
                             .setPopUpTo("chapters", true)
                             .build()

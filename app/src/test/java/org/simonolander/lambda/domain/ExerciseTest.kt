@@ -6,6 +6,8 @@ import io.kotest.matchers.shouldBe
 import org.simonolander.lambda.content.exercise.basic.*
 import org.simonolander.lambda.content.exercise.booleans.*
 import org.simonolander.lambda.content.exercise.numbers.*
+import org.simonolander.lambda.content.exercise.pairs.firstExercise
+import org.simonolander.lambda.content.exercise.pairs.secondExercise
 import org.simonolander.lambda.engine.normalize
 import org.simonolander.lambda.engine.parse
 import org.simonolander.lambda.engine.shouldBeAlphaEquivalentTo
@@ -37,6 +39,8 @@ class ExerciseTest : FunSpec({
             predecessorExercise to "λn f x. n (λg h. h (g f)) (const x) id",
             subtractionExercise to "λa b. b pred a",
             successorExercise to "λn f x. f (n f x)",
+            firstExercise to "flip apply true",
+            secondExercise to "flip apply false",
         ).forEach { (exercise, solution) ->
             test(exercise.name) {
                 val library = exercise.library + (exercise.functionName to parse(solution))

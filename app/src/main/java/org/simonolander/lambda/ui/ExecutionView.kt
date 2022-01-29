@@ -1,11 +1,8 @@
 package org.simonolander.lambda.ui
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -25,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import org.simonolander.lambda.content.exercise.booleans.andExercise
 import org.simonolander.lambda.engine.parse
 import org.simonolander.lambda.ui.theme.LambdaTheme
+import org.simonolander.lambda.ui.view.scrollableNoFling
 
 @Composable
 fun ExecutionView(
@@ -43,7 +41,7 @@ fun ExecutionView(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp)
-                .scrollable(scrollState, Orientation.Vertical)
+                .scrollableNoFling(scrollState)
                 .verticalScroll(scrollState)
                 .weight(1f)
         ) {

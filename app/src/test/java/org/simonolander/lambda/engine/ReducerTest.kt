@@ -26,7 +26,9 @@ class ReducerTest : FunSpec({
                 fail("$expression did not reduce in $maxDepth steps")
             }
             val actual = actualReductions.last().after
-            withClue("`$expression` should reduce to `$expectedString` but was `$actual`\nreductions:\n${actualReductions.joinToString("\n") {it.prettyPrint()}}") {
+            withClue("`$expression` should reduce to `$expectedString` but was `$actual`\nreductions:\n${
+                actualReductions.joinToString("\n") { it.prettyPrint() }
+            }") {
                 val expected = normalize(parse(expectedString), library, maxDepth)
                 expected.shouldNotBeNull()
                 actual.alphaEquals(expected) shouldBe true
@@ -37,7 +39,11 @@ class ReducerTest : FunSpec({
             shouldEqual(initial to expected, library)
         }
 
-        fun shouldReduceTo(initial: String, expected: Expression, library: Map<String, Expression>) {
+        fun shouldReduceTo(
+            initial: String,
+            expected: Expression,
+            library: Map<String, Expression>,
+        ) {
             shouldEqual(initial to expected.toString(), library)
         }
 
@@ -236,6 +242,7 @@ class ReducerTest : FunSpec({
                     val initial: String,
                     val expected: String,
                 )
+
                 val testCases = Arb.positiveInt(10)
                     .map { number ->
                         TestCase(
@@ -253,6 +260,7 @@ class ReducerTest : FunSpec({
                     val initial: String,
                     val expected: String,
                 )
+
                 val testCases = Arb.pair(Arb.positiveInt(10), Arb.positiveInt(10))
                     .map { (a, b) ->
                         TestCase(
@@ -270,6 +278,7 @@ class ReducerTest : FunSpec({
                     val initial: String,
                     val expected: String,
                 )
+
                 val testCases = Arb.pair(Arb.positiveInt(10), Arb.positiveInt(10))
                     .map { (a, b) ->
                         TestCase(
