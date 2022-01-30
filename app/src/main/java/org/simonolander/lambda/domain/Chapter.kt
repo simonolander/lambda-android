@@ -10,7 +10,8 @@ enum class Chapter(
         title = "Introduction",
         levels = listOf(
             Level.HELLO,
-            Level.WHAT_IS_LAMBDA_CALCULUS,
+            Level.FUNCTIONS_AND_APPLICATIONS,
+            Level.IDENTITY,
             Level.APPLICATION_SYNTAX,
             Level.FUNCTION_SYNTAX,
         )
@@ -19,7 +20,6 @@ enum class Chapter(
         id = ChapterId("basic-exercises"),
         title = "Basic functions",
         levels = listOf(
-            Level.IDENTITY,
             Level.CONSTANT_FUNCTION,
             Level.KESTREL,
             Level.KITE,
