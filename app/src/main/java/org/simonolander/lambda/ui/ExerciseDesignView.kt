@@ -8,7 +8,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -23,6 +22,7 @@ import org.simonolander.lambda.domain.Exercise
 import org.simonolander.lambda.engine.Expression
 import org.simonolander.lambda.engine.ParserException
 import org.simonolander.lambda.engine.parse
+import org.simonolander.lambda.ui.theme.Lambda
 import org.simonolander.lambda.ui.theme.LambdaTheme
 import org.simonolander.lambda.ui.theme.codeStyle
 import org.simonolander.lambda.ui.view.scrollableNoFling
@@ -89,7 +89,7 @@ fun ExerciseDesignView(exercise: Exercise, onSubmit: (Expression) -> Unit) {
                     )
                 }) {
                     Icon(
-                        imageVector = Icons.Default.Favorite,
+                        imageVector = Icons.Filled.Lambda,
                         contentDescription = "Insert λ"
                     )
                 }
