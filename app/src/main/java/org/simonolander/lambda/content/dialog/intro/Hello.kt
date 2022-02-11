@@ -32,7 +32,7 @@ val helloDialog = run {
 
     DialogBuilder()
         .message("Hello!") { Wave() }
-        .message("I'm Lambert, and welcome to my lecture on $lambdaCalculus!")
+        .message("I'm Lambert, welcome to my lecture on $lambdaCalculus!")
         .message("First off, how familiar are you with $lambdaCalculus?")
         .question(
             "How familiar are you with $lambdaCalculus?",

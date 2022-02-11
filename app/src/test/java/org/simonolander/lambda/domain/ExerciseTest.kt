@@ -3,6 +3,7 @@ package org.simonolander.lambda.domain
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
+import org.simonolander.lambda.content.Chapter
 import org.simonolander.lambda.content.exercise.basic.*
 import org.simonolander.lambda.content.exercise.booleans.*
 import org.simonolander.lambda.content.exercise.numbers.*

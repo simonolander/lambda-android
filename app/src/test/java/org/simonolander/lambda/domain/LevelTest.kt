@@ -10,6 +10,8 @@ import io.kotest.property.arbitrary.filter
 import io.kotest.property.arbitrary.map
 import io.kotest.property.arbitrary.string
 import io.kotest.property.forAll
+import org.simonolander.lambda.content.Chapter
+import org.simonolander.lambda.content.Level
 
 class LevelTest : FunSpec({
     val levels = Level.values().toList()

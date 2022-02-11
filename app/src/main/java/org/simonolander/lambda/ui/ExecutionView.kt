@@ -336,9 +336,7 @@ private fun ControlView(
                     val successful =
                         testCases.all { it.state == ExecutingTestCase.State.SUCCESSFUL }
                     if (successful) {
-                        Button(onClick = onSuccess) {
-                            Text("Next level")
-                        }
+                        FinishButton(onSuccess)
                     }
                 }
             }
@@ -369,6 +367,15 @@ private fun RunButton(onClick: () -> Unit) {
     ControlButton(
         imageVector = Icons.Default.PlayArrow,
         contentDescription = "Run",
+        onClick = onClick,
+    )
+}
+
+@Composable
+private fun FinishButton(onClick: () -> Unit) {
+    ControlButton(
+        imageVector = Icons.Default.SportsScore,
+        contentDescription = "Finish lesson",
         onClick = onClick,
     )
 }

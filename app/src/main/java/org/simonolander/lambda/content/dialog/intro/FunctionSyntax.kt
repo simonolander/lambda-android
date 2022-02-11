@@ -33,13 +33,16 @@ val functionSyntaxDialog = run {
 
 @Composable
 private fun FunctionParentheses() {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp),
-    ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Text(
+                text = "Function parentheses",
+                style = MaterialTheme.typography.h4,
+            )
             Text(
                 text = lambdaCalculus,
                 style = MaterialTheme.typography.h5,
@@ -86,7 +89,7 @@ private fun FunctionParentheses() {
 
 @Preview
 @Composable
-private fun ApplicationSyntaxDialogPreview() {
+private fun FunctionParenthesesPreview() {
     Surface {
         LambdaTheme {
             FunctionParentheses()

@@ -3,7 +3,7 @@ package org.simonolander.lambda.ui
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import org.simonolander.lambda.domain.Level
+import org.simonolander.lambda.content.Level
 import org.simonolander.lambda.domain.LevelId
 import org.simonolander.lambda.engine.Expression
 

@@ -13,8 +13,8 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.simonolander.lambda.database.LambdaDatabase
-import org.simonolander.lambda.domain.Chapter
-import org.simonolander.lambda.domain.Level
+import org.simonolander.lambda.content.Chapter
+import org.simonolander.lambda.content.Level
 import org.simonolander.lambda.domain.LevelId
 import org.simonolander.lambda.ui.theme.LambdaTheme
 

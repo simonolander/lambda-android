@@ -5,6 +5,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldHaveSingleElement
 import io.kotest.matchers.shouldBe
+import org.simonolander.lambda.content.Chapter
 
 class ChapterTest : FunSpec({
     val chapters = Chapter.values().toList()

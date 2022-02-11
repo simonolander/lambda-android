@@ -44,9 +44,8 @@ val identityExercise = run {
     }
 
     val dialog = DialogBuilder()
-        .message("Hello!")
-        .message("Enough talking, it's time for some action!")
-        .message("Here, you need to enter an the expression that satisfies the given exercise.")
+        .message("Hello! Enough talking, it's time for some action!")
+        .message("Here, you need to enter an expression that satisfies the given exercise.")
         .message("In this instance, I'm asking you to design the identity function.")
         .message("Write it in the text field called id.")
         .message("If you don't have a λ on your keyboard, you can simply click the icon in the text field.")
