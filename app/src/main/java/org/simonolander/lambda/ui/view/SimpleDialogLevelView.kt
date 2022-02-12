@@ -1,6 +1,8 @@
 package org.simonolander.lambda.ui.view
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -35,7 +37,13 @@ fun SimpleDialogLevelView(
     }
 
     if (dialog != null) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        val scrollState = rememberScrollState()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .scrollableNoFling(scrollState)
+                .verticalScroll(scrollState)
+        ) {
             Box(Modifier.weight(1f)) {
                 view?.invoke()
             }

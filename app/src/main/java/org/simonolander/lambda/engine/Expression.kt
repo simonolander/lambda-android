@@ -3,15 +3,23 @@ package org.simonolander.lambda.engine
 sealed interface Expression {
     val freeVariables: Set<String>
     val functions: Set<Function>
+    val deBruijnExpression: DeBruijnExpression
 
     fun substitute(search: String, replace: Expression): Expression
     fun prettyPrint(): String
-    fun alphaEquals(other: Expression): Boolean
+    fun alphaEquals(other: Expression): Boolean {
+        return deBruijnExpression == other.deBruijnExpression
+    }
 }
 
 data class Identifier(val name: String) : Expression {
     override val freeVariables = setOf(name)
+
     override val functions = emptySet<Function>()
+
+    override val deBruijnExpression: FreeIdentifier by lazy {
+        FreeIdentifier(name)
+    }
 
     override fun substitute(search: String, replace: Expression): Expression {
         return when (search) {
@@ -22,14 +30,6 @@ data class Identifier(val name: String) : Expression {
 
     override fun prettyPrint(): String {
         return name
-    }
-
-    override fun alphaEquals(other: Expression): Boolean {
-        return when (other) {
-            is Application -> false
-            is Function -> false
-            is Identifier -> other.name == name
-        }
     }
 
     override fun toString(): String {
@@ -47,6 +47,10 @@ data class Function(
 
     override val functions by lazy {
         body.functions + this
+    }
+
+    override val deBruijnExpression by lazy {
+        DeBruijnFunction(body.deBruijnExpression.bind(parameterName))
     }
 
     val unsafeParameterNames by lazy {
@@ -87,29 +91,6 @@ data class Function(
         return "λ $parameterName. ${body.prettyPrint()}"
     }
 
-    override fun alphaEquals(other: Expression): Boolean {
-        return when (other) {
-            is Application -> false
-            is Identifier -> false
-            is Function -> when {
-                other.parameterName == parameterName -> body.alphaEquals(other.body)
-                parameterName !in other.unsafeParameterNames -> body.alphaEquals(
-                    other.unsafeRenameParameter(parameterName).body
-                )
-                other.parameterName !in unsafeParameterNames -> other.body.alphaEquals(
-                    unsafeRenameParameter(other.parameterName).body
-                )
-                else -> {
-                    val newParameterName =
-                        nextName(unsafeParameterNames + other.unsafeParameterNames)
-                    val thisBody = unsafeRenameParameter(newParameterName).body
-                    val otherBody = other.unsafeRenameParameter(newParameterName).body
-                    thisBody.alphaEquals(otherBody)
-                }
-            }
-        }
-    }
-
     override fun toString(): String {
         return "λ $parameterName. $body"
     }
@@ -125,6 +106,9 @@ data class Application(
 
     override val functions by lazy {
         function.functions + argument.functions
+    }
+    override val deBruijnExpression by lazy {
+        DeBruijnApplication(function.deBruijnExpression, argument.deBruijnExpression)
     }
 
     override fun substitute(search: String, replace: Expression): Expression {
@@ -149,14 +133,6 @@ data class Application(
             else -> argument.prettyPrint()
         }
         return "$f $a"
-    }
-
-    override fun alphaEquals(other: Expression): Boolean {
-        return when (other) {
-            is Application -> function.alphaEquals(other.function) && argument.alphaEquals(other.argument)
-            is Function -> false
-            is Identifier -> false
-        }
     }
 
     override fun toString(): String {

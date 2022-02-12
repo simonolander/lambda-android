@@ -1,9 +1,6 @@
-package org.simonolander.lambda.domain
+package org.simonolander.lambda.content
 
-import org.simonolander.lambda.content.dialog.intro.applicationSyntaxDialog
-import org.simonolander.lambda.content.dialog.intro.functionSyntaxDialog
-import org.simonolander.lambda.content.dialog.intro.helloDialog
-import org.simonolander.lambda.content.dialog.intro.whatIsLambdaCalculusDialog
+import org.simonolander.lambda.content.dialog.intro.*
 import org.simonolander.lambda.content.dialog.numbers.naturalNumbersDialog
 import org.simonolander.lambda.content.dialog.pair.pairsDialog
 import org.simonolander.lambda.content.exercise.basic.*
@@ -11,7 +8,8 @@ import org.simonolander.lambda.content.exercise.booleans.*
 import org.simonolander.lambda.content.exercise.numbers.*
 import org.simonolander.lambda.content.exercise.pairs.firstExercise
 import org.simonolander.lambda.content.exercise.pairs.secondExercise
-import org.simonolander.lambda.misc.lambdaCalculus
+import org.simonolander.lambda.domain.LevelId
+import org.simonolander.lambda.domain.LevelViewComposable
 import org.simonolander.lambda.ui.levels.LevelView
 import org.simonolander.lambda.ui.view.SimpleDialogLevelView
 
@@ -25,20 +23,10 @@ enum class Level(
         title = "Hello",
         view = { SimpleDialogLevelView(helloDialog, it) },
     ),
-    WHAT_IS_LAMBDA_CALCULUS(
-        id = LevelId("what-is-lambda-calculus"),
-        title = "What is $lambdaCalculus",
-        view = { SimpleDialogLevelView(whatIsLambdaCalculusDialog, it) },
-    ),
-    APPLICATION_SYNTAX(
-        id = LevelId("application-syntax"),
-        title = "Application Syntax",
-        view = { SimpleDialogLevelView(applicationSyntaxDialog, it) },
-    ),
-    FUNCTION_SYNTAX(
-        id = LevelId("function-syntax"),
-        title = "Function Syntax",
-        view = { SimpleDialogLevelView(functionSyntaxDialog, it) },
+    FUNCTIONS_AND_APPLICATIONS(
+        id = LevelId("functions"),
+        title = "Functions and applications",
+        view = { SimpleDialogLevelView(functionsAndApplicationsDialog, it) },
     ),
     IDENTITY(
         id = LevelId("identity"),
@@ -50,6 +38,11 @@ enum class Level(
         title = "Constant function",
         view = { LevelView(constantExercise, it) },
     ),
+    CURRYING(
+        id = LevelId("currying"),
+        title = "Currying",
+        view = { SimpleDialogLevelView(curryingDialog, it) },
+    ),
     KESTREL(
         id = LevelId("kestrel"),
         title = "Const",
@@ -60,6 +53,11 @@ enum class Level(
         title = "Kite",
         view = { LevelView(kiteExercise, it) },
     ),
+    APPLICATION_SYNTAX(
+        id = LevelId("application-syntax"),
+        title = "Application Syntax",
+        view = { SimpleDialogLevelView(applicationSyntaxDialog, it) },
+    ),
     APPLICATOR(
         id = LevelId("applicator"),
         title = "Apply",
@@ -69,6 +67,11 @@ enum class Level(
         id = LevelId("cardinal"),
         title = "Flip",
         view = { LevelView(cardinalExercise, it) },
+    ),
+    FUNCTION_SYNTAX(
+        id = LevelId("function-syntax"),
+        title = "Function Syntax",
+        view = { SimpleDialogLevelView(functionSyntaxDialog, it) },
     ),
     TRUE(
         id = LevelId("true"),

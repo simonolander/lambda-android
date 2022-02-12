@@ -1,4 +1,6 @@
-package org.simonolander.lambda.domain
+package org.simonolander.lambda.content
+
+import org.simonolander.lambda.domain.ChapterId
 
 enum class Chapter(
     val id: ChapterId,
@@ -10,21 +12,16 @@ enum class Chapter(
         title = "Introduction",
         levels = listOf(
             Level.HELLO,
-            Level.WHAT_IS_LAMBDA_CALCULUS,
-            Level.APPLICATION_SYNTAX,
-            Level.FUNCTION_SYNTAX,
-        )
-    ),
-    BASIC_EXERCISES(
-        id = ChapterId("basic-exercises"),
-        title = "Basic functions",
-        levels = listOf(
+            Level.FUNCTIONS_AND_APPLICATIONS,
             Level.IDENTITY,
             Level.CONSTANT_FUNCTION,
+            Level.CURRYING,
             Level.KESTREL,
             Level.KITE,
+            Level.APPLICATION_SYNTAX,
             Level.APPLICATOR,
             Level.CARDINAL,
+            Level.FUNCTION_SYNTAX,
         )
     ),
     BOOLEAN_LOGIC(

@@ -14,14 +14,15 @@ import androidx.compose.ui.unit.dp
 import org.simonolander.lambda.domain.DialogBuilder
 import org.simonolander.lambda.misc.javascript
 import org.simonolander.lambda.misc.lambdaCalculus
+import org.simonolander.lambda.ui.levels.CodeBlock
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
 val applicationSyntaxDialog = run {
     DialogBuilder()
-        .message("Hi! In this lesson, we're going to go through some $lambdaCalculus syntax.")
+        .message("Hi! In this lesson, we're going to go through some more $lambdaCalculus syntax.")
         .message("First, let's take a look at parentheses.")
         .message("Parentheses are used to control the order of application.")
-        .message("In the previous lesson, we looked at the expression f x y.") {
+        .message("In a previous lesson, we looked at the expression f x y.") {
             JavascriptFunctionApplicationParentheses()
         }
         .message("Here are three examples of how parentheses change the order of application.")
@@ -42,13 +43,16 @@ val applicationSyntaxDialog = run {
 
 @Composable
 private fun JavascriptFunctionApplicationParentheses() {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp),
-    ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Text(
+                text = "Application order",
+                style = MaterialTheme.typography.h4,
+            )
             Row(Modifier.fillMaxWidth()) {
                 Text(
                     text = lambdaCalculus,
@@ -61,41 +65,23 @@ private fun JavascriptFunctionApplicationParentheses() {
                     modifier = Modifier.weight(1f),
                 )
             }
-            Row(Modifier.fillMaxWidth()) {
-                Text(
-                    text = "f x y",
-                    style = TextStyle(fontFamily = FontFamily.Monospace),
-                    modifier = Modifier.weight(1f),
-                )
-                Text(
-                    text = "f(x)(y)",
-                    style = TextStyle(fontFamily = FontFamily.Monospace),
-                    modifier = Modifier.weight(1f),
-                )
-            }
-            Row(Modifier.fillMaxWidth()) {
-                Text(
-                    text = "(f x) y",
-                    style = TextStyle(fontFamily = FontFamily.Monospace),
-                    modifier = Modifier.weight(1f),
-                )
-                Text(
-                    text = "(f(x))(y)",
-                    style = TextStyle(fontFamily = FontFamily.Monospace),
-                    modifier = Modifier.weight(1f),
-                )
-            }
-            Row(Modifier.fillMaxWidth()) {
-                Text(
-                    text = "f (x y)",
-                    style = TextStyle(fontFamily = FontFamily.Monospace),
-                    modifier = Modifier.weight(1f),
-                )
-                Text(
-                    text = "f(x(y))",
-                    style = TextStyle(fontFamily = FontFamily.Monospace),
-                    modifier = Modifier.weight(1f),
-                )
+            listOf(
+                "f x y" to "f(x)(y)",
+                "(f x) y" to "(f(x))(y)",
+                "f (x y)" to "f(x(y))",
+            ).forEach { (lc, js) ->
+                Row(Modifier.fillMaxWidth()) {
+                    Text(
+                        text = lc,
+                        style = TextStyle(fontFamily = FontFamily.Monospace),
+                        modifier = Modifier.weight(1f),
+                    )
+                    Text(
+                        text = js,
+                        style = TextStyle(fontFamily = FontFamily.Monospace),
+                        modifier = Modifier.weight(1f),
+                    )
+                }
             }
         }
     }
@@ -103,13 +89,16 @@ private fun JavascriptFunctionApplicationParentheses() {
 
 @Composable
 private fun JavascriptFunctionApplicationMaximalParentheses() {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp),
-    ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Text(
+                text = "Parentheses",
+                style = MaterialTheme.typography.h4,
+            )
             Text(
                 text = lambdaCalculus,
                 style = MaterialTheme.typography.h5,
@@ -152,7 +141,16 @@ private fun JavascriptFunctionApplicationMaximalParentheses() {
 
 @Preview
 @Composable
-private fun ApplicationSyntaxDialogPreview() {
+private fun JavascriptFunctionApplicationParenthesesPreview() {
+    Surface {
+        LambdaTheme {
+            JavascriptFunctionApplicationParentheses()
+        }
+    }
+}
+@Preview
+@Composable
+private fun JavascriptFunctionApplicationMaximalParenthesesPreview() {
     Surface {
         LambdaTheme {
             JavascriptFunctionApplicationMaximalParentheses()

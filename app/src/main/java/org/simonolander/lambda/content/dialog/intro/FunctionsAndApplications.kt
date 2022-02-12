@@ -16,7 +16,7 @@ import org.simonolander.lambda.misc.lambdaCalculus
 import org.simonolander.lambda.ui.levels.CodeBlock
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
-val whatIsLambdaCalculusDialog = run {
+val functionsAndApplicationsDialog = run {
     val knowsJavascript = DialogBuilder()
         .message("$javascript is perfect. As I said, $lambdaCalculus is all about functions.")
         .message("Here's a function in $javascript, and the same function written in $lambdaCalculus.") {
@@ -37,17 +37,7 @@ val whatIsLambdaCalculusDialog = run {
             ApplicationView()
         }
         .message("In both $javascript and $lambdaCalculus, the result is just y.")
-        .message("In $javascript, it's common to define functions with multiple parameters, or none at all!") {
-            JavascriptMultipleParameters()
-        }
-        .message("In $lambdaCalculus, functions always have exactly one parameter.")
-        .message("Functions with zero parameters simply don't exist, and functions with two or more parameters are created through currying.")
-        .message("Here are examples of curried functions in $javascript and $lambdaCalculus.") {
-            JavascriptCurrying()
-        }
-        .message("You can see that in both cases, the function f is applied first to the argument x, creating a new function.")
-        .message("This new function is then applied to the argument y, which returns the final result.")
-        .message("As a side note, plus doesn't exist as a symbol in this way in $lambdaCalculus. We'll revisit that in chapter 3.")
+        .message("Take a moment to understand the application, and we'll do some exercises next!")
         .build()
 
     val noneAbove = DialogBuilder()
@@ -94,7 +84,7 @@ val whatIsLambdaCalculusDialog = run {
     DialogBuilder()
         .message("Welcome to lesson 2! What is $lambdaCalculus about?")
         .message("At its core, $lambdaCalculus is a tiny symbol manipulation framework.")
-        .message("It's used for describing computation. Fun fact: any computation can be described using $lambdaCalculus!")
+        .message("It's used for describing computation. In fact, any computation can be described using $lambdaCalculus!")
         .message("But we're getting ahead of ourselves.")
         .message("$lambdaCalculus is all about functions.")
         .message("Before we dive deeper, I would like to know if you're familiar with some programming language.")
@@ -110,25 +100,28 @@ private fun ApplicationView() {
     Box(Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
-                .align(Alignment.Center)
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
             Text(
+                text = "Applying functions",
+                style = MaterialTheme.typography.h4,
+            )
+            Text(
                 text = javascript,
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.h5,
             )
             CodeBlock("(x => x)(y)")
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = lambdaCalculus,
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.h5,
             )
             CodeBlock("(λ x. x) y")
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "Result",
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.h5,
             )
             CodeBlock("y")
         }
@@ -140,101 +133,34 @@ private fun JavascriptIdentityFunction() {
     Box(Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
-                .align(Alignment.Center)
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
             Text(
+                text = "Example function",
+                style = MaterialTheme.typography.h4,
+            )
+            Text(
                 text = javascript,
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.h5,
             )
             CodeBlock("x => x")
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = lambdaCalculus,
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.h5,
             )
             CodeBlock("λ x. x")
         }
     }
 }
 
-@Composable
-private fun JavascriptMultipleParameters() {
-    Box(Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .fillMaxWidth()
-                .padding(8.dp)
-        ) {
-            Text(
-                text = javascript,
-                style = MaterialTheme.typography.h6,
-            )
-            CodeBlock("""
-                    // 2 parameters
-                    (x, y) => x + y
-                """.trimIndent())
-            Spacer(modifier = Modifier.height(8.dp))
-            CodeBlock("""
-                    // 0 parameters
-                    () => console.log('Hi')
-                """.trimIndent())
-        }
-    }
-}
-
-@Composable
-private fun JavascriptCurrying() {
-    Box(Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .fillMaxWidth()
-                .padding(8.dp)
-        ) {
-            Text(
-                text = javascript,
-                style = MaterialTheme.typography.h6,
-            )
-            Text(
-                text = "A curried function",
-                style = MaterialTheme.typography.caption,
-            )
-            CodeBlock("x => y => x + y")
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "Application of curried function f to two arguments",
-                style = MaterialTheme.typography.caption,
-            )
-            CodeBlock("f(x)(y)")
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = lambdaCalculus,
-                style = MaterialTheme.typography.h6,
-            )
-            Text(
-                text = "A curried function",
-                style = MaterialTheme.typography.caption,
-            )
-            CodeBlock("λ x. (λ y. (x + y))")
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "Application of curried function f to two arguments",
-                style = MaterialTheme.typography.caption,
-            )
-            CodeBlock("f x y")
-        }
-    }
-}
-
 @Preview
 @Composable
-private fun WhatIsLambdaCalculusPreview() {
+private fun FunctionsAndApplicationsPreview() {
     Surface {
         LambdaTheme {
-            JavascriptCurrying()
+            ApplicationView()
         }
     }
 }

@@ -9,7 +9,7 @@ import org.simonolander.lambda.misc.lambdaCalculus
 import org.simonolander.lambda.ui.theme.codeStyle
 
 val kestrelExercise = run {
-    val name = "Const (or kestrel)"
+    val name = "Const"
     val functionName = "const"
 
     val description = buildAnnotatedString {
