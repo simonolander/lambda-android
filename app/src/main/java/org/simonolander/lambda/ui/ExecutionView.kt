@@ -27,7 +27,7 @@ import org.simonolander.lambda.ui.view.scrollableNoFling
 @Composable
 fun ExecutionView(
     state: ExecutionState,
-    onSuccess: () -> Unit,
+    onFinish: () -> Unit,
 ) {
     val exercise = state.exercise
     val testCases = state.executingTestCases
@@ -85,7 +85,7 @@ fun ExecutionView(
             onRun = { state.run(coroutineScope) },
             onPause = state::pause,
             onStep = state::step,
-            onSuccess = onSuccess,
+            onSuccess = onFinish,
             onReset = state::reset,
         )
     }
@@ -417,17 +417,15 @@ private fun ControlButton(
 @Preview(uiMode = UI_MODE_NIGHT_NO)
 @Composable
 private fun ExecutionScreenPreview() {
-    val context = LocalContext.current
     val viewModel = ExecutionState(
-        andExercise,
-        solution = parse("\\a b. true")
+        exercise = andExercise,
+        solution = parse("\\a b. true"),
+        onSuccess = {}
     )
     repeat(13) { viewModel.step() }
     LambdaTheme {
         Surface {
-            ExecutionView(viewModel, onSuccess = {
-                Toast.makeText(context, "onSuccess called", Toast.LENGTH_SHORT).show()
-            })
+            ExecutionView(viewModel, {})
         }
     }
 }

@@ -26,7 +26,8 @@ import org.simonolander.lambda.ui.theme.LambdaTheme
 @Composable
 fun SimpleDialogLevelView(
     initialDialog: Dialog?,
-    onLevelComplete: (Expression?) -> Unit,
+    onLevelCompleted: (Expression?) -> Unit,
+    onNavigateToNextLevel: () -> Unit,
 ) {
     val (dialog, setDialog) = remember(initialDialog) {
         mutableStateOf(initialDialog)
@@ -51,9 +52,12 @@ fun SimpleDialogLevelView(
                 DialogView(
                     dialog = dialog,
                     animationSpeed = 30f,
-                    onNextDialog = {
-                        setDialog(it)
-                        setView((it as? Message)?.view ?: view)
+                    onNextDialog = { nextDialog ->
+                        setDialog(nextDialog)
+                        setView((nextDialog as? Message)?.view ?: view)
+                        if (nextDialog == null) {
+                            onLevelCompleted(null)
+                        }
                     }
                 )
             }
@@ -74,7 +78,7 @@ fun SimpleDialogLevelView(
                     style = MaterialTheme.typography.h2,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = { onLevelComplete(null) }) {
+                Button(onClick = { onNavigateToNextLevel() }) {
                     Text(text = "Next level")
                 }
             }
@@ -88,7 +92,7 @@ fun SimpleDialogLevelView(
 private fun SimpleDialogLevelViewPreview() {
     Surface {
         LambdaTheme {
-            SimpleDialogLevelView(initialDialog = null) {}
+            SimpleDialogLevelView(null, {}, {})
         }
     }
 }

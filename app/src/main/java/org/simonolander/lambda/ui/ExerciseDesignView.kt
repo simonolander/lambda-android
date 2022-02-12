@@ -1,6 +1,5 @@
 package org.simonolander.lambda.ui
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
@@ -28,7 +27,11 @@ import org.simonolander.lambda.ui.theme.codeStyle
 import org.simonolander.lambda.ui.view.scrollableNoFling
 
 @Composable
-fun ExerciseDesignView(exercise: Exercise, onSubmit: (Expression) -> Unit) {
+fun ExerciseDesignView(
+    exercise: Exercise,
+    onSubmit: (Expression) -> Unit,
+    onParseError: (ParserException) -> Unit,
+) {
     var solutionValue by remember {
         mutableStateOf(TextFieldValue())
     }
@@ -44,6 +47,7 @@ fun ExerciseDesignView(exercise: Exercise, onSubmit: (Expression) -> Unit) {
             onSubmit(expression)
         }
         catch (e: ParserException) {
+            onParseError(e)
             parserException = e
         }
     }
@@ -57,7 +61,7 @@ fun ExerciseDesignView(exercise: Exercise, onSubmit: (Expression) -> Unit) {
     ) {
         Text(
             text = exercise.name,
-            style = MaterialTheme.typography.h2,
+            style = MaterialTheme.typography.h3,
         )
         Text(
             text = exercise.description,
@@ -149,9 +153,7 @@ private fun DefaultPreview() {
     val context = LocalContext.current
     LambdaTheme {
         Surface {
-            ExerciseDesignView(exercise = andExercise) {
-                Toast.makeText(context, it.prettyPrint(), Toast.LENGTH_SHORT).show()
-            }
+            ExerciseDesignView(exercise = andExercise, {}, {})
         }
     }
 }

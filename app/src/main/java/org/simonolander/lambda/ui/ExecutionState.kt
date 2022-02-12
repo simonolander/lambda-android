@@ -45,6 +45,7 @@ data class ExecutingTestCase(
 class ExecutionState(
     val exercise: Exercise,
     val solution: Expression,
+    val onSuccess: () -> Unit,
 ) {
     var executingTestCases by mutableStateOf(exercise.testCases.map { ExecutingTestCase(it) })
         private set
@@ -93,6 +94,10 @@ class ExecutionState(
                 ExecutingTestCase.State.SUCCESSFUL -> false
                 ExecutingTestCase.State.FAILED -> false
             }
+        }
+
+        if (executingTestCases.all { it.state == ExecutingTestCase.State.SUCCESSFUL }) {
+            onSuccess()
         }
 
         if (index == -1) {
