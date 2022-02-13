@@ -6,6 +6,7 @@ package org.simonolander.lambda.domain
  * Events should be recorded.
  */
 enum class EventType(val id: String) {
-    CompletedExercise(id = "completed-exercise"),
-    ParseError(id = "parse-error"),
+    COMPLETED_EXERCISE("completed-exercise"),
+    PARSE_ERROR("parse-error"),
+    SUCCESSFUL_EXERCISE_SUBMISSION("successful-exercise-submission"),
 }

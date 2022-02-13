@@ -134,23 +134,25 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
                 }
             }
 
+            val onEvent: suspend (EventType) -> Boolean = { eventType ->
+                val parseErrorEventsExist = eventDao
+                    .hasEvent(eventType)
+                    .firstOrNull()
+                    ?: false
+                if (parseErrorEventsExist) {
+                    false
+                }
+                else {
+                    eventDao.insert(Event(type = eventType))
+                    true
+                }
+            }
+
             LevelScreen(
                 levelId = levelId,
                 onLevelCompleted = onLevelCompleted,
                 onNavigateToNextLevel = onNavigateToNextLevel,
-                onParseError = suspend {
-                    val parseErrorEventsExist = eventDao
-                        .hasEvent(type = EventType.ParseError)
-                        .firstOrNull()
-                        ?: false
-                    if (parseErrorEventsExist) {
-                        false
-                    }
-                    else {
-                        eventDao.insert(Event(type = EventType.ParseError))
-                        true
-                    }
-                }
+                onEvent = onEvent
             )
         }
     }

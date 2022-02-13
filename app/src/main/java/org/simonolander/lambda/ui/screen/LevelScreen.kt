@@ -16,10 +16,10 @@ import org.simonolander.lambda.content.exercise.numbers.*
 import org.simonolander.lambda.content.exercise.pairs.firstExercise
 import org.simonolander.lambda.content.exercise.pairs.secondExercise
 import org.simonolander.lambda.domain.Dialog
+import org.simonolander.lambda.domain.EventType
 import org.simonolander.lambda.domain.Exercise
 import org.simonolander.lambda.domain.LevelId
 import org.simonolander.lambda.engine.Expression
-import org.simonolander.lambda.engine.ParserException
 import org.simonolander.lambda.ui.levels.LevelView
 import org.simonolander.lambda.ui.theme.LambdaTheme
 import org.simonolander.lambda.ui.view.SimpleDialogLevelView
@@ -29,7 +29,7 @@ fun LevelScreen(
     levelId: LevelId,
     onLevelCompleted: (Expression?) -> Unit,
     onNavigateToNextLevel: () -> Unit,
-    onParseError: suspend () -> Boolean,
+    onEvent: suspend (EventType) -> Boolean,
 ) {
     val level = Level.findById(levelId)
     if (level == null) {
@@ -51,7 +51,7 @@ fun LevelScreen(
                 exercise = exercise,
                 onLevelCompleted = onLevelCompleted,
                 onNavigateToNextLevel = onNavigateToNextLevel,
-                onParseError = onParseError,
+                onEvent = onEvent,
             )
         }
 

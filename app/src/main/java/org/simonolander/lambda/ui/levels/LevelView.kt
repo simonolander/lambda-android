@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.launch
 import org.simonolander.lambda.content.exercise.booleans.andExercise
 import org.simonolander.lambda.domain.DialogBuilder
+import org.simonolander.lambda.domain.EventType
 import org.simonolander.lambda.domain.Exercise
 import org.simonolander.lambda.engine.Expression
 import org.simonolander.lambda.misc.lambda
@@ -28,7 +29,7 @@ fun LevelView(
     exercise: Exercise,
     onLevelCompleted: (Expression?) -> Unit,
     onNavigateToNextLevel: () -> Unit,
-    onParseError: suspend () -> Boolean,
+    onEvent: suspend (EventType) -> Boolean,
 ) {
     val (answer, setAnswer) = remember {
         mutableStateOf<Expression?>(null)
@@ -40,16 +41,30 @@ fun LevelView(
 
     val coroutineScope = rememberCoroutineScope()
 
-    if (answer == null) {
-        Column(Modifier.fillMaxSize()) {
-            Box(modifier = Modifier.weight(1f)) {
+    Column(Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.weight(1f)) {
+            if (answer == null) {
                 ExerciseDesignView(
                     exercise = exercise,
-                    onSubmit = setAnswer,
+                    onSubmit = { answer ->
+                        setAnswer(answer)
+                        coroutineScope.launch {
+                            val firstEvent = onEvent(EventType.SUCCESSFUL_EXERCISE_SUBMISSION)
+                            if (firstEvent) {
+                                setDialog(
+                                    DialogBuilder()
+                                        .message("Alright, we have an answer!")
+                                        .message("Let's run it through a couple of test cases to see that it matches the spec!")
+                                        .message("Use the controls at the bottom to control the execution of the test cases. Good luck!")
+                                        .build()
+                                )
+                            }
+                        }
+                    },
                     onParseError = {
                         coroutineScope.launch {
-                            val firstParseError = onParseError()
-                            if (firstParseError) {
+                            val firstEvent = onEvent(EventType.PARSE_ERROR)
+                            if (firstEvent) {
                                 setDialog(
                                     DialogBuilder()
                                         .message("Aj aj, it looks like you entered an invalid expression.")
@@ -62,27 +77,27 @@ fun LevelView(
                     }
                 )
             }
-            if (dialog != null) {
-                DialogView(
-                    dialog = dialog,
-                    onNextDialog = setDialog,
-                    animationSpeed = 30f,
+            else {
+                val executionState = ExecutionState(
+                    exercise = exercise,
+                    solution = answer,
+                    onSuccess = { onLevelCompleted(answer) }
                 )
+                ExecutionView(
+                    state = executionState,
+                    onFinish = onNavigateToNextLevel,
+                )
+                BackHandler {
+                    setAnswer(null)
+                }
             }
         }
-    }
-    else {
-        val executionState = ExecutionState(
-            exercise = exercise,
-            solution = answer,
-            onSuccess = { onLevelCompleted(answer) }
-        )
-        ExecutionView(
-            state = executionState,
-            onFinish = onNavigateToNextLevel,
-        )
-        BackHandler {
-            setAnswer(null)
+        if (dialog != null) {
+            DialogView(
+                dialog = dialog,
+                onNextDialog = setDialog,
+                animationSpeed = 30f,
+            )
         }
     }
 }
@@ -96,7 +111,7 @@ private fun LevelViewPreview() {
                 exercise = andExercise,
                 onLevelCompleted = {},
                 onNavigateToNextLevel = {},
-                onParseError = { false }
+                onEvent = { false }
             )
         }
     }
