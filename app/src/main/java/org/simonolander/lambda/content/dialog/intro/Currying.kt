@@ -1,9 +1,9 @@
 package org.simonolander.lambda.content.dialog.intro
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,11 +44,11 @@ private fun JavascriptMultipleParameters() {
         ) {
             Text(
                 text = "Multiple parameters",
-                style = MaterialTheme.typography.h4,
+                style = MaterialTheme.typography.headlineMedium,
             )
             Text(
                 text = javascript,
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.headlineSmall,
             )
             CodeBlock(
                 """
@@ -77,37 +77,37 @@ private fun JavascriptCurrying() {
         ) {
             Text(
                 text = "Currying",
-                style = MaterialTheme.typography.h4,
+                style = MaterialTheme.typography.headlineMedium,
             )
             Text(
                 text = javascript,
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.headlineSmall,
             )
             Text(
                 text = "A curried function",
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
             )
             CodeBlock("x => y => x + y")
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "Application of curried function f to two arguments",
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
             )
             CodeBlock("f(x)(y)")
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = lambdaCalculus,
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.headlineSmall,
             )
             Text(
                 text = "A curried function",
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
             )
             CodeBlock("λ x. (λ y. (x + y))")
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "Application of curried function f to two arguments",
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
             )
             CodeBlock("f x y")
         }

@@ -1,7 +1,7 @@
 package org.simonolander.lambda.ui
 
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import org.simonolander.lambda.content.Level
 import org.simonolander.lambda.domain.LevelId
@@ -17,7 +17,7 @@ fun LevelScreen(levelId: LevelId, onLevelCompleted: (Expression?) -> Unit) {
 fun LevelNotFound(levelId: LevelId) {
     Text(
         text = "Level not found: $levelId",
-        style = MaterialTheme.typography.h2,
-        color = MaterialTheme.colors.error
+        style = MaterialTheme.typography.displayMedium,
+        color = MaterialTheme.colorScheme.error
     )
 }

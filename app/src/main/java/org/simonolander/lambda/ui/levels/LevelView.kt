@@ -5,7 +5,8 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Surface
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +22,7 @@ import org.simonolander.lambda.ui.ExerciseDesignView
 import org.simonolander.lambda.ui.theme.LambdaTheme
 import org.simonolander.lambda.ui.view.DialogView
 
+@ExperimentalMaterial3Api
 @Composable
 fun LevelView(exercise: Exercise, onLevelComplete: (Expression?) -> Unit) {
     val (answer, setAnswer) = remember {

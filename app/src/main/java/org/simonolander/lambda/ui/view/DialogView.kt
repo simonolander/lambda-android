@@ -5,7 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.SportsScore
@@ -93,7 +93,7 @@ private fun MessageView(
             )
             Text(
                 text = message.text.take(numberOfCharactersToShow),
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier
                     .padding(8.dp)
                     .weight(4f)
@@ -136,7 +136,7 @@ private fun QuestionView(question: Question, onNextDialog: (Dialog?) -> Unit) {
         ) {
             Text(
                 text = question.text,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
             )
             Spacer(modifier = Modifier.height(8.dp))
             question.responses.forEachIndexed { index, (text, next) ->

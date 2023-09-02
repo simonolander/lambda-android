@@ -1,9 +1,9 @@
 package org.simonolander.lambda.content.dialog.intro
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,17 +51,17 @@ private fun JavascriptFunctionApplicationParentheses() {
         ) {
             Text(
                 text = "Application order",
-                style = MaterialTheme.typography.h4,
+                style = MaterialTheme.typography.headlineMedium,
             )
             Row(Modifier.fillMaxWidth()) {
                 Text(
                     text = lambdaCalculus,
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.weight(1f),
                 )
                 Text(
                     text = javascript,
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.weight(1f),
                 )
             }
@@ -97,21 +97,21 @@ private fun JavascriptFunctionApplicationMaximalParentheses() {
         ) {
             Text(
                 text = "Parentheses",
-                style = MaterialTheme.typography.h4,
+                style = MaterialTheme.typography.headlineMedium,
             )
             Text(
                 text = lambdaCalculus,
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.headlineSmall,
             )
             Row(Modifier.fillMaxWidth()) {
                 Text(
                     text = "No redundant parentheses",
-                    style = MaterialTheme.typography.caption,
+                    style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.weight(1f),
                 )
                 Text(
                     text = "Clarifying parentheses",
-                    style = MaterialTheme.typography.caption,
+                    style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.weight(1f),
                 )
             }

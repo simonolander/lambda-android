@@ -3,7 +3,7 @@ package org.simonolander.lambda.ui.screen
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
@@ -18,6 +18,7 @@ import org.simonolander.lambda.domain.LevelId
 import org.simonolander.lambda.ui.theme.LambdaTheme
 import org.simonolander.lambda.ui.view.scrollableNoFling
 
+@ExperimentalMaterial3Api
 @Composable
 fun ChaptersScreen(
     chapters: List<Chapter>,
@@ -33,7 +34,7 @@ fun ChaptersScreen(
     ) {
         Text(
             text = "Chapters",
-            style = MaterialTheme.typography.h2,
+            style = MaterialTheme.typography.displayMedium,
         )
         chapters.forEach { chapter ->
             ChapterCardView(
@@ -46,6 +47,7 @@ fun ChaptersScreen(
     }
 }
 
+@ExperimentalMaterial3Api
 @Composable
 private fun ChapterCardView(
     chapter: Chapter,
@@ -67,11 +69,11 @@ private fun ChapterCardView(
             Column {
                 Text(
                     text = chapter.title,
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.titleLarge,
                 )
                 Text(
                     text = "$numberOfCompletedLessons out of $totalNumberOfLessons lessons completed",
-                    style = MaterialTheme.typography.caption
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
             if (numberOfCompletedLessons == totalNumberOfLessons) {
@@ -84,6 +86,7 @@ private fun ChapterCardView(
     }
 }
 
+@ExperimentalMaterial3Api
 @Preview
 @Composable
 private fun ChapterCardViewPreview() {

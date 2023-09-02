@@ -3,10 +3,10 @@ package org.simonolander.lambda.ui.view
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -67,11 +67,11 @@ fun SimpleDialogLevelView(
             ) {
                 Text(
                     text = "Lesson complete!",
-                    style = MaterialTheme.typography.h4,
+                    style = MaterialTheme.typography.headlineMedium,
                 )
                 Text(
                     text = "🎉",
-                    style = MaterialTheme.typography.h2,
+                    style = MaterialTheme.typography.displayMedium,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(onClick = { onLevelComplete(null) }) {

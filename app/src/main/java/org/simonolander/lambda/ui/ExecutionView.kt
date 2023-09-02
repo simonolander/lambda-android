@@ -7,7 +7,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
@@ -47,26 +47,26 @@ fun ExecutionView(
         ) {
             Text(
                 text = exercise.name,
-                style = MaterialTheme.typography.h2,
+                style = MaterialTheme.typography.displayMedium,
             )
 
             Spacer(Modifier.height(10.dp))
 
             Text(
                 text = "Your answer",
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.titleLarge,
             )
 
             Text(
                 text = state.solution.prettyPrint(),
-                style = MaterialTheme.typography.subtitle1,
+                style = MaterialTheme.typography.titleMedium,
             )
 
             Spacer(Modifier.height(10.dp))
 
             Text(
                 text = "Test cases",
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.titleLarge,
             )
 
             Spacer(Modifier.height(10.dp))
@@ -134,29 +134,29 @@ fun TestCaseRunningView(testCase: ExecutingTestCase) {
                 ) {
                     Text(
                         text = testCase.testCase.input.prettyPrint(),
-                        style = MaterialTheme.typography.subtitle1,
+                        style = MaterialTheme.typography.titleMedium,
                     )
                     when (val steps = testCase.reductions.count()) {
                         0 -> {} // Do not write anything
                         1 -> Text(
                             text = "$steps step",
-                            style = MaterialTheme.typography.caption,
+                            style = MaterialTheme.typography.bodySmall,
                         )
                         else -> Text(
                             text = "$steps steps",
-                            style = MaterialTheme.typography.caption,
+                            style = MaterialTheme.typography.bodySmall,
                         )
                     }
                 }
                 Text(
                     text = "Expected",
-                    style = MaterialTheme.typography.caption,
+                    style = MaterialTheme.typography.bodySmall,
                 )
                 Text(text = testCase.testCase.output.prettyPrint())
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = "Current",
-                    style = MaterialTheme.typography.caption,
+                    style = MaterialTheme.typography.bodySmall,
                 )
                 val actual = testCase.reductions.lastOrNull()?.after
                     ?: testCase.testCase.input
@@ -195,12 +195,12 @@ fun TestCaseSuccessfulView(testCase: ExecutingTestCase) {
             ) {
                 Text(
                     text = testCase.testCase.input.prettyPrint(),
-                    style = MaterialTheme.typography.subtitle1,
+                    style = MaterialTheme.typography.titleMedium,
                 )
                 val numberOfReductions = testCase.reductions.count()
                 Text(
                     text = "$numberOfReductions steps",
-                    style = MaterialTheme.typography.caption,
+                    style = MaterialTheme.typography.bodySmall,
                 )
             }
         }
@@ -240,23 +240,23 @@ fun TestCaseFailedView(testCase: ExecutingTestCase) {
                 ) {
                     Text(
                         text = testCase.testCase.input.prettyPrint(),
-                        style = MaterialTheme.typography.subtitle1,
+                        style = MaterialTheme.typography.titleMedium,
                     )
                     val numberOfReductions = testCase.reductions.count()
                     Text(
                         text = "$numberOfReductions steps",
-                        style = MaterialTheme.typography.caption,
+                        style = MaterialTheme.typography.bodySmall,
                     )
                 }
                 Text(
                     text = "Expected",
-                    style = MaterialTheme.typography.caption,
+                    style = MaterialTheme.typography.bodySmall,
                 )
                 Text(text = testCase.testCase.output.prettyPrint())
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = "Actual",
-                    style = MaterialTheme.typography.caption,
+                    style = MaterialTheme.typography.bodySmall,
                 )
                 val actual = testCase.reductions.lastOrNull()?.after
                     ?: testCase.testCase.input
@@ -290,7 +290,7 @@ fun TestCasePendingView(testCase: ExecutingTestCase) {
             Spacer(modifier = Modifier.width(5.dp))
             Text(
                 text = testCase.testCase.input.prettyPrint(),
-                style = MaterialTheme.typography.subtitle1,
+                style = MaterialTheme.typography.titleMedium,
             )
         }
     }
@@ -404,7 +404,7 @@ private fun ControlButton(
     FloatingActionButton(
         onClick = onClick,
         elevation = FloatingActionButtonDefaults.elevation(0.dp),
-        backgroundColor = backgroundColor,
+        containerColor = backgroundColor,
         contentColor = contentColor,
     ) {
         Icon(
