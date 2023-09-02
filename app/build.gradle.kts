@@ -82,12 +82,6 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-
-//    implementation("androidx.appcompat:appcompat:1.4.0")
-//    implementation("com.google.accompanist:accompanist-flowlayout:0.21.2-beta")
-//    implementation("com.google.android.material:material:1.4.0")
-//    implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.0")
-//    debugImplementation("androidx.compose.ui:ui-tooling:$compose_version")
 }
 
 allprojects {
