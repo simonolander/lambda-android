@@ -22,7 +22,6 @@ import org.simonolander.lambda.ui.ExerciseDesignView
 import org.simonolander.lambda.ui.theme.LambdaTheme
 import org.simonolander.lambda.ui.view.DialogView
 
-@ExperimentalMaterial3Api
 @Composable
 fun LevelView(exercise: Exercise, onLevelComplete: (Expression?) -> Unit) {
     val (answer, setAnswer) = remember {

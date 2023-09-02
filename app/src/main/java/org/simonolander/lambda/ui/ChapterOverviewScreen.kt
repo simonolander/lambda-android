@@ -20,7 +20,6 @@ import org.simonolander.lambda.content.Level
 import org.simonolander.lambda.domain.LevelId
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
-@ExperimentalMaterial3Api
 @Composable
 fun ChapterOverviewScreen(
     chapters: Array<Chapter> = Chapter.values(),
@@ -46,7 +45,6 @@ fun ChapterOverviewScreen(
     }
 }
 
-@ExperimentalMaterial3Api
 @Composable
 private fun ChapterView(chapter: Chapter, onLevelClick: (Level) -> Unit) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -64,7 +62,6 @@ private fun ChapterView(chapter: Chapter, onLevelClick: (Level) -> Unit) {
     }
 }
 
-@ExperimentalMaterial3Api
 @Composable
 fun LevelView(level: Level, onClick: () -> Unit) {
     Card(
@@ -89,7 +86,6 @@ fun LevelView(level: Level, onClick: () -> Unit) {
     }
 }
 
-@ExperimentalMaterial3Api
 @Preview
 @Composable
 private fun DefaultPreview() {

@@ -18,7 +18,6 @@ import org.simonolander.lambda.domain.LevelId
 import org.simonolander.lambda.ui.theme.LambdaTheme
 import org.simonolander.lambda.ui.view.scrollableNoFling
 
-@ExperimentalMaterial3Api
 @Composable
 fun ChaptersScreen(
     chapters: List<Chapter>,
@@ -47,7 +46,6 @@ fun ChaptersScreen(
     }
 }
 
-@ExperimentalMaterial3Api
 @Composable
 private fun ChapterCardView(
     chapter: Chapter,
@@ -86,7 +84,6 @@ private fun ChapterCardView(
     }
 }
 
-@ExperimentalMaterial3Api
 @Preview
 @Composable
 private fun ChapterCardViewPreview() {

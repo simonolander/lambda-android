@@ -29,7 +29,6 @@ import org.simonolander.lambda.ui.screen.ChapterScreen
 import org.simonolander.lambda.ui.screen.ChaptersScreen
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
-@ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +38,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@ExperimentalMaterial3Api
 @Composable
 fun LambdaApp() {
     LambdaTheme {

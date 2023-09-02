@@ -38,7 +38,6 @@ fun ChapterScreen(
     }
 }
 
-@ExperimentalMaterial3Api
 @Composable
 fun ChapterView(
     chapter: Chapter,
@@ -68,7 +67,6 @@ fun ChapterView(
     }
 }
 
-@ExperimentalMaterial3Api
 @Composable
 fun LevelCardView(level: Level, completed: Boolean, onClick: () -> Unit) {
     Card(onClick = onClick) {

@@ -27,7 +27,6 @@ import org.simonolander.lambda.ui.theme.LambdaTheme
 import org.simonolander.lambda.ui.theme.codeStyle
 import org.simonolander.lambda.ui.view.scrollableNoFling
 
-@ExperimentalMaterial3Api
 @Composable
 fun ExerciseDesignView(exercise: Exercise, onSubmit: (Expression) -> Unit) {
     var solutionValue by remember {
@@ -144,7 +143,6 @@ fun ExerciseDesignView(exercise: Exercise, onSubmit: (Expression) -> Unit) {
     }
 }
 
-@ExperimentalMaterial3Api
 @Preview
 @Composable
 private fun DefaultPreview() {
