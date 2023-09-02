@@ -30,6 +30,7 @@ fun DialogView(dialog: Dialog, animationSpeed: Float? = null, onNextDialog: (Dia
             animationSpeed = animationSpeed,
             onNextDialog = onNextDialog,
         )
+
         is Question -> QuestionView(dialog, onNextDialog)
     }
 }
@@ -44,8 +45,10 @@ private fun MessageView(
         mutableStateOf(if (animationSpeed != null) 0 else message.text.length)
     }
 
-    val animating by derivedStateOf {
-        numberOfCharactersToShow < message.text.length
+    val animating by remember {
+        derivedStateOf {
+            numberOfCharactersToShow < message.text.length
+        }
     }
 
     LaunchedEffect(message, animationSpeed) {
@@ -58,8 +61,7 @@ private fun MessageView(
                     delay(characterDelay.toLong())
                 }
             }
-        }
-        else {
+        } else {
             numberOfCharactersToShow = message.text.length
         }
     }
@@ -71,8 +73,7 @@ private fun MessageView(
         onClick = {
             if (animating) {
                 numberOfCharactersToShow = message.text.length
-            }
-            else {
+            } else {
                 onNextDialog(message.next)
             }
         },
@@ -104,8 +105,7 @@ private fun MessageView(
                 val imageVector =
                     if (message.next != null) {
                         Icons.Default.PlayArrow
-                    }
-                    else {
+                    } else {
                         Icons.Default.SportsScore
                     }
                 Icon(
