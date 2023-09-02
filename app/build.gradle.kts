@@ -93,7 +93,7 @@ dependencies {
 allprojects {
     tasks.withType(KotlinCompile::class.java) {
         kotlinOptions {
-            freeCompilerArgs += "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+            freeCompilerArgs += "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
         }
     }
 }
