@@ -4,12 +4,31 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.SportsScore
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,14 +61,10 @@ private fun MessageView(
     onNextDialog: (Dialog?) -> Unit,
 ) {
     var numberOfCharactersToShow by remember(message, animationSpeed) {
-        mutableStateOf(if (animationSpeed != null) 0 else message.text.length)
+        mutableIntStateOf(if (animationSpeed != null) 0 else message.text.length)
     }
 
-    val animating by remember {
-        derivedStateOf {
-            numberOfCharactersToShow < message.text.length
-        }
-    }
+    val animating = numberOfCharactersToShow < message.text.length
 
     LaunchedEffect(message, animationSpeed) {
         if (animationSpeed != null) {
@@ -67,9 +82,6 @@ private fun MessageView(
     }
 
     Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .defaultMinSize(minHeight = 200.dp),
         onClick = {
             if (animating) {
                 numberOfCharactersToShow = message.text.length
@@ -78,43 +90,44 @@ private fun MessageView(
             }
         },
     ) {
-        Row(
-            modifier = Modifier
+        Box(
+            Modifier
                 .fillMaxWidth()
+                .defaultMinSize(minHeight = 200.dp)
                 .border(width = 8.dp, color = borderColor(isSystemInDarkTheme()))
                 .padding(8.dp)
         ) {
-            Image(
-                painterResource(message.speaker.profilePicture),
-                contentDescription = "Profile picture",
-                modifier = Modifier
-                    .weight(1f, false)
-                    .padding(8.dp)
-                    .aspectRatio(1f)
-            )
-            Text(
-                text = message.text.take(numberOfCharactersToShow),
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .weight(4f)
-            )
-        }
-        if (!animating) {
-            Box {
-                val imageVector =
-                    if (message.next != null) {
-                        Icons.Default.PlayArrow
-                    } else {
-                        Icons.Default.SportsScore
-                    }
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Image(
+                    painterResource(message.speaker.profilePicture),
+                    contentDescription = "Profile picture",
+                    modifier = Modifier
+                        .weight(1f, false)
+                        .padding(8.dp)
+                        .aspectRatio(1f)
+                )
+                Text(
+                    text = message.text.take(numberOfCharactersToShow),
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .weight(4f)
+                )
+            }
+            if (!animating) {
+                val imageVector = if (message.next != null) {
+                    Icons.Default.PlayArrow
+                } else {
+                    Icons.Default.SportsScore
+                }
                 Icon(
                     imageVector = imageVector,
                     contentDescription = "Next",
                     modifier = Modifier
-                        .size(64.dp)
-                        .align(Alignment.BottomEnd)
-                        .padding(8.dp),
+                        .size(48.dp)
+                        .align(Alignment.BottomEnd),
                     tint = Color.LightGray,
                 )
             }
@@ -131,8 +144,7 @@ private fun QuestionView(question: Question, onNextDialog: (Dialog?) -> Unit) {
             .border(width = 8.dp, color = borderColor(isSystemInDarkTheme())),
     ) {
         Column(
-            modifier = Modifier
-                .padding(16.dp)
+            modifier = Modifier.padding(16.dp)
         ) {
             Text(
                 text = question.text,
@@ -155,18 +167,19 @@ private fun QuestionView(question: Question, onNextDialog: (Dialog?) -> Unit) {
 }
 
 private fun borderColor(isSystemInDarkTheme: Boolean): Color {
-    return if (isSystemInDarkTheme)
-        Color.DarkGray
-    else
-        Color.LightGray
+    return if (isSystemInDarkTheme) Color.DarkGray
+    else Color.LightGray
 }
 
 @Composable
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 private fun MessageViewPreview() {
     val message = Message(
-        "In mathematics, Church encoding is a means of representing data and operators in the lambda calculus.",
-        null
+        """
+        In mathematics, Church encoding is a means of representing data and operators in the lambda calculus.
+        
+        For example, Church numerals are a classic illustration of how natural numbers can be encoded using lambda expressions.
+        """.trimIndent(), null
     )
     Surface {
         LambdaTheme {
@@ -179,8 +192,7 @@ private fun MessageViewPreview() {
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 private fun QuestionViewPreview() {
     val question = Question(
-        "How familiar are you with lambda calculus?",
-        listOf(
+        "How familiar are you with lambda calculus?", listOf(
             "Not at all" to null,
             "Somewhat familiar" to null,
             "Quite familiar" to null,
