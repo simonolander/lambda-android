@@ -5,7 +5,13 @@ import androidx.compose.ui.text.withStyle
 import org.simonolander.lambda.domain.DialogBuilder
 import org.simonolander.lambda.domain.Exercise
 import org.simonolander.lambda.domain.TestCase
-import org.simonolander.lambda.engine.*
+import org.simonolander.lambda.engine.CONST
+import org.simonolander.lambda.engine.FALSE
+import org.simonolander.lambda.engine.ID
+import org.simonolander.lambda.engine.IF
+import org.simonolander.lambda.engine.TRUE
+import org.simonolander.lambda.engine.ZERO
+import org.simonolander.lambda.engine.churchNumerals
 import org.simonolander.lambda.ui.theme.codeStyle
 import kotlin.math.max
 

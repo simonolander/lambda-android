@@ -4,7 +4,14 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import org.simonolander.lambda.domain.Exercise
 import org.simonolander.lambda.domain.TestCase
-import org.simonolander.lambda.engine.*
+import org.simonolander.lambda.engine.AND
+import org.simonolander.lambda.engine.FALSE
+import org.simonolander.lambda.engine.IF
+import org.simonolander.lambda.engine.Identifier
+import org.simonolander.lambda.engine.NOT
+import org.simonolander.lambda.engine.OR
+import org.simonolander.lambda.engine.TRUE
+import org.simonolander.lambda.engine.parse
 import org.simonolander.lambda.ui.theme.codeStyle
 
 val xorExercise = run {

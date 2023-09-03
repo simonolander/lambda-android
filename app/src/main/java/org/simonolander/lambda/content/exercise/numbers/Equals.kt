@@ -4,7 +4,15 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import org.simonolander.lambda.domain.Exercise
 import org.simonolander.lambda.domain.TestCase
-import org.simonolander.lambda.engine.*
+import org.simonolander.lambda.engine.AND
+import org.simonolander.lambda.engine.FALSE
+import org.simonolander.lambda.engine.LEQ
+import org.simonolander.lambda.engine.OR
+import org.simonolander.lambda.engine.PRED
+import org.simonolander.lambda.engine.SUB
+import org.simonolander.lambda.engine.TRUE
+import org.simonolander.lambda.engine.ZERO
+import org.simonolander.lambda.engine.churchNumerals
 import org.simonolander.lambda.ui.theme.codeStyle
 
 val equalsExercise = run {

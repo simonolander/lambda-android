@@ -4,7 +4,11 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import org.simonolander.lambda.domain.Exercise
 import org.simonolander.lambda.domain.TestCase
-import org.simonolander.lambda.engine.*
+import org.simonolander.lambda.engine.APPLY
+import org.simonolander.lambda.engine.FALSE
+import org.simonolander.lambda.engine.FLIP
+import org.simonolander.lambda.engine.PAIR
+import org.simonolander.lambda.engine.TRUE
 import org.simonolander.lambda.ui.theme.codeStyle
 
 val secondExercise = run {

@@ -1,6 +1,7 @@
 package org.simonolander.lambda.engine
 
-import java.util.*
+import java.util.LinkedList
+import java.util.Queue
 
 enum class TokenType {
     LeftParenthesis,

@@ -1,6 +1,10 @@
 package org.simonolander.lambda.ui.view
 
-import androidx.compose.foundation.gestures.*
+import androidx.compose.foundation.gestures.FlingBehavior
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.ScrollScope
+import androidx.compose.foundation.gestures.ScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.ui.Modifier
 
 object NoFlingBehaviour : FlingBehavior {
