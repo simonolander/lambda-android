@@ -1,12 +1,13 @@
 package org.simonolander.lambda.domain
 
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
 
 sealed interface Dialog
 
 data class Message(
     val text: String,
-    val view: (@Composable () -> Unit)? = null,
+    val view: (@Composable (BoxScope.() -> Unit))? = null,
     val next: Dialog? = null,
     val speaker: Character = Character.Lambert,
 ) : Dialog {
@@ -26,7 +27,7 @@ class DialogBuilder {
     fun message(
         text: String,
         speaker: Character = Character.Lambert,
-        view: @Composable (() -> Unit)? = null,
+        view: @Composable (BoxScope.() -> Unit)? = null,
     ): DialogNonNullBuilder {
         return DialogNonNullBuilder(Message(
             text = text,
@@ -44,7 +45,7 @@ class DialogNonNullBuilder(initialMessage: Message) {
     fun message(
         text: String,
         speaker: Character = Character.Lambert,
-        view: @Composable (() -> Unit)? = null,
+        view: @Composable (BoxScope.() -> Unit)? = null,
     ): DialogNonNullBuilder {
         messages += lastMessage
         lastMessage = Message(text, view, speaker = speaker)

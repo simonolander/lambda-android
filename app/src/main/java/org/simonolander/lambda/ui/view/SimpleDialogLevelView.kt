@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.simonolander.lambda.domain.Dialog
 import org.simonolander.lambda.domain.DialogBuilder
+import org.simonolander.lambda.domain.DialogNonNullBuilder
 import org.simonolander.lambda.domain.Message
 import org.simonolander.lambda.engine.Expression
 import org.simonolander.lambda.misc.javascript
@@ -53,11 +54,12 @@ fun SimpleDialogLevelView(
             val scrollState = rememberScrollState()
             Box(
                 Modifier
+                    .fillMaxWidth()
                     .weight(1f)
                     .scrollableNoFling(scrollState)
                     .verticalScroll(scrollState)
             ) {
-                view?.invoke()
+                view?.invoke(this)
             }
             Box {
                 DialogView(dialog = dialog, animationSpeed = 30f, onNextDialog = {
@@ -92,10 +94,29 @@ fun SimpleDialogLevelView(
 
 @Preview
 @Composable
-private fun SimpleDialogLevelViewPreview() {
+private fun LessonCompletePreview() {
     Surface {
         LambdaTheme {
             SimpleDialogLevelView(initialDialog = null) {}
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun WavePreview() {
+    Surface {
+        LambdaTheme {
+            SimpleDialogLevelView(
+                DialogBuilder()
+                    .message("Some message.") {
+                        Text(
+                            text = "👋",
+                            modifier = Modifier.align(Alignment.Center),
+                            style = MaterialTheme.typography.displayMedium
+                        )
+                    }.build()
+            ) {}
         }
     }
 }
