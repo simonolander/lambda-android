@@ -1,9 +1,9 @@
 package org.simonolander.lambda.content.dialog.intro
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -105,23 +105,23 @@ private fun ApplicationView() {
         ) {
             Text(
                 text = "Applying functions",
-                style = MaterialTheme.typography.h4,
+                style = MaterialTheme.typography.headlineMedium,
             )
             Text(
                 text = javascript,
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.headlineSmall,
             )
             CodeBlock("(x => x)(y)")
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = lambdaCalculus,
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.headlineSmall,
             )
             CodeBlock("(λ x. x) y")
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "Result",
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.headlineSmall,
             )
             CodeBlock("y")
         }
@@ -138,17 +138,17 @@ private fun JavascriptIdentityFunction() {
         ) {
             Text(
                 text = "Example function",
-                style = MaterialTheme.typography.h4,
+                style = MaterialTheme.typography.headlineMedium,
             )
             Text(
                 text = javascript,
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.headlineSmall,
             )
             CodeBlock("x => x")
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = lambdaCalculus,
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.headlineSmall,
             )
             CodeBlock("λ x. x")
         }

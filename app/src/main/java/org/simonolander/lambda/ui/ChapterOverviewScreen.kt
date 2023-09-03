@@ -1,10 +1,12 @@
 package org.simonolander.lambda.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -18,7 +20,6 @@ import org.simonolander.lambda.content.Level
 import org.simonolander.lambda.domain.LevelId
 import org.simonolander.lambda.ui.theme.LambdaTheme
 
-@ExperimentalMaterialApi
 @Composable
 fun ChapterOverviewScreen(
     chapters: Array<Chapter> = Chapter.values(),
@@ -44,13 +45,12 @@ fun ChapterOverviewScreen(
     }
 }
 
-@ExperimentalMaterialApi
 @Composable
 private fun ChapterView(chapter: Chapter, onLevelClick: (Level) -> Unit) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
             text = chapter.title,
-            style = MaterialTheme.typography.h2,
+            style = MaterialTheme.typography.displayMedium,
         )
         chapter.levels.forEach { level ->
             LevelView(
@@ -62,21 +62,21 @@ private fun ChapterView(chapter: Chapter, onLevelClick: (Level) -> Unit) {
     }
 }
 
-@ExperimentalMaterialApi
 @Composable
 fun LevelView(level: Level, onClick: () -> Unit) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .background(MaterialTheme.colorScheme.primary),
         shape = MaterialTheme.shapes.small,
-        onClick = onClick,
-        backgroundColor = MaterialTheme.colors.primary,
     ) {
         Column(
             modifier = Modifier.padding(10.dp)
         ) {
             Text(
                 text = level.title,
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.titleLarge,
             )
             Text(
                 text = "Not completed",
@@ -86,7 +86,6 @@ fun LevelView(level: Level, onClick: () -> Unit) {
     }
 }
 
-@ExperimentalMaterialApi
 @Preview
 @Composable
 private fun DefaultPreview() {

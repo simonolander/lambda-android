@@ -5,7 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.SportsScore
@@ -30,6 +30,7 @@ fun DialogView(dialog: Dialog, animationSpeed: Float? = null, onNextDialog: (Dia
             animationSpeed = animationSpeed,
             onNextDialog = onNextDialog,
         )
+
         is Question -> QuestionView(dialog, onNextDialog)
     }
 }
@@ -44,8 +45,10 @@ private fun MessageView(
         mutableStateOf(if (animationSpeed != null) 0 else message.text.length)
     }
 
-    val animating by derivedStateOf {
-        numberOfCharactersToShow < message.text.length
+    val animating by remember {
+        derivedStateOf {
+            numberOfCharactersToShow < message.text.length
+        }
     }
 
     LaunchedEffect(message, animationSpeed) {
@@ -58,8 +61,7 @@ private fun MessageView(
                     delay(characterDelay.toLong())
                 }
             }
-        }
-        else {
+        } else {
             numberOfCharactersToShow = message.text.length
         }
     }
@@ -71,8 +73,7 @@ private fun MessageView(
         onClick = {
             if (animating) {
                 numberOfCharactersToShow = message.text.length
-            }
-            else {
+            } else {
                 onNextDialog(message.next)
             }
         },
@@ -93,7 +94,7 @@ private fun MessageView(
             )
             Text(
                 text = message.text.take(numberOfCharactersToShow),
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier
                     .padding(8.dp)
                     .weight(4f)
@@ -104,8 +105,7 @@ private fun MessageView(
                 val imageVector =
                     if (message.next != null) {
                         Icons.Default.PlayArrow
-                    }
-                    else {
+                    } else {
                         Icons.Default.SportsScore
                     }
                 Icon(
@@ -136,7 +136,7 @@ private fun QuestionView(question: Question, onNextDialog: (Dialog?) -> Unit) {
         ) {
             Text(
                 text = question.text,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
             )
             Spacer(modifier = Modifier.height(8.dp))
             question.responses.forEachIndexed { index, (text, next) ->

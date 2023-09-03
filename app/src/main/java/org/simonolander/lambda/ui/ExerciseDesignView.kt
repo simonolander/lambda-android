@@ -6,7 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -57,11 +57,11 @@ fun ExerciseDesignView(exercise: Exercise, onSubmit: (Expression) -> Unit) {
     ) {
         Text(
             text = exercise.name,
-            style = MaterialTheme.typography.h2,
+            style = MaterialTheme.typography.displayMedium,
         )
         Text(
             text = exercise.description,
-            style = MaterialTheme.typography.subtitle1,
+            style = MaterialTheme.typography.titleMedium,
         )
         Spacer(modifier = Modifier.height(10.dp))
         TextField(
@@ -104,7 +104,7 @@ fun ExerciseDesignView(exercise: Exercise, onSubmit: (Expression) -> Unit) {
             if (this != null) {
                 Text(
                     text = message,
-                    color = MaterialTheme.colors.error,
+                    color = MaterialTheme.colorScheme.error,
                 )
                 Spacer(modifier = Modifier.height(10.dp))
             }
@@ -121,20 +121,20 @@ fun ExerciseDesignView(exercise: Exercise, onSubmit: (Expression) -> Unit) {
 
             Text(
                 text = "The following library functions are available to you:",
-                style = MaterialTheme.typography.subtitle1,
+                style = MaterialTheme.typography.titleMedium,
             )
 
             exercise.library.forEach { (name, expr) ->
                 Row(Modifier.fillMaxWidth()) {
                     Text(
                         text = AnnotatedString(name, codeStyle),
-                        style = MaterialTheme.typography.subtitle1,
+                        style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.weight(1f)
                     )
 
                     Text(
                         text = AnnotatedString(expr.prettyPrint(), codeStyle),
-                        style = MaterialTheme.typography.subtitle1,
+                        style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.weight(2f)
                     )
                 }

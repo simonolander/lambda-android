@@ -4,7 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -53,8 +54,10 @@ fun LambdaNavHost(navController: NavHostController, modifier: Modifier) {
     val database = LambdaDatabase.getInstance(LocalContext.current)
     val coroutineScope = rememberCoroutineScope()
     val solutions by database.solutionDao().getAll().collectAsState(emptyList())
-    val completedLevelsIds by derivedStateOf {
-        solutions.map { LevelId(it.levelId) }.toSet()
+    val completedLevelsIds by remember {
+        derivedStateOf {
+            solutions.map { LevelId(it.levelId) }.toSet()
+        }
     }
     NavHost(
         navController = navController,

@@ -3,7 +3,7 @@ package org.simonolander.lambda.ui.screen
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
@@ -54,7 +54,7 @@ fun ChapterView(
     ) {
         Text(
             text = chapter.title,
-            style = MaterialTheme.typography.h2,
+            style = MaterialTheme.typography.displayMedium,
         )
         chapter.levels.forEach { level ->
             LevelCardView(
@@ -79,7 +79,7 @@ fun LevelCardView(level: Level, completed: Boolean, onClick: () -> Unit) {
         ) {
             Text(
                 text = level.title,
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.titleLarge,
             )
 
             if (completed) {
@@ -97,11 +97,11 @@ fun ChapterNotFoundView(chapterId: ChapterId) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
             text = "Not found",
-            style = MaterialTheme.typography.h2,
+            style = MaterialTheme.typography.displayMedium,
         )
         Text(
             text = "You attempted to view chapter $chapterId, but no such chapter exists.",
-            style = MaterialTheme.typography.caption,
+            style = MaterialTheme.typography.bodySmall,
         )
     }
 }

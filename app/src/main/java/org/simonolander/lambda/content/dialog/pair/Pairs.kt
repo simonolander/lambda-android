@@ -1,8 +1,8 @@
 package org.simonolander.lambda.content.dialog.pair
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +50,7 @@ private fun LargePair() {
     ) {
         Text(
             text = pair('a', 'b'),
-            style = MaterialTheme.typography.h2,
+            style = MaterialTheme.typography.displayMedium,
         )
     }
 }
@@ -63,7 +63,7 @@ private fun PairsDefinition() {
     ) {
         Text(
             text = "The pair function",
-            style = MaterialTheme.typography.caption,
+            style = MaterialTheme.typography.bodySmall,
         )
         Text(
             text = PAIR.second.prettyPrint(),
@@ -71,7 +71,7 @@ private fun PairsDefinition() {
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "The pair " + pair(5, 2),
-            style = MaterialTheme.typography.caption,
+            style = MaterialTheme.typography.bodySmall,
         )
         Text(
             text = parse("λf. f 5 2").prettyPrint(),
